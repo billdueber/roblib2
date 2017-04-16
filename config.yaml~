@@ -1,0 +1,27 @@
+theme: hugo-fatboy
+
+AuthorName: Bill Dueber
+GitHubUser: billdueber
+
+
+baseURL: http://robotlibrarian.billdueber.com
+disablePathToLower: true
+languageCode: en-us
+title: Robot Librarian
+
+permalinks:
+  post: /:year/:month/:slug/
+
+taxonomies:
+  tag: tags
+
+footnoteReturnLinkContents: "↩"
+
+googleAnalytics: XXXX
+metaDataFormat: yaml
+paginate: 20
+
+
+
+
+...
