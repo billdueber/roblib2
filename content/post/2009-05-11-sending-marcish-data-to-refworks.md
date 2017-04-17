@@ -2,7 +2,6 @@
 date: 2009-05-11T00:00:00Z
 slug: sending-marcish-data-to-refworks
 title: Sending MARC(ish) data to Refworks
-url: /2009/05/11/sending-marcish-data-to-refworks/
 ---
 
 Refworks has some <a href="http://www.refworks.com/DirectExport.htm">okish documentation</a> about how to deal with its callback import procedure, but I thought I'd put down how I'm doing it for our <a href="http://vufind.org/">vufind</a> install (<a href="http://mirlyn2-beta.lib.umich.edu/">mirlyn2-beta.lib.umich.edu</a>) in case other folks are interested.

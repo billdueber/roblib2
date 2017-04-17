@@ -2,7 +2,6 @@
 date: 2009-08-17T00:00:00Z
 slug: sending-unicode-email-headers-in-php
 title: Sending unicode email headers in PHP
-url: /2009/08/17/sending-unicode-email-headers-in-php/
 ---
 
 I'm probably the last guy on earth to know this, but I'm recording it here just in case. I'm sending record titles in the subject line of emails, and of course they may be unicode. The body takes care of itself, but you need to explicitly encode a header like "Subject."

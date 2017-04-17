@@ -3,7 +3,6 @@ date: 2011-01-13T00:00:00Z
 slug: four-things-i-hate-about-ruby
 tags: [ruby]
 title: Four things I hate about Ruby
-url: /2011/01/13/four-things-i-hate-about-ruby/
 ---
 
 Don't get me wrong. I use ruby as my default language when possible. I love JRuby in a way that's illegal in most states.

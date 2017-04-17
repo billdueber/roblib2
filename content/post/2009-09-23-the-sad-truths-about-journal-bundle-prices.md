@@ -2,7 +2,6 @@
 date: 2009-09-23T00:00:00Z
 slug: the-sad-truths-about-journal-bundle-prices
 title: The sad truths about journal bundle prices
-url: /2009/09/23/the-sad-truths-about-journal-bundle-prices/
 ---
 
 [Notes taken during a talk today, *Ted Bergstrom: "Some Economics of Saying Nix To Big Deals and the Terrible Fix"*. My own thoughts are interspersed throughout; please don't automatically ascribe everything to Dr. Bergstrom.

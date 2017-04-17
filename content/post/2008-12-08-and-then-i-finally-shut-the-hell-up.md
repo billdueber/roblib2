@@ -2,7 +2,6 @@
 date: 2008-12-08T00:00:00Z
 slug: and-then-i-finally-shut-the-hell-up
 title: And then I finally shut the hell up
-url: /2008/12/08/and-then-i-finally-shut-the-hell-up/
 ---
 
 I had a great --- great! I tell you -- 30 second conversation with Ken Varnum (of <a title="Ken Varnum's RSS4Lib Blog" href="http://www.rss4lib.com/">RSS4Lib</a> fame) that went something like this (much paraphrasing, obviously):

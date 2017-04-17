@@ -3,7 +3,6 @@ date: 2008-05-15T00:00:00Z
 slug: google-doctype-open-documentation-open-code
 tags: [google, reference]
 title: Google Doctype -- open documentation, open code
-url: /2008/05/15/google-doctype-open-documentation-open-code/
 ---
 
 Because you can never have too many open encyclopedia-type-thingies, Google has launched

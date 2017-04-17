@@ -2,7 +2,6 @@
 date: 2013-12-17T00:00:00Z
 slug: new-blog-front-and-back-end.html
 title: New blog front- and back-end
-url: /2013/12/17/new-blog-front-and-back-end/
 ---
 
 A while back, [Dreamhost](http://dreamhost.com/) had some problems and my blog and assorted other websites I help keep track of went down.

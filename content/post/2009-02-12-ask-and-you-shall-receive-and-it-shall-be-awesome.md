@@ -2,7 +2,6 @@
 date: 2009-02-12T00:00:00Z
 slug: ask-and-you-shall-receive-and-it-shall-be-awesome
 title: Ask, and you shall receive, and it shall be AWESOME!
-url: /2009/02/12/ask-and-you-shall-receive-and-it-shall-be-awesome/
 ---
 
 The good folks at <a href="http://www.tictocs.ac.uk">ticToc</a>s heard the call for open data, and they responded...exactly as I asked them to. Which makes me think I should have asked for a pony, too, but I'm still very, very happy!

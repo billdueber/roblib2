@@ -2,7 +2,6 @@
 date: 2009-02-02T00:00:00Z
 slug: tictocs-give-us-a-file-pretty-pretty-pretty-please
 title: 'TicTocs: Give us a file! Pretty pretty pretty please!'
-url: /2009/02/02/tictocs-give-us-a-file-pretty-pretty-pretty-please/
 ---
 
 For those who haven't heard, <a href="http://www.tictocs.ac.uk/">ticTOCs</a> is a service that provides web-based access to a database of Journal RSS/Atom Table of Contents feeds. Awesome.

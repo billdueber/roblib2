@@ -2,7 +2,6 @@
 date: 2009-04-15T00:00:00Z
 slug: marc-hash-the-saga-continues-now-with-even-less-structure
 title: 'MARC-HASH: The saga continues (now with even less structure)'
-url: /2009/04/15/marc-hash-the-saga-continues-now-with-even-less-structure/
 ---
 
 After a medium-sized discussion on #code4lib, we've collectively decided that...well, ok, no one really cares all that much, but a few people weighed in.

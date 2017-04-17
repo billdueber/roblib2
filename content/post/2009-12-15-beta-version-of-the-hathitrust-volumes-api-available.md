@@ -2,7 +2,6 @@
 date: 2009-12-15T00:00:00Z
 slug: beta-version-of-the-hathitrust-volumes-api-available
 title: Beta version of the HathiTrust Volumes API available
-url: /2009/12/15/beta-version-of-the-hathitrust-volumes-api-available/
 ---
 
 ## <span style="color: red">MAJOR CHANGE</span>

@@ -3,7 +3,6 @@ date: 2011-04-12T00:00:00Z
 slug: isbn-parenthetical-notes-bad-marc-data-1
 tags: [bad data]
 title: 'ISBN parenthetical notes: Bad MARC data #1'
-url: /2011/04/12/isbn-parenthetical-notes-bad-marc-data-1/
 ---
 
 Yesterday, I gave a brief overview of [why free text is hard to deal with](http://robotlibrarian.billdueber.com/why-programmers-hate-free-text-in-marc-records/).

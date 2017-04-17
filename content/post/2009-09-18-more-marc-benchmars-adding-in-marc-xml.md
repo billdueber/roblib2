@@ -2,7 +2,6 @@
 date: 2009-09-18T00:00:00Z
 slug: more-marc-benchmars-adding-in-marc-xml
 title: 'More Ruby MARC Benchmarks: Adding in MARC-XML'
-url: /2009/09/18/more-marc-benchmars-adding-in-marc-xml/
 ---
 
 It turns out that UVA's reluctance to use the raw MARC data on the search results screen is driven more by processing time than parsing time. Even if they were to start with a fully-parsed MARC object, they're doing enough screwing around with that data that the bottleneck on their end appears to be all the regex and string processing, not the parsing. Their specs for what gets displayed are complex enough that they want to do the work up-front.

@@ -3,7 +3,6 @@ date: 2014-10-06T00:00:00Z
 slug: schemaless-solr-with-dynamicfield-and-copyfield
 tags: [solr]
 title: '"Schemaless" solr with dynamicField and copyField'
-url: /2014/10/06/schemaless-solr-with-dynamicfield-and-copyfield/
 ---
 
 [Holy Kamoly, it's been a long time since I blogged!]

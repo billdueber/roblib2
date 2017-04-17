@@ -2,7 +2,6 @@
 date: 2010-02-05T00:00:00Z
 slug: jruby_producer_consumer-dead-simple-producerconsumer-for-jruby
 title: jruby_producer_consumer dead-simple producer/consumer for JRuby
-url: /2010/02/05/jruby_producer_consumer-dead-simple-producerconsumer-for-jruby/
 ---
 
 Yea! My first gem ever released!

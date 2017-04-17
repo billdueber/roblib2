@@ -2,7 +2,6 @@
 date: 2008-11-03T00:00:00Z
 slug: how-to-rig-an-election
 title: How to rig an election
-url: /2008/11/03/how-to-rig-an-election/
 ---
 
 No matter where I've gone today and for the past few days, I keep running into people (on both sides) who are sure that if Their Guy Doesn't Win, it's going to be because of dirty tactics.

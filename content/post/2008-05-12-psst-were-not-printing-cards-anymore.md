@@ -3,7 +3,6 @@ date: 2008-05-12T00:00:00Z
 slug: psst-were-not-printing-cards-anymore
 tags: [code4lib, TALITAS]
 title: Psst. We're not printing cards anymore
-url: /2008/05/12/psst-were-not-printing-cards-anymore/
 ---
 
 \[From a series I'm calling, "Things About The Library I Think Are Stoooopid", part one of about a zillion.\]

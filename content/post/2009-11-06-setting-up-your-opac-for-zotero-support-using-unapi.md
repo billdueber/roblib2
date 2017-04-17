@@ -2,7 +2,6 @@
 date: 2009-11-06T00:00:00Z
 slug: setting-up-your-opac-for-zotero-support-using-unapi
 title: Setting up your OPAC for Zotero support using unAPI
-url: /2009/11/06/setting-up-your-opac-for-zotero-support-using-unapi/
 ---
 
 [unAPI](http://unapi.info) is a very simple protocol to let a machine know what other formats a document is available in. [Zotero](http://zotero.org) is a bibliographic management tool (like Endnote or Refworks) that operates as a Firefox plugin. And it speaks unAPI.

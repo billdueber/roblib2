@@ -3,7 +3,6 @@ date: 2012-02-29T00:00:00Z
 slug: stupid-solr-tricks-introduction
 tags: [solr, Stupid Solr Tricks]
 title: 'Stupid Solr tricks: Introduction (SST #0)'
-url: /2012/02/29/stupid-solr-tricks-introduction/
 ---
 
 **Completed parts of the series:**

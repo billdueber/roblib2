@@ -2,7 +2,6 @@
 date: 2010-04-23T00:00:00Z
 slug: why-rda-is-doomed-to-failure
 title: Why RDA is doomed to failure
-url: /2010/04/23/why-rda-is-doomed-to-failure/
 ---
 
 [Note: edited for clarity thanks to rsinger's comment, below]

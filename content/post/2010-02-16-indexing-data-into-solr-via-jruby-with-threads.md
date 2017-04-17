@@ -2,7 +2,6 @@
 date: 2010-02-16T00:00:00Z
 slug: indexing-data-into-solr-via-jruby-with-threads
 title: Indexing data into Solr via JRuby (with threads!)
-url: /2010/02/16/indexing-data-into-solr-via-jruby-with-threads/
 ---
 
 [Note: in this post I'm just going to focus on the "get stuff into Solr" part. My normal focus -- MARC data -- will

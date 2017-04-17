@@ -2,7 +2,6 @@
 date: 2010-01-29T00:00:00Z
 slug: still-another-look-at-marc-parsing-in-ruby-and-jruby
 title: Still another look at MARC parsing in ruby and jruby
-url: /2010/01/29/still-another-look-at-marc-parsing-in-ruby-and-jruby/
 ---
 
 I've been looking at making a jruby-based solr indexer for MARC documents, and started off wanting to make sure I could determine if anything I did would be faster than our existing (solrmarc-based) setup.

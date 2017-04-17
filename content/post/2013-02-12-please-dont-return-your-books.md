@@ -2,7 +2,6 @@
 date: 2013-02-12T00:00:00Z
 slug: please-dont-return-your-books
 title: 'Please: don''t return your books'
-url: /2013/02/12/please-dont-return-your-books/
 ---
 
 So, I'm at [code4lib 2013](http://code4lib.org/conference/2013) right now, where side conversations and informal exchanges tend to be the most interesting part.

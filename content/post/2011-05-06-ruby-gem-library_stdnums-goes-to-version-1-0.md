@@ -3,7 +3,6 @@ date: 2011-05-06T00:00:00Z
 slug: ruby-gem-library_stdnums-goes-to-version-1-0
 tags: [librarian code, ruby]
 title: Ruby gem library_stdnums goes to version 1.0
-url: /2011/05/06/ruby-gem-library_stdnums-goes-to-version-1-0/
 ---
 
 I just released another (this time pretty good) version of my gem for normalizing/validating library standard numbers, `library_stdnums` ([github source](https://github.com/billdueber/library_stdnums) / [docs](http://rubydoc.info/github/billdueber/library_stdnums/master/frames)).

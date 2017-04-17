@@ -1,7 +1,6 @@
 ---
 date: 2014-10-09T00:00:00Z
 title: Ruby MARC serialization/deserialization revisited
-url: /2014/10/09/marc_serialization_revisited/
 ---
 
 A few years ago, I [benchmarked](http://robotlibrarian.billdueber.com/2010/09/sizespeed-of-various-marc-serializations-using-ruby-marc/)

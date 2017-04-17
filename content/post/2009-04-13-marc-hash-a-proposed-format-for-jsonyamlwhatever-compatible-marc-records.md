@@ -2,7 +2,6 @@
 date: 2009-04-13T00:00:00Z
 slug: marc-hash-a-proposed-format-for-jsonyamlwhatever-compatible-marc-records
 title: 'MARC-Hash: a proposed format for JSON/YAML/Whatever-compatible MARC records '
-url: /2009/04/13/marc-hash-a-proposed-format-for-jsonyamlwhatever-compatible-marc-records/
 ---
 
 In my first shot at MARC-in-JSON, which I appropriately (and prematurely) named <a href="http://code.google.com/p/marc-json/">MARC-JSON</a>, I made a point of losing round-tripability (to and from MARC) in order to end up with a nice, easy-to-work-with data structure based mostly on hashes. "Who really cares what order the subfields come in?" I asked myself.

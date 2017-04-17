@@ -2,7 +2,6 @@
 date: 2009-11-18T00:00:00Z
 slug: running-blacklight-under-jruby
 title: Running Blacklight under JRuby
-url: /2009/11/18/running-blacklight-under-jruby/
 ---
 
 I decided to see if I could get [Blacklight](http://projectblacklight.org/) working under [JRuby](http://jruby.org/), starting with running the test suite and working my way up from there.

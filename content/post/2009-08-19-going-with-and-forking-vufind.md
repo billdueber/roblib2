@@ -2,7 +2,6 @@
 date: 2009-08-19T00:00:00Z
 slug: going-with-and-forking-vufind
 title: Going with and "forking" VUFind
-url: /2009/08/19/going-with-and-forking-vufind/
 ---
 
 *Note: This is the second in a series I'm doing about our VUFind installation, [Mirlyn](http://mirlyn.lib.umich.edu/). Here I talk about how we got to where we are. Next I'll start looking at specific technologies, how we solved various problems, and generally more nerd-centered stuff.*

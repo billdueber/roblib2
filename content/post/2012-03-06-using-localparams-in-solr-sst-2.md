@@ -4,7 +4,6 @@ slug: using-localparams-in-solr-sst-2
 tags: [solr, Stupid Solr Tricks]
 title: 'Using localparams in Solr (or, how to boost records that contain all terms)
   (SST #2)'
-url: /2012/03/06/using-localparams-in-solr-sst-2/
 ---
 
 [Note: this isn't so much a _Stupid Solr Trick_ as a _Thing You Should Probably Know_; consider it required reading for the next SST. If you're just joining us, check out the [introduction to the Stupid Solr Tricks series](http://robotlibrarian.billdueber.com/stupid-solr-tricks-introduction/)]

@@ -2,7 +2,6 @@
 date: 2014-01-30T00:00:00Z
 slug: yet-another-lc-callnumber-parser.html
 title: Help me test yet another LC Callnumber parser
-url: /2014/01/30/yet-another-lc-callnumber-parser/
 ---
 
 Those who have followed this blog and my code for a while know that I have a [long](http://robotlibrarian.billdueber.com/normalizing-loc-call-numbers-for-sorting/), slightly [sad](http://robotlibrarian.billdueber.com/enough-with-the-freakin-lc-call-number-normalization/), and borderline [abusive](https://github.com/billdueber/lib.umich.edu-solr-stuff) relationship with Library of Congress call numbers.

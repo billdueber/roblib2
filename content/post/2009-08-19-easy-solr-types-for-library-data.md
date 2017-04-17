@@ -2,7 +2,6 @@
 date: 2009-08-19T00:00:00Z
 slug: easy-solr-types-for-library-data
 title: Easy Solr types for library data
-url: /2009/08/19/easy-solr-types-for-library-data/
 ---
 
 [Yet another bit in a series about our Vufind installation]

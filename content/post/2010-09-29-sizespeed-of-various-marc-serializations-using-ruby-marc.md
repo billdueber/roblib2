@@ -2,7 +2,6 @@
 date: 2010-09-29T00:00:00Z
 slug: sizespeed-of-various-marc-serializations-using-ruby-marc
 title: Size/speed of various MARC serializations using ruby-marc
-url: /2010/09/29/sizespeed-of-various-marc-serializations-using-ruby-marc/
 ---
 
 [Ross Singer](http://dilettantes.code4lib.org/) recently updated [ruby-marc](http://marc.rubyforge.org/) to include a `#to_hash` method that creates a data structure that is (a) round-trippable without any data loss, and (b) amenable to serializing to JSON. He's calling it *[marc-in-json](http://dilettantes.code4lib.org/blog/2010/09/a-proposal-to-serialize-marc-in-json/)* (even though the serialization is up to the programmer, it's expected most of us will use JSON), and I think it's the way to go in terms of JSON-able MARC data.

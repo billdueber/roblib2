@@ -2,7 +2,6 @@
 date: 2011-12-01T00:00:00Z
 slug: solr-and-boolean-operators
 title: Solr and boolean operators
-url: /2011/12/01/solr-and-boolean-operators/
 ---
 
 [Summary: **ALWAYS ALWAYS ALWAYS USE PARENTHESES TO GROUP BOOLEANS IN SOLR!!!**]

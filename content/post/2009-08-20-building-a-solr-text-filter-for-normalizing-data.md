@@ -2,7 +2,6 @@
 date: 2009-08-20T00:00:00Z
 slug: building-a-solr-text-filter-for-normalizing-data
 title: Building a solr text filter for normalizing data
-url: /2009/08/20/building-a-solr-text-filter-for-normalizing-data/
 ---
 
 [Kind of part of a continuing series on our VUFind implementation; more of a sidebar, really.]

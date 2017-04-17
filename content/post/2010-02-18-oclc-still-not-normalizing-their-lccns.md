@@ -2,7 +2,6 @@
 date: 2010-02-18T00:00:00Z
 slug: oclc-still-not-normalizing-their-lccns
 title: OCLC still not (NO! They are!) normalizing their LCCNs
-url: /2010/02/18/oclc-still-not-normalizing-their-lccns/
 ---
 
 <blockquote>NOTE 2: It turns out that I did find a minor bug in the system, but that in general LCCN normalization is working correctly. I just happened to hit a weirdness with a bad LCCN and a little bug in the parser on their end. Which is getting fixed. So...good news all around, and huge kudos to

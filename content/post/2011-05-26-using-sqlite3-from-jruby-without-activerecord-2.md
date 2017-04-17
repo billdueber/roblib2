@@ -3,7 +3,6 @@ date: 2011-05-26T00:00:00Z
 slug: using-sqlite3-from-jruby-without-activerecord-2
 tags: [jruby]
 title: Using SQLite3 from JRuby without ActiveRecord
-url: /2011/05/26/using-sqlite3-from-jruby-without-activerecord-2/
 ---
 
 I spent way too long asking my friend, The Internet, how to get a normal DBI connection to SQLIte3 using JRuby. Apparently, everyone except me is [using ActiveRecord and/or Rails](http://jruby-extras.rubyforge.org/activerecord-jdbc-adapter/) and doesn't *want* to just connect to the database.

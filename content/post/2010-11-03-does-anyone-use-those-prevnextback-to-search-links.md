@@ -2,7 +2,6 @@
 date: 2010-11-03T00:00:00Z
 slug: does-anyone-use-those-prevnextback-to-search-links
 title: Does anyone use those prev/next/back-to-search links?
-url: /2010/11/03/does-anyone-use-those-prevnextback-to-search-links/
 ---
 
 There's a common problem among developers of websites that paginate, including OPACs: how do you provide a single item view that can have links that go back to the search (or to the prev/next item) without making your URLs look ugly?

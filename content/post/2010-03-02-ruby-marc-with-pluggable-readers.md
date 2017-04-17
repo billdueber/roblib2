@@ -2,7 +2,6 @@
 date: 2010-03-02T00:00:00Z
 slug: ruby-marc-with-pluggable-readers
 title: ruby-marc with pluggable readers
-url: /2010/03/02/ruby-marc-with-pluggable-readers/
 ---
 
 I've been messing with easier ways of adding parsers to ruby-marc's MARC::Reader object. The idea is that you can do this:

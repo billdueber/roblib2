@@ -2,7 +2,6 @@
 date: 2010-09-16T00:00:00Z
 slug: vufind-midwest-gathering
 title: VuFind Midwest gathering
-url: /2010/09/16/vufind-midwest-gathering/
 ---
 
 A couple weeks ago, representatives from UMich (that'd be me), Purdue, Notre Dame, UChicago, and our hosts at Western Michigan got together in lovely Kalamazoo to talk about our VuFind implementations.

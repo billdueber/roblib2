@@ -2,7 +2,6 @@
 date: 2011-02-09T00:00:00Z
 slug: code4lib-2011-lightning-talk-slides
 title: '[RETRACTED] Code4Lib 2011 Lightning Talk Slides'
-url: /2011/02/09/code4lib-2011-lightning-talk-slides/
 ---
 
 <blockquote><strong>DANGER!</strong>

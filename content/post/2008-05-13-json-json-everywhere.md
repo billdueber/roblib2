@@ -3,7 +3,6 @@ date: 2008-05-13T00:00:00Z
 slug: json-json-everywhere
 tags: [api, datastorage, json]
 title: JSON, JSON everywhere
-url: /2008/05/13/json-json-everywhere/
 ---
 
 Via Ajaxian, just saw an announcement for [Persevere](http://sitepen.com/labs/persevere.php), a network-centric,

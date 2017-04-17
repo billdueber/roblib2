@@ -2,7 +2,6 @@
 date: 2010-02-26T00:00:00Z
 slug: new-interest-in-marc-hash-json
 title: New interest in MARC-HASH / JSON
-url: /2010/02/26/new-interest-in-marc-hash-json/
 ---
 
 <blockquote>EDIT: This is historical -- the recommended serialization for marc in json is now Ross Singer's <a href="http://dilettantes.code4lib.org/blog/2010/09/a-proposal-to-serialize-marc-in-json/">marc-in-json</a>. The marc-in-json serialization has implementations in the core marc libraries for <a href="https://rubygems.org/gems/marc">Ruby</a> and <a href="http://pear.php.net/package/File_MARC/">PHP</a>, and add-ons for <a href="http://search.cpan.org/~bbaxter/MARC-Utils-MARC2MARC_in_JSON/">Perl</a> and <a href="https://github.com/billdueber/marc4j_extra_reader_writers">Java</a>. C'mon, Python people!</blockquote>

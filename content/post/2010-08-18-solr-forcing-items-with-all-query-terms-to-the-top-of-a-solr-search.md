@@ -2,7 +2,6 @@
 date: 2010-08-18T00:00:00Z
 slug: solr-forcing-items-with-all-query-terms-to-the-top-of-a-solr-search
 title: 'Solr: Forcing items with all query terms to the top of a Solr search'
-url: /2010/08/18/solr-forcing-items-with-all-query-terms-to-the-top-of-a-solr-search/
 ---
 
 [Note: I've since made a [better explanation of, and solution for, this problem](http://robotlibrarian.billdueber.com/using-localparams-in-solr-sst-2/).]

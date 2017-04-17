@@ -2,7 +2,6 @@
 date: 2011-02-15T00:00:00Z
 slug: corrected-code4lib-slides-are-up
 title: Corrected Code4Lib slides are up
-url: /2011/02/15/corrected-code4lib-slides-are-up/
 ---
 
 ...at <a href="http://robotlibrarian.billdueber.com/wp-content/uploads/2011/02/dueber_lightning_c4l11.ppt">the same URL</a>.

@@ -2,7 +2,6 @@
 date: 2009-09-17T00:00:00Z
 slug: benchmarking-marc-record-parsing-in-ruby
 title: Benchmarking MARC record parsing in Ruby
-url: /2009/09/17/benchmarking-marc-record-parsing-in-ruby/
 ---
 
 [Note: since I started writing this, I found out Bess & Co. store MARC-XML. That makes a difference, since XML in Ruby can be really, really slow]

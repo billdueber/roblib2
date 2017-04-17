@@ -3,7 +3,6 @@ date: 2008-11-13T00:00:00Z
 slug: normalizing-loc-call-numbers-for-sorting
 tags: [callnumbers, code]
 title: Normalizing LoC Call Numbers for sorting
-url: /2008/11/13/normalizing-loc-call-numbers-for-sorting/
 ---
 
 **Updated**: <em>I missed a '?' in the original code that pushed a single cutter into the second-cutter position. Fixed below.</em>

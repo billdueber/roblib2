@@ -2,7 +2,6 @@
 date: 2009-08-14T00:00:00Z
 slug: rolling-out-umichs-vufind-introduction-and-new-features
 title: 'Rolling out UMich''s "VUFind": Introduction and New Features'
-url: /2009/08/14/rolling-out-umichs-vufind-introduction-and-new-features/
 ---
 
 <p>For the last few months, I've been working on rolling out a ridiculous-modified version of <a href="http://vufind.org/">Vufind</a>, which we just launched as our primary OPAC, <a href="http://mirlyn.lib.umich.edu/">Mirlyn</a>, with a slightly-different version powering <a href="http://catalog.hathitrust.org/">catalog.hathitrust.org</a>, a temporary metadata search on the HathiTrust data until the OCLC takes it over at some undetermined date.</p>

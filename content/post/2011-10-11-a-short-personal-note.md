@@ -3,7 +3,6 @@ date: 2011-10-11T00:00:00Z
 slug: a-short-personal-note
 tags: [personal]
 title: A short personal note
-url: /2011/10/11/a-short-personal-note/
 ---
 
 We had another baby. :-)

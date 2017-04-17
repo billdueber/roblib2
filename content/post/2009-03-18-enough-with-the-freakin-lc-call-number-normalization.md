@@ -2,7 +2,6 @@
 date: 2009-03-18T00:00:00Z
 slug: enough-with-the-freakin-lc-call-number-normalization
 title: Enough with the freakin' LC Call Number normalization!
-url: /2009/03/18/enough-with-the-freakin-lc-call-number-normalization/
 ---
 
 OK. I'm done with it, and this time I mean it.

@@ -3,7 +3,6 @@ date: 2008-07-07T00:00:00Z
 slug: planet-code4lib-in-a-snapshot
 tags: [code4lib, fun]
 title: Planet Code4Lib in a snapshot
-url: /2008/07/07/planet-code4lib-in-a-snapshot/
 ---
 
 Inspired by the [Inquiring Librarian](http://inquiringlibrarian.blogspot.com/2008/07/i-couldnt-resist.html), I just used [Wordle](http://wordle.net) to create a "tagcloud" of the current [Planet Code4Lib]() feed.

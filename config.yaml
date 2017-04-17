@@ -5,12 +5,11 @@ GitHubUser: billdueber
 
 
 baseURL: http://robotlibrarian.billdueber.com
-disablePathToLower: true
 languageCode: en-us
 title: Robot Librarian
 
 permalinks:
-  post: /:year/:slug/
+  post: /:year/:month/:slug/
 
 taxonomies:
   tag: tags

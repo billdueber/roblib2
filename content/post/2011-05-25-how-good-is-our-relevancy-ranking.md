@@ -2,7 +2,6 @@
 date: 2011-05-25T00:00:00Z
 slug: how-good-is-our-relevancy-ranking
 title: How good is our relevancy ranking?
-url: /2011/05/25/how-good-is-our-relevancy-ranking/
 ---
 
 For those of us that spend our days trying to tweak <a title="Mirlyn -- The University of Michigan Library Catalog" href="http://mirlyn.lib.umich.edu/">Mirlyn</a> to make it better, one of the most important  -- and, in many ways, most opaque -- questions is, "How good is our relevancy ranking?"

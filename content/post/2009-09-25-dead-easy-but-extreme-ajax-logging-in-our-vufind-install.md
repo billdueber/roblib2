@@ -2,7 +2,6 @@
 date: 2009-09-25T00:00:00Z
 slug: dead-easy-but-extreme-ajax-logging-in-our-vufind-install
 title: Dead-easy (but extreme) AJAX logging in our VuFind install
-url: /2009/09/25/dead-easy-but-extreme-ajax-logging-in-our-vufind-install/
 ---
 
 One of the advantages of having complete control over the OPAC is that I change things pretty easily. The downside of that is that we need to know *what* to change.

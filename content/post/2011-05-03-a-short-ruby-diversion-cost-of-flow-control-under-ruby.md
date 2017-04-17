@@ -3,7 +3,6 @@ date: 2011-05-03T00:00:00Z
 slug: a-short-ruby-diversion-cost-of-flow-control-under-ruby
 tags: [ruby]
 title: 'A short ruby diversion: cost of flow control under Ruby'
-url: /2011/05/03/a-short-ruby-diversion-cost-of-flow-control-under-ruby/
 ---
 
 A couple days ago I decided to finally get back to working on [`threach`](https://github.com/billdueber/threach) to try to deal with problems it had -- essentially, it didn't deal well with non-local exits due to calls to `break` or even something simple like a `NoMethodError`.

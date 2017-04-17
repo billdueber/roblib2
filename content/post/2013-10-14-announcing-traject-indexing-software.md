@@ -2,7 +2,6 @@
 date: 2013-10-14T00:00:00Z
 slug: announcing-traject-indexing-software
 title: Announcing "traject" indexing software
-url: /2013/10/14/announcing-traject-indexing-software/
 ---
 
 [Over the next few days I'll be writing a series of posts that highlight a new indexing solution by Jonathan Rochkind and myself called `traject` that we're using to index MARC data into Solr. This is the introduction.]

@@ -2,7 +2,6 @@
 date: 2009-09-28T00:00:00Z
 slug: an-exercise-in-solr-and-dataimporthandler-hathitrust-data
 title: 'An exercise in Solr and DataImportHandler: HathiTrust data'
-url: /2009/09/28/an-exercise-in-solr-and-dataimporthandler-hathitrust-data/
 ---
 
 Many of the folks who read this blog (hi, both of you! Mom, say hello to Dad!) are aware, at least tangentially, of the [HathiTrust](http://www.hathitrust.org/). Currently hosted by us at the [University of Michigan](http://www.lib.umich.edu/), the most public interface to its data is a [VuFind](http://www.vufind.org/) installation you can access at [catalog.hathitrust.org](http://catalog.hathitrust.org) (or, for you smart-phone types, at [m.catalog.hathitrust.org](http://m.catalog.hathitrust.org/)). Once you do a metadata search, you get links into the actual page images or a chance to search the fulltext of the selected item (depending on its copyright status).

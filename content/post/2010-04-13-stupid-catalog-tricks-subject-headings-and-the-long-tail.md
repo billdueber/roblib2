@@ -2,7 +2,6 @@
 date: 2010-04-13T00:00:00Z
 slug: stupid-catalog-tricks-subject-headings-and-the-long-tail
 title: 'Stupid catalog tricks: Subject Headings and the Long Tail'
-url: /2010/04/13/stupid-catalog-tricks-subject-headings-and-the-long-tail/
 ---
 
 Library of Congress Subject Headings (LCSH) in particular.

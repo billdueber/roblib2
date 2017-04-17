@@ -2,7 +2,6 @@
 date: 2009-03-30T00:00:00Z
 slug: a-plea-use-solr-to-normalize-your-data
 title: 'A plea: use Solr to normalize your data'
-url: /2009/03/30/a-plea-use-solr-to-normalize-your-data/
 ---
 
 [Only, of course, if you're using Solr. Otherwise, that'd be dumb.]

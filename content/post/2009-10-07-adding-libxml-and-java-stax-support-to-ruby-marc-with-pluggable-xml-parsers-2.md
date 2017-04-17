@@ -2,7 +2,6 @@
 date: 2009-10-07T00:00:00Z
 slug: adding-libxml-and-java-stax-support-to-ruby-marc-with-pluggable-xml-parsers-2
 title: Adding LibXML and Java STAX support to ruby-marc with pluggable XML parsers
-url: /2009/10/07/adding-libxml-and-java-stax-support-to-ruby-marc-with-pluggable-xml-parsers-2/
 ---
 
 JRuby is my ruby platform of choice, mostly because I think its deployment options in my work environment are simpler (perhaps technically and certainly politically), but also because I have high, high hopes to use lots of super-optimized native java libraries. The [CPAN](http://cpan.perl.org/) is what keeps me tethered to Perl, and whether or not you like Java-the-language, boy, are there a lot of high-quality libraries out there.

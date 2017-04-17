@@ -2,7 +2,6 @@
 date: 2010-03-04T00:00:00Z
 slug: pushing-marc-to-solr-processing-times-and-threading-and-such
 title: Pushing MARC to Solr; processing times and threading and such
-url: /2010/03/04/pushing-marc-to-solr-processing-times-and-threading-and-such/
 ---
 
 [This is in response to a [thread on the blacklight mailing](http://groups.google.com/group/blacklight-development/browse_thread/thread/672b7269ada16a61?hl=en) list about getting MARC data into Solr.]

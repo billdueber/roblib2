@@ -3,7 +3,6 @@ date: 2008-10-02T00:00:00Z
 slug: wanted-a-better-proxy-server
 tags: [TALITAS]
 title: 'Wanted: a better proxy server'
-url: /2008/10/02/wanted-a-better-proxy-server/
 ---
 
 We in the library world have a problem. We spend a zillion-with-a-Z dollars subscribing to online databases, purchases which presume our ability to make sure only authorized people can look at them. The alternative is to be in breach of contract law, which I've been assured is something we'd like to avoid.

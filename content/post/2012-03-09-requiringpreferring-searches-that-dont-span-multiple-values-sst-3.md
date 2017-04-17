@@ -3,7 +3,6 @@ date: 2012-03-09T00:00:00Z
 slug: requiringpreferring-searches-that-dont-span-multiple-values-sst-3
 tags: [phrase slop, solr, Stupid Solr Tricks]
 title: 'Requiring/Preferring searches that don''t span multiple values (SST #3)'
-url: /2012/03/09/requiringpreferring-searches-that-dont-span-multiple-values-sst-3/
 ---
 
 > Check out [introduction to the Stupid Solr Tricks series](http://robotlibrarian.billdueber.com/stupid-solr-tricks-introduction/) if you're just joining us.]

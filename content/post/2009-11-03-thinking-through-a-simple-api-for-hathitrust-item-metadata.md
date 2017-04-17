@@ -2,7 +2,6 @@
 date: 2009-11-03T00:00:00Z
 slug: thinking-through-a-simple-api-for-hathitrust-item-metadata
 title: Thinking through a simple API for HathiTrust item metadata
-url: /2009/11/03/thinking-through-a-simple-api-for-hathitrust-item-metadata/
 ---
 
 **EDITS**:

@@ -3,7 +3,6 @@ date: 2012-03-01T00:00:00Z
 slug: solr-field-type-for-numericish-ids
 tags: [solr, Stupid Solr Tricks]
 title: 'Solr Field Type for numeric(ish) IDs (SST #1)'
-url: /2012/03/01/solr-field-type-for-numericish-ids/
 ---
 
 [For the introduction to this series, take a quick gander at [the introduction](http://robotlibrarian.billdueber.com/stupid-solr-tricks-introduction/)]

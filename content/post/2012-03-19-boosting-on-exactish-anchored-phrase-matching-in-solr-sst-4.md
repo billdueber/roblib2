@@ -3,7 +3,6 @@ date: 2012-03-19T00:00:00Z
 slug: boosting-on-exactish-anchored-phrase-matching-in-solr-sst-4
 tags: [exact, fieldtype, solr, Stupid Solr Tricks]
 title: 'Boosting on Exactish (anchored) phrase matching in Solr: (SST #4)'
-url: /2012/03/19/boosting-on-exactish-anchored-phrase-matching-in-solr-sst-4/
 ---
 
 > Check out [introduction to the Stupid Solr Tricks series](http://robotlibrarian.billdueber.com/stupid-solr-tricks-introduction/) if you're just joining us.]

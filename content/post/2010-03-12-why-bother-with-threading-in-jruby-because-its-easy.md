@@ -2,7 +2,6 @@
 date: 2010-03-12T00:00:00Z
 slug: why-bother-with-threading-in-jruby-because-its-easy
 title: Why bother with threading in jruby? Because it's easy.
-url: /2010/03/12/why-bother-with-threading-in-jruby-because-its-easy/
 ---
 
 [<strong>Edit 2011-July-1</strong>: I've written a jruby_specific threach that takes advantage of better underlying java libraries called <a href="http://robotlibrarian.billdueber.com/even-better-even-simpler-multithreading-with-jruby/">jruby_threach</a> that is a much better option if you're running jruby]

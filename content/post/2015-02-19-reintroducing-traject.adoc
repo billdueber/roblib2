@@ -1,11 +1,7 @@
 ---
 date: 2015-02-19T00:00:00Z
-url: /2015/02/19/reintroducing-traject/
+title: "Reintroducing Traject: Traject 2.0"
 ---
-
-= Reintroducing Traject: Traject 2.0
-:layout: post
-:allow-uri-read:
 
 Traject 2.0.0 released! Now runs under MRI/RBX!
 
