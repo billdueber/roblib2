@@ -1,0 +1,58 @@
+# Don't forget the last '/'
+baseurl = "http://example.com/"
+RelativeURLs = true
+languageCode = "en-us"
+title = "My New Hugo Site"
+disqusShortname = "shortcode-here"
+paginate = 5
+
+[taxonomies]
+	tag = "tags"
+	tutorial = "tutorials"
+
+[params]
+	# Show particles on the menu
+	showparticles = true
+	
+	# Allow a "zoom" on images
+	zoomImages = true
+	# When I want to add an image, i put that in the markdown
+	# <dl><div></br><a class="transition" href="../../img/img.png" title="Title of the image"><figure><p align="center"><img src="../../img/img.png" style="width: 80%; height: 80%" alt="Title of the image" /></p></a><figcaption><p align="center"><em>Click to zoom</em></p></figcaption></div></dl>
+	# I still don't find the time to integrate that properly :/
+	
+	# Title that will appear in the copyright (and the the sharing buttons at the top of articles)
+	title = "TITLE"
+	subtitle = "YOUR SUBTITLE"
+	
+	# Google Analytics
+	analytics = "code-here"
+
+	# Social links
+	git = "https://github.com/user"
+	twitter = "user"
+	linkedin = "https://www.linkedin.com/"
+	email = "contact@example.com"
+	cloud = "https://cloud.example.com"
+	# paypal = "https://www.paypal.me/user"
+	
+	# Add social links at the beginning of the articles
+	sharing = true 
+	
+	# Add a header to the top of main page, put it in commentaries if you don't want it
+	header = "What I'm Thinking"
+	
+	# Big picture on the left
+	profilepic = "img/profile.png"
+	# Favicon
+	iconpic = "img/favicon.ico"
+	
+	# Those sections are the one you find on the left
+	[[params.navlinks]]
+	name = "About"
+	url = "about/"
+	
+	[[params.navlinks]]
+	name = "Blog"
+	url = "post/"
+	
+

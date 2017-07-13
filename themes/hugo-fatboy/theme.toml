@@ -1,0 +1,13 @@
+name = "hugo-fatboy"
+license = "GNU GPL"
+licenselink = "https://git.pofilo.fr/pofilo/hugo-fatboy/src/master/LICENSE"
+description = "A responsive blog theme made using Bootstrap 3, jQuery, and D3.js"
+homepage = "https://www.pofilo.fr"
+tags = ["blog"]
+features = ["blog", "responsive", "bootstrap"]
+min_version= 0.16
+
+[author]
+    name = "Pofilo"
+    email = "contact@pofilo.fr"
+    url = "https://www.pofilo.fr"

@@ -1,0 +1,21 @@
+{{ partial "head.html" . }}
+{{ partial "nav.html" . }}
+
+<article>
+	<header>
+		<h1>{{ .Title }}</a></h1>
+	</header>	
+	{{ range .Data.Pages.GroupByDate "2006" }}
+		<h3>{{ .Key }}</h3>
+		<ul>
+			{{ range .Pages }}
+			<li>
+				<a href="{{ .Site.BaseURL }}{{ .RelPermalink }}" class="post-title-archive">{{ .Title }}</a>
+				<br/><small class="text-muted">{{ .Params.datefr }}</small>
+			</li>
+			{{ end }}
+		</ul>
+	{{ end }}
+</article>
+
+{{ partial "footer.html" . }}

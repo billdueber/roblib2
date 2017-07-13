@@ -1,0 +1,74 @@
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; {{ .Now.Year }} <a target="_blank" href="{{ .Site.BaseURL }}">{{ .Site.Params.title }}</a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	{{ if isset .Site.Params "analytics" }}
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', '{{ .Site.Params.analytics }}', 'auto');
+			ga('send', 'pageview');
+			window.baseURL = "{{ .Site.BaseURL }}";
+		</script>
+	{{ end }}
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	{{ if .Site.Params.showparticles }}
+		<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+		<script src="{{ .Site.BaseURL }}js/app.js"></script>
+	{{ end }}
+
+	{{ if .Params.highlight }}
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+	{{ end }}
+
+	{{ range .Params.scripts }}
+		<script src="{{ . }}"></script>
+	{{ end }}
+
+	{{ if .Site.Params.zoomImages }}
+		<!-- Add jQuery library -->
+		<!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>-->
+		<script type="text/javascript" src="{{ .Site.BaseURL }}fancybox/lib/jquery-1.11.1.min.js"></script>
+		<!-- Add mousewheel plugin -->
+		<script type="text/javascript" src="{{ .Site.BaseURL }}fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+		<!-- Add fancyBox -->
+		<script type="text/javascript" src="{{ .Site.BaseURL }}fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+		<link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}fancybox/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".transition").fancybox({
+					openEffect  : 'elastic',
+					closeEffect	: 'elastic',
+
+					helpers : {
+						title : {
+							type : 'inside'
+						}
+					}
+				});
+			});
+		</script>
+	{{ end }}
+
+	{{ if .Site.Params.sharing }}
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	{{ end }}
+	</body>
+</html>

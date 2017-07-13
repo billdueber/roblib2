@@ -1,0 +1,78 @@
+{{ partial "head.html" . }}
+{{ partial "nav.html" . }}
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>{{ .Title }}
+				{{ if .Params.datefr }}
+					<br>
+					<small>
+						{{ .Params.datefr }}
+					</small>
+				{{ end }}
+			</h1>
+			<div class="panel-footer">
+				{{ if isset .Params "tags" }}
+					<small class="text-muted">
+						{{ $base := .Site.BaseURL }}
+						{{ range $tag := .Params.tags }}
+							<font size="4"><a href="{{ $base }}tags/{{ $tag | urlize }}"><span class="label label-success">{{ . }}</span></a></font>
+						{{ end }}
+					</small>
+				{{ end }}
+			</div>
+			{{ if .Site.Params.sharing }}
+				<div class="share-box">
+					<ul class="share">
+						<li>
+							<a class="twitter" href="https://twitter.com/intent/tweet?original_referer={{ .Permalink | html }}&ref_src=twsrc%5Etfw&text={{.Site.Params.title}}%20%7C%20{{ .Title | html }}&tw_p=tweetbutton&url={{ .Permalink | html }}&via={{.Site.Params.twitter}}" target="_blank">
+								<i class="fa fa-twitter"></i>
+							</a>
+						</li>
+						<li>
+							<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?sdk=joey&u={{ .Permalink | html }}" target="_blank">
+								<i class="fa fa-facebook"></i>
+							</a>
+						</li>
+						<li>
+							<a class="email" href="mailto:?subject={{.Site.Params.title}} %7c {{ .Title | html }}&amp;body={{ .Permalink | html }}" target="_blank">
+								<i class="fa fa-envelope"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			{{ end }}
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		{{ .Content }}
+	</article>
+	<br>
+	{{ if .Params.datefr }}
+	<nav>
+		<ul class="pager">
+			{{if .PrevInSection}}
+			<li class="previous"><a href="{{.PrevInSection.Permalink}}"><span aria-hidden="true">&larr;</span> {{.PrevInSection.Title}}</a></li>
+			{{end}}
+			{{if .NextInSection}}
+			<li class="next"><a href="{{.NextInSection.Permalink}}">{{.NextInSection.Title}} <span aria-hidden="true">&rarr;</span></a></li>
+			{{end}}
+		</ul>
+	</nav>
+	{{end}}
+</main>
+	
+{{ if .Site.DisqusShortname }}
+  <HR align=center>
+  <h3>Commentaires</h3>
+  {{ template "_internal/disqus.html" . }}
+{{ end }}
+
+{{ partial "footer.html" . }}
+
+
+
+
