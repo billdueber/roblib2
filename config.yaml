@@ -20,7 +20,10 @@ googleAnalytics: XXXX
 metaDataFormat: yaml
 paginate: 20
 
-
-
+params:
+  subtitle: Bill Dueber
+  twitter: billdueber
+  github:  https://github.com/billdueber
+  email:   bill@dueber.com
 
 ...
