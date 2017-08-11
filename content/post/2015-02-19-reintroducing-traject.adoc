@@ -3,8 +3,6 @@ date: 2015-02-19T00:00:00Z
 title: "Reintroducing Traject: Traject 2.0"
 ---
 
-Traject 2.0.0 released! Now runs under MRI/RBX!
-
 `traject` is an ETL (extract/transform/load) system written in ruby with a special
 view towards extracting fields from MARC data and writing it out into Solr.  http://bibwild.wordpress.com[Jonathan Rochkind] and I wrote this primarily out of
 frustration using other tools in this space (e.g., https://code.google.com/p/solrmarc/[Solrmarc], or my own precursor to `traject` , https://github.com/billdueber/marc2solr[marc2solr]footnote:[http://search.cpan.org/~nics/Catmandu-0.9210/bin/catmandu[Catmandu] is another, perl-based system I don't have any direct experience with]).

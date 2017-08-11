@@ -18,7 +18,7 @@ footnoteReturnLinkContents: "↩"
 
 googleAnalytics: XXXX
 metaDataFormat: yaml
-paginate: 20
+paginate: 10
 
 params:
   subtitle: Bill Dueber
