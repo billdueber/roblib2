@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Solr and boolean operators">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Solr and boolean operators</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2011-12-01 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2011/12/solr-and-boolean-operators/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Solr and boolean operators
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>[Summary: <strong>ALWAYS ALWAYS ALWAYS USE PARENTHESES TO GROUP BOOLEANS IN SOLR!!!</strong>]</p>
+
+<p>What does Solr do, given the following query?</p>
+
+<pre><code>  a OR b AND c
+~~~~
+
+
+I'll give you three guesses, but you'll get the first two wrong
+and won't have any idea how to generate a third, so don't spend too much time on it.
+
+### Boolean algebra and operator precedence
+
+Anyone who's had even a passing introduction to boolean alegebra knows that it specifies a strict order to how the operators are bound: NOT before AND before OR. So, one might expect the following grouping:
+
+
+</code></pre>
+
+<p>a OR (b AND c)</p>
+
+<pre><code>
+
+That's guess one. It's not how Solr does it.
+
+### Left to right?
+
+Some naive students, and at least one programming language (Smalltalk), do a simple left-to-right evaluation. So you might go with:
+
+
+~~~
+
+  (a OR b) AND c
+
+</code></pre>
+
+<p>Nope. Wrong again.</p>
+
+<h3 id="so-what-s-left">So what&rsquo;s left???</h3>
+
+<p>Excellent question. I don&rsquo;t know the code well enough to know what&rsquo;s going on underneath, but here&rsquo;s what we get under the lucene query parser.</p>
+
+<pre><code>
+    (b AND c)
+
+~~~~
+
+
+That's right. The first term is thrown away.(More correctly, the first term is deemed &quot;optional&quot;).
+
+### Do you let your users put AND/OR/NOT in their queries?
+
+Hopefully, they don't know any boolean algebra. If they do, hopefully they use parentheses, or you parse it out for them. And if not, well, they're gonna be pretty damn confused.
+
+### It gets weirder
+
+I populated a fresh solr (3.5) index with all possible subsets of the strings &quot;curly&quot;, &quot;larry&quot;, &quot;moe&quot;, and &quot;shemp&quot; (not Joe. Don't talk to me about Joe). There are 15 of them, from the one-item 'curly' to all four at once.
+
+I wrote a script to run a set of queries against the index under both lucene and edismax to see what I would get. In all cases the default lucene operator is 'AND' and the edismax mm parameter is set to 100% (equivalent to &quot;all required&quot;).
+
+
+</code></pre>
+
+<pre><code>    Lucene                    EDismax
+</code></pre>
+
+<hr />
+
+<ol>
+<li><p>curly AND larry
+    curly larry               curly larry
+    curly larry moe           curly larry moe
+    curly larry shemp         curly larry shemp
+    curly larry moe shemp     curly larry moe shemp</p></li>
+
+<li><p>curly AND larry OR moe
+    curly                     curly larry
+    curly larry               curly larry moe
+    curly moe                 curly larry shemp
+    curly shemp               curly larry moe shemp
+    curly larry moe
+    curly larry shemp
+    curly moe shemp
+    curly larry moe shemp</p></li>
+
+<li><p>curly OR larry AND moe
+    larry moe                 larry moe
+    curly larry moe           curly larry moe
+    larry moe shemp           larry moe shemp
+    curly larry moe shemp     curly larry moe shemp</p></li>
+
+<li><p>curly AND larry OR moe AND shemp
+    curly moe shemp           curly larry moe shemp
+    curly larry moe shemp</p></li>
+
+<li><p>moe AND shemp OR curly AND larry
+    curly larry moe           curly larry moe shemp
+    curly larry moe shemp</p></li>
+</ol>
+
+<p>~~~~</p>
+
+<p>Query 1 is as expected. Query 2 apparently reduces to just &lsquo;curly&rsquo; under the lucene parser and &lsquo;curly AND larry&rsquo; under edismax (and query 3 similarly reduces to the two AND&rsquo;d words). Queries 4 and 5 are&hellip;well, you can look at the debugQuery output to see what it gets, but not <strong>why</strong>. And then tell me how to explain it to a user.</p>
+
+<h3 id="where-does-this-leave-us">Where does this leave us?</h3>
+
+<p>The good news is that both lucene and edismax behave predictably when you use parentheses for grouping. So do that.</p>
+
+<p>I&rsquo;m generally not one to complain about open-source software, at least partially because I don&rsquo;t have the chops to do anything about it most of the time, but I don&rsquo;t understand how this could seem OK to anyone. There are a couple lucene Jira tickets (<a href="https://issues.apache.org/jira/browse/LUCENE-167">Lucene-167</a> and <a href="https://issues.apache.org/jira/browse/LUCENE-1823">Lucene-1823</a>) and a <a href="http://www.mail-archive.com/java-user@lucene.apache.org/msg00008.html">2005 mailing list thread</a> denouncing the current behavior, but it persists.</p>
+
+<p>Until the Solr/Lucene powers that be decide to tackle this, the rest of us will either have to write pre-parsers to make sure users get something sensible, or cripple our applications to disallow unrestricted boolean queries.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

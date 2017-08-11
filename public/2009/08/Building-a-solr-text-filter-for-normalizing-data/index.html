@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Building a solr text filter for normalizing data">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Building a solr text filter for normalizing data</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2009-08-20 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2009/08/building-a-solr-text-filter-for-normalizing-data/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Building a solr text filter for normalizing data
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>[Kind of part of a continuing series on our VUFind implementation; more of a sidebar, really.]</p>
+
+<p>In my <a href="http://robotlibrarian.billdueber.com/easy-solr-types-for-library-data/">last post</a> I made the case that you should put as much data normalization into Solr as possible. The built-in text filters will get you a long, long way, but sometimes you want to have specialized code, and then you need to build your own filter.</p>
+
+<p><strong>Huge Disclaimer</strong>: <em>I&rsquo;m putting this up not because I&rsquo;m the best person to do so, but because it doesn&rsquo;t look as if anyone else has. I don&rsquo;t know what I&rsquo;m doing. I don&rsquo;t know why the code I&rsquo;m showing below is the way it is, and if anyone would like to make it better, that&rsquo;d be great. This is basically just a lot of pattern-matching on my part.</em></p>
+
+<p>[A second disclaimer: I haven&rsquo;t actually built this into Solr yet, although I&rsquo;ve done some simple testing on the ISBN-13 checksum code.  I&rsquo;ll remove this disclaimer when I get a chance to actually index some data with it.]</p>
+
+<h2 id="the-setup-an-isbn-10-to-isbn-13-converter">The Setup: An ISBN-10 to ISBN-13 converter</h2>
+
+<p>Last time, I said I didn&rsquo;t know why I hadn&rsquo;t put together an ISBN longifier yet. So let&rsquo;s walk through it.</p>
+
+<p>This is a lot easier than most things in that I&rsquo;m assuming we&rsquo;re going to be getting exactly one token
+to work with (via the <em>KeywordTokenizer</em>) and can just work on it with impunity.</p>
+
+<p>If you&rsquo;d like to follow along, get the <a href="http://svn.apache.org/repos/asf/lucene/solr/trunk">solr source via svn</a> on a machine
+with java and ant. And junit, I think.</p>
+
+<p>##Where to put stuff</p>
+
+<p>Of all the black magic associated with doing this, figuring out how to actually make it build is the part that&rsquo;s probably easiest for Java-heads and the most confusing to the rest of us. Anyone attempting this sort of thing should probably get a good grounding in how Solr is set up and how its build system works before doing anything else.</p>
+
+<p>Me? I cheated.</p>
+
+<p>I basically just copied the directory structure of another project in the <code>config</code> directory in the solr root (looks like maybe it was velocity), did some tiny modifications to the <code>build.xml</code> file to change the name of the project, renamed the &lsquo;.pom&rsquo; file and edited <em>it</em> in the obvious ways, and followed the copied directory structure to figure out where to put my files.</p>
+
+<p>And then it worked. And I didn&rsquo;t ask any question, and metaphorically just backed away slowly with a nonchalant look on my face. Of course, if you know what you&rsquo;re doing with java and ant, I&rsquo;m sure there are better ways.</p>
+
+<p>For the record, the directory in solr/config/umichnormalizers (where I put this stuff) would look something like this by the end of this project:</p>
+
+<pre><code>
+./target/
+./build.xml
+
+./src/main/java/edu/umich/lib/normalizers/ISBNLongifier.java
+./src/test/java/edu/umich/lib/normalizers/ISBNLongifier.java
+
+./src/main/java/edu/umich/lib/solr/analysis/ISBNLongifierFilter.java
+./src/main/java/edu/umich/lib/solr/analysis/ISBNLongifierFilterFactory.java
+
+
+~~~~
+
+
+You then just run `ant` in your config directory to generate a .jar file that can be put in solrmarc's `lib` directory or (I think) jetty's `lib` directory. You can also just run `ant dist` at the solr root level to get a .war file with your stuff embedded.
+
+## The converter
+
+
+First, you just need some basic code to actually do the conversion. I'm sure this is hideously inefficient, but probably not as inefficient as the actual filter I'll be producing in a minute.
+
+We take in a string. If it looks like it might have a 10-digit ISBN in it (possibly with dashes or periods as delimiters), extract it, do the conversion to an ISBN-13, and return that as a 13-character string (e.g., no dashes or whatnot).
+
+Note that I'm not working hard to determine if it's an ISBN -- this isn't designed to try to pull an ISBN from random text. The hope is that by the time you get this far you've already got a pretty good idea that you've got an ISBN on your hands. I'm also not checking to see if the incoming ISBN is valid in any way; that's left as an exercise for the dilligent reader.
+
+
+~~~java
+
+package edu.umich.lib.normalizers;
+import java.util.regex.*;
+
+public class ISBNLongifier {
+
+  // dashes and dots are acceptable delimiters. Should we add spaces??
+  private static String  ISBNDelimiiterPattern = &quot;[\-\.]&quot;;
+
+  // Look for a string of nine digits followed by another digit or an X
+  private static Pattern ISBNPattern = Pattern.compile(&quot;^.*?(\d{9})[\dXx].*$&quot;);
+
+  public static Boolean matches(String isbn)  throws IllegalArgumentException {
+    isbn = isbn.replaceAll(ISBNDelimiiterPattern, &quot;&quot;);
+    Matcher m = ISBNPattern.matcher(isbn);
+    return m.matches();
+  }
+
+  public static String longify(String isbn) {
+    isbn = isbn.replaceAll(ISBNDelimiiterPattern, &quot;&quot;);
+    Matcher m = ISBNPattern.matcher(isbn);
+    if (!m.matches()) {
+      throw new IllegalArgumentException(isbn + &quot;: Not an ISBN&quot;);
+    }
+
+    String longisbn = &quot;978&quot; + m.group(1);
+    int[] digits = new int[12];
+    for (int i=0;i&lt;12;i++) {
+      digits[i] =  new Integer(longisbn.substring(i, i+1));
+    }
+
+    Integer sum = 0;
+    for (int i = 0; i &lt; 12; i++) {
+      sum = sum + digits[i] + (2 * digits[i] * (i % 2));
+    }
+
+    // Get the smallest multiple of ten &gt; sum
+    Integer top = sum + (10 - (sum % 10));
+    Integer check = top - sum;
+    if (check == 10) {
+      return longisbn + &quot;0&quot;;
+    } else {
+      return longisbn + check.toString();
+    }
+  }
+}
+
+</code></pre>
+
+<h2 id="the-factory-object">The Factory Object</h2>
+
+<p>Next is a boilerplate factory object. The only change will be the package you put it in, and the last method&rsquo;s name and return value.</p>
+
+<pre><code class="language-java">
+package edu.umich.lib.solr.analysis;
+import java.util.Map;
+import org.apache.solr.analysis.BaseTokenFilterFactory;
+import org.apache.lucene.analysis.TokenStream;
+
+public class ISBNLongifierFilterFactory extends BaseTokenFilterFactory {
+  Map&lt;String,String&gt; args;
+
+  public Map&lt;String,String&gt; getArgs()
+  {
+    return args;
+  }
+  public void init(Map&lt;String,String&gt; args)
+  {
+    this.args = args;
+  }
+  public ISBNLongifierFilter create(TokenStream input)
+  {
+    return new ISBNLongifierFilter(input);
+  }
+}
+
+
+</code></pre>
+
+<h2 id="the-actual-filter">The actual filter</h2>
+
+<p>And, finally, the filter class. You&rsquo;ll notice that I&rsquo;m catching any illegal argument error and just returning the input unchanged. So anything that comes through that <em>isn&rsquo;t</em> an ISBN just gets passed along.</p>
+
+<pre><code class="language-java">
+package edu.umich.lib.solr.analysis;
+
+import edu.umich.lib.normalizers.ISBNLongifier;
+import org.apache.lucene.analysis.Token;
+import org.apache.lucene.analysis.TokenFilter;
+import org.apache.lucene.analysis.TokenStream;
+import java.util.regex.*;
+import java.io.IOException;
+
+public final class ISBNLongifierFilter extends org.apache.lucene.analysis.TokenFilter {
+
+  public ISBNLongifierFilter(TokenStream in) {
+    super(in);
+  }
+
+  public Token next() throws IOException {
+    return normalize(this.input.next());
+  }
+
+  public Token next(Token result) throws IOException {
+    return normalize(this.input.next());
+
+  }
+
+  public Token normalize(Token t) {
+    if (null == t || null == t.termBuffer() || t.termLength() == 0) {
+      return t;
+    }
+    String val = new String(t.termBuffer());
+    try {
+      t.setTermBuffer(ISBNLongifier.longify(val));
+      return t;
+    } catch (IllegalArgumentException e) {
+       // pass it through unchanged
+      return t;
+    }
+  }
+}
+
+</code></pre>
+
+<h2 id="how-to-use-it">How to use it</h2>
+
+<p>Assuming you&rsquo;ve managed to get it built into Solr and then deployed, just define it as a type in your <code>schema.xml</code>:</p>
+
+<pre><code class="language-xml">
+  &lt;fieldType name=&quot;isbnlongifier&quot; class=&quot;solr.TextField&quot;  omitNorms=&quot;true&quot;&gt;
+    &lt;analyzer&gt;
+      &lt;tokenizer class=&quot;solr.KeywordTokenizerFactory&quot;/&gt;
+      &lt;filter class=&quot;edu.umich.lib.solr.analysis.ISBNLongifierFilterFactory&quot;/&gt;
+    &lt;/analyzer&gt;
+  &lt;/fieldType&gt;
+
+  # and later...
+
+  &lt;field name=&quot;isbn&quot; type=&quot;isbnlongifier&quot; indexed=&quot;true&quot; stored=&quot;false&quot; multiValued=&quot;true&quot;/&gt;
+
+</code></pre>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>There it is. The rocket science is all hidden behind the import statements. My understanding is that casting the token value to/from Strings makes things horribly inefficient, but I&rsquo;m pretty sure I&rsquo;ve got bigger bottlenecks to tackle before worrying about this.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

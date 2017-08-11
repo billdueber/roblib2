@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Data structures and Serializations">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Data structures and Serializations</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2010-04-20 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2010/04/data-structures-and-serializations/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Data structures and Serializations
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>Jonathan Rochkind, in response to a long (and, IMHO, mostly ridiculous) thread on NGC4Lib, has been exploring the boundaries between a data model and its expression/serialization (
+see <a href="http://bibwild.wordpress.com/2010/04/19/of-marc-serialization-formats-and-element-schemata/">here</a>, <a href="http://bibwild.wordpress.com/2010/04/19/and-more-on-software-data-formats/">here</a>, and <a href="http://bibwild.wordpress.com/2010/04/20/serialization-vs-metadata-schemavocabulary/">here</a>
+) and I thought I&rsquo;d jump in.</p>
+
+<h3 id="what-this-post-is-not">What this post is <em>not</em></h3>
+
+<p>There&rsquo;s a lot to be said about a good domain model for bibliographic data. I&rsquo;m <em>so</em> not the guy to say it. I know there are arguments for and against various aspects of the AACR2 and RDA and FRBR, and I&rsquo;m unable to go into them.</p>
+
+<p>What I <em>am</em> comfortable saying is this:</p>
+
+<blockquote>
+<p>Anyone advocating or dismissing a data model based on the  data structure or serialization most-often associated with that model <strong>is missing the goddamn point</strong>.</p>
+</blockquote>
+
+<h3 id="data-serializations">Data serializations</h3>
+
+<p>&hellip;are boring. They&rsquo;re unimportant at the data modeling stage, and only barely important when thinking about data structures. For any given data structure there are lots of ways you can serialize it. A standard programming-language hash can be represented in a zillion ways, for example: yaml, json, various programming languages, .ini files, etc. Even MARC has two standard serializations (binary and xml) with several more actually in use (Aleph Sequential, for example).</p>
+
+<p>So, let me repeat again, serializations are boring and not worth talking about until you&rsquo;ve got everything else nailed down. Any format you can round-trip your data structure to/from is fine.</p>
+
+<p>Serializations are measured from &ldquo;less pain&rdquo; to &ldquo;more pain&rdquo;, but all have the exact same <em>expressiveness</em>. Data <em>structures</em>, on the other hand, do not.</p>
+
+<h3 id="a-hierarchy-of-data-structures">A hierarchy of data structures</h3>
+
+<p>Think about the following data structures:</p>
+
+<ul>
+<li>An ordered list</li>
+<li>key-value pairs</li>
+<li>A hierarchy (e.g., an XML document)</li>
+<li>An undirected graph</li>
+<li>A directed graph</li>
+<li>A labeled, directed multigraph (e.g., a set of RDF Triples)</li>
+</ul>
+
+<p>You don&rsquo;t have to think very hard to see that any of these can be viewed as a restricted version of the data structures above it. An ordered list (array) is just a set of key-value pairs where the keys represent each item&rsquo;s sequence. A set of key-value pairs is a very, very flat hierarchy. A hierarchy is an undirected graph without cycles. An undirected graph is a directed graph where you&rsquo;re careful to make links both ways. And a directed graph can easily be represented as a set of RDF triples (where you may, for example, only have one label for your relationships: &ldquo;links to&rdquo;).</p>
+
+<p>[<strong>Note that I didn&rsquo;t say any of these would be efficient implementations</strong>!]</p>
+
+<p>The reverse is not true &ndash; or, at least, not without an incredible amount of &ldquo;out of band&rdquo; information in another layer somewhere.</p>
+
+<p>The structures at the end of the list have more <em>expressiveness</em>. You can just plain model more things in them (give-or-take the out-of-band stuff, composition, etc) per unit of screwing around. I&rsquo;m not going to try to model my set of key=value pairs in an array. I could <em>do</em> it, but it would take so much of my attention that the data modeling would suffer.</p>
+
+<h3 id="don-t-handicap-yourself">Don&rsquo;t handicap yourself</h3>
+
+<p>Don&rsquo;t start with the data structure.</p>
+
+<p>DON&rsquo;T START WITH THE DATA STRUCTURE!</p>
+
+<p>GET THAT MOTHER-FREAKIN&rsquo; DATA STRUCTURE OFF MY MOTHER-FREAKIN&rsquo; PLANE!</p>
+
+<p>Seriously. Don&rsquo;t be stupid. If all you&rsquo;ve got is a hammer, everything starts to look like a thumb.</p>
+
+<p>If you start off with a restrictive data structure before you even fully define the domain you&rsquo;re trying to model, you may hose yourself. You may end up making stupid decisions based on the toolchain you&rsquo;re imagining in your head.</p>
+
+<p>Domain modeling is <em>ridiculously hard</em> for any domain worth modeling. If you start with a handicap (a restrictive data structure) it&rsquo;s going to be even harder.</p>
+
+<p>No one would think of trying to model bibliographic data using only arrays. That&rsquo;s premature optimization on an epic scale.</p>
+
+<h3 id="the-appeal-of-rdf-triples">The appeal of RDF Triples</h3>
+
+<p>Even if you ignore all the semantics and rules that make RDF Triples a value-added instance of a labeled, directed multigraph, the appeal (to me, anyway) is that <em>any semantic model based on RDF Triples has enormous expressive power at its disposal</em>.</p>
+
+<p>Does it turn out that after you&rsquo;ve fully satisfied the necessary model for the domain, the semantics you need can actually be accomplished with something lower down in the list? Awesome. Go with it. You&rsquo;ll get great implementations with good real-life computing characteristics. A database can often usefully be thought of an implementation of an undirected graph with typed nodes (and, perhaps, some typed links, if you use the column name in the calling table a &ldquo;type&rdquo; of sorts, and add some out-of-band knowledge). And lord knows RDBMS&rsquo;s have great performance characteristics.</p>
+
+<p>But don&rsquo;t <em>start</em> there. Start with the domain. Model it. Figure out what you need to describe and derive. <em>Then</em> pick the most appropriate data structure.</p>
+
+<h3 id="the-nightmare-that-is-marc">The nightmare that is MARC</h3>
+
+<p>MARC-the-data-structure (not to be confused with a serialization of that data structure, on the one hand,  or with the AACR2 on the other) can incompletely (but usefully, I think) be described as:</p>
+
+<ul>
+<li>A set of key-value pairs</li>
+<li>&hellip;that have a defined order</li>
+<li>&hellip;where keys can be repeated</li>
+<li>&hellip;and values are strings</li>
+<li>&hellip;and keys are a concatenation of tag/ind1/ind2/code</li>
+</ul>
+
+<p>Control fields are especially restricted (ind1, ind2, and code are all &lsquo;null&rsquo;). There&rsquo;s been some bullshit attempts at links (e.g., the 880 fields) but really, this is it.</p>
+
+<p>It doesn&rsquo;t give us much to work with. It&rsquo;s restricted. And, sadly, so is our thinking.</p>
+
+<h3 id="putting-the-cart-before-the-horse">Putting the cart before the horse</h3>
+
+<p>As Jonathan (and zillions of others) rightly point out, a huge problem in the library world is that there are generations (plural) of working librarians who, because of years of practice, find it incredibly hard to think about bibliographic data as modeled outside the constraints inherent in the MARC <em>data structure</em>. It&rsquo;s a handicap. It&rsquo;s an anchor around our necks.</p>
+
+<p>MARC-the-data-<em>model</em> (nee AACR2) is not inherently bad because it&rsquo;s built on an impoverished data structure. It&rsquo;s bad because it does a shitty job at modeling the bibliographic data space. If we could produce a good model in a crappy data structure like that, well, that&rsquo;d be awesome because it would indicate that things are simple.</p>
+
+<p>Things, of course, aren&rsquo;t simple. They&rsquo;re <em>hard</em>.</p>
+
+<p>So, if you want to complain about MARC or RDA or FRBR, figure out what its trying to model and talk about the fidelity of the model with respect to the problem space. But don&rsquo;t conflate data models, data structures, and serializations.</p>
+
+<p>Oh, and don&rsquo;t say &ldquo;PIN Number&rdquo; or &ldquo;ATM Machine.&rdquo; That drives me crazy, too.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

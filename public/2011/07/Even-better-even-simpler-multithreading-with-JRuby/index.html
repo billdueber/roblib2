@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Even better, even simpler multithreading with JRuby">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Even better, even simpler multithreading with JRuby</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2011-07-01 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2011/07/even-better-even-simpler-multithreading-with-jruby/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+		<meta property="og:tags" content="jruby">
+	
+		<meta property="og:tags" content="ruby">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Even better, even simpler multithreading with JRuby
+				
+			</h1>
+			<div class="panel-footer">
+				
+					<small class="text-muted">
+						
+						
+							<font size="4"><a href="http://robotlibrarian.billdueber.comtags/jruby"><span class="label label-success">jruby</span></a></font>
+						
+							<font size="4"><a href="http://robotlibrarian.billdueber.comtags/ruby"><span class="label label-success">ruby</span></a></font>
+						
+					</small>
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<p>[Yes, another post about ruby code; I&rsquo;ll get back to library stuff soon.]</p>
+
+<p>Quite a while ago, I released a little gem called <em><a href="https://rubygems.org/gems/threach">threach</a></em> (for &ldquo;threaded #each&rdquo;). It allows you to easily process a block with multiple threads.</p>
+
+<pre><code class="language-ruby">
+  # Process a CSV file with three threads
+  FIle.open('data.csv').threach(3, :each_line) {|line| send_to_db(line)}
+
+</code></pre>
+
+<p>Nice, right?</p>
+
+<p>The problem is that I could never figure out a way to deal with a <code>break</code> or an <code>Exception</code> raised inside the block. The core problem is that once a thread trying to push/pop from a ruby <code>SizedQueue</code> is blocking, there&rsquo;s no way (I could find) to tell it to wake up and see if there&rsquo;s an error from another thread floating around that needs to be addressed.</p>
+
+<p>So, I got into a pattern of running my code with <code>each</code> for a while, debugging, and eventually doing the production run under <code>threach</code>. Which is just dumb. Then I&rsquo;d try to re-write <code>threach</code> to deal with this stuff using different approach (mutexes, lightweight events), quickly (or not so quickly) fail, give up, and start again.</p>
+
+<p>So&hellip;let&rsquo;s not worry MRI for the moment. I run all my big jobs under JRuby these days anyway, and there I can take advantage of Java&rsquo;s blocking queues that have timeouts. When a queue operation times out, I can check to see if there&rsquo;s been a break or an exception thrown in the meantime and behave appropriately.</p>
+
+<p>The result is the gem <code><a href="https://rubygems.org/gems/jruby_threach">jruby_threach</a></code>. It works just like <code>threach</code>, except that, you know, it actually works the way I&rsquo;d like it to.</p>
+
+<pre><code class="language-ruby">
+require 'jruby_threach'
+FIle.open('data.csv').threach(3, :each_line) {|line| send_to_db(line)}
+
+</code></pre>
+
+<p>Looks familiar, doesn&rsquo;t it.</p>
+
+<p>But you can also break out of the loop.</p>
+
+<pre><code class="language-ruby">
+myarray.threach(2) do |item|
+  break if item_indicates_to_break(item)
+  if item == :really_bad_value
+    raise RuntimeError.new, &quot;Something's really wrong&quot;, nil
+  end
+  process_item(item)
+end
+
+</code></pre>
+
+<p>Any exceptions that are <code>rescue</code>d within the block are handled internally and don&rsquo;t cause processing to stop. Any that are <em>not</em> handled within the block are noticed by <code>threach</code>, cause the processing to stop, and the re-raised so you can deal with them outside of <code>threach</code></p>
+
+<pre><code class="language-ruby">
+
+reader = SpecializedFileReader.new(filename)
+
+begin
+  reader.threach(2) do |item|
+    process_item(item)
+  end
+rescue SpecializedFileReaderError
+  # deal with the fact that the reader failed
+rescue Exception
+  # deal with the problem processing the item
+end
+
+
+</code></pre>
+
+<p>Dealing with the underlying Java data structures makes life a lot easier. To the point that I added an enhancement &ndash; threading production as well.</p>
+
+<pre><code class="language-ruby">
+  # Use two threads to read lines from files, and another three threads
+  # to process the data that comes out of those files.
+  Dir.glob(&quot;*.csv&quot;).map{|f| File.open(f)}.mthreach(2,3) do |item|
+    send_item_to_datbase(item)
+  end
+
+</code></pre>
+
+<p><code>mthreach</code> basically allows you to treat an array of Enumerables as a single logical entity, multithreading both the producer and consumer sides of the operation. There aren&rsquo;t a whole lot of obvious use cases, but it can certainly come in handy.</p>
+
+<p>You can also access the underlying class that aggregates multiple enumerables directly.</p>
+
+<pre><code class="language-ruby">
+require 'jruby_threach'
+me = Threach::MultiEnum.new(
+  [enum1, enum2, enum3], # enumerables
+  threads,               # How many threads to use to
+  :each_with_index,      # the iterator to call on the enumerables
+  size                   # size of the under-the-hood queue
+)
+
+# Note that like threach, calling #each against an MultiEnum actually
+# calls the iterator you sent in (in this case, #each_with_index)
+me.each {|item| process_item(item)}
+
+</code></pre>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

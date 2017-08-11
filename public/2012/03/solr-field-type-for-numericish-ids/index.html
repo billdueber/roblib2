@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Solr Field Type for numeric(ish) IDs (SST #1)">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Solr Field Type for numeric(ish) IDs (SST #1)</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2012-03-01 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2012/03/solr-field-type-for-numericish-ids/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+		<meta property="og:tags" content="solr">
+	
+		<meta property="og:tags" content="Stupid Solr Tricks">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Solr Field Type for numeric(ish) IDs (SST #1)
+				
+			</h1>
+			<div class="panel-footer">
+				
+					<small class="text-muted">
+						
+						
+							<font size="4"><a href="http://robotlibrarian.billdueber.comtags/solr"><span class="label label-success">solr</span></a></font>
+						
+							<font size="4"><a href="http://robotlibrarian.billdueber.comtags/stupid-solr-tricks"><span class="label label-success">Stupid Solr Tricks</span></a></font>
+						
+					</small>
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>[For the introduction to this series, take a quick gander at <a href="http://robotlibrarian.billdueber.com/stupid-solr-tricks-introduction/">the introduction</a>]</p>
+
+<p>Like everyone else in the library world, I&rsquo;ve got a bunch of well-defined, well-controlled standard identifiers I need to keep track of and allow searching on.</p>
+
+<p>You know, well-vetted stuff like this:</p>
+
+<ul>
+<li>1234-5678</li>
+<li>123-4567-890</li>
+<li>12-34-567-X</li>
+<li>0012-0045</li>
+<li>ISBN13: 1234567890123</li>
+<li>ISSN: 1234567X (1998-99)</li>
+<li>ISSN (1998-99): 1234567X</li>
+<li>1234567890 (hdk. 22 pgs)</li>
+<li>9</li>
+<li>Behind the 3rd floor desk</li>
+<li>Henry VIII</li>
+</ul>
+
+<p>[Note: some of these may be a titch exaggerated]</p>
+
+<p>How does your system deal with these on index? How about on query?</p>
+
+<p>Here&rsquo;s an idea of how to use a custom solr fieldtype to do the heavy lifting.</p>
+
+<h3 id="what-we-re-shooting-for">What we&rsquo;re shooting for</h3>
+
+<p>I&rsquo;d like to be able to send in a text string as follows:</p>
+
+<ul>
+<li>The input can contain other text besides the id</li>
+<li>The ID starts with a digit and consists solely of digits and (optional) dashes, then ends with a digits and possibly a trailing &lsquo;X&rsquo; or &lsquo;x&rsquo; so we can deal with ISBN/ISSN</li>
+<li>The ID has to be at least N characters long (for this example, I&rsquo;m using N=8); this helps us avoid other text that might trivially look like an ID but isn&rsquo;t.</li>
+<li>Only the ID itself is indexed</li>
+<li>If no valid ID is identified, nothing is indexed</li>
+</ul>
+
+<h3 id="the-numericid-field-suitable-for-isbn-issn-oclc-etc">The numericID field, suitable for ISBN/ISSN/OCLC/etc.</h3>
+
+<p>Let&rsquo;s take a look at the end product and then walk through it.</p>
+
+<pre><code class="language-xml">&lt;fieldtype name=&quot;numericID&quot; class=&quot;solr.TextField&quot;
+           positionIncrementGap=&quot;1000&quot; omitNorms=&quot;true&quot;&gt;
+&lt;analyzer&gt;
+  &lt;tokenizer class=&quot;solr.KeywordTokenizerFactory&quot;/&gt;
+    &lt;filter class=&quot;solr.PatternReplaceFilterFactory&quot;
+              pattern=&quot;^.*?(\p{N}[\p{N}\-\.]{6,}[xX]?).*$&quot;
+              replacement=&quot;***$1&quot; /&gt;
+    &lt;filter class=&quot;solr.PatternReplaceFilterFactory&quot;
+              pattern=&quot;^[^\*].*$&quot; replacement=&quot;&quot; /&gt;
+    &lt;filter class=&quot;solr.PatternReplaceFilterFactory&quot;
+              pattern=&quot;^\*\*\*&quot; replacement=&quot;&quot; /&gt;
+    &lt;filter class=&quot;solr.LowerCaseFilterFactory&quot;/&gt;
+    &lt;filter class=&quot;solr.PatternReplaceFilterFactory&quot;
+              pattern=&quot;[^\p{N}x]&quot; replacement=&quot;&quot;
+              replace=&quot;all&quot; /&gt;
+    &lt;filter class=&quot;solr.LengthFilterFactory&quot; min=&quot;8&quot; max=&quot;14&quot; /&gt;
+    &lt;filter class=&quot;solr.PatternReplaceFilterFactory&quot;
+              pattern=&quot;^0*&quot; replacement=&quot;&quot;
+    /&gt;
+  &lt;/analyzer&gt;
+&lt;/fieldtype&gt;
+</code></pre>
+
+<h3 id="things-we-ll-be-learning-about-today">Things we&rsquo;ll be learning about today</h3>
+
+<p><strong>NOTE: I really, really recommend taking a look at <a href="http://www.lucidimagination.com/content/scaling-lucene-and-solr">Scaling Lucene and Solr</a> by the good folks over at <a href="http://www.lucidimagination.com/">Lucid Imagination</a> for great, short explanations of <em>omitNorms</em>, term frequencies, etc.</strong></p>
+
+<p>Since this is the first post, I&rsquo;ll go over some stuff that&rsquo;s probably a little
+too basic for any audience that&rsquo;s likely to show up here, but what the heck.</p>
+
+<ul>
+<li>KeywordTokenizer</li>
+<li>PatternReplaceFilterFactory</li>
+<li>LowerCaseFilterFactory</li>
+<li>LengthFilterFactory</li>
+</ul>
+
+<h4 id="step-1-tokenize-to-a-single-token">Step 1: &ldquo;Tokenize&rdquo; to a single token</h4>
+
+<p>The job of a <em>tokenizer</em> is to decide how to split your input into individual tokens (often &ldquo;words&rdquo;), which are then munged by any filters you&rsquo;re applying.</p>
+
+<p>For the case of an ID, <em>we don&rsquo;t want to tokenize</em>. At least at this juncture, I&rsquo;m not trying to extract multiple valid IDs out of a single string; I&rsquo;m just trying to determine if there&rsquo;s a valid ID in there somewhere and throwing everything else away.</p>
+
+<p>In other words, I&rsquo;m going to treat the input as a <em>single token</em>, and then munge the bejeebers out of it in order to get what I want.</p>
+
+<p>In the Solr world, that leads us to the confusingly-named <a href="http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.KeywordTokenizerFactory">KeywordTokenizer</a>.</p>
+
+<p><strong>What we have now</strong>: exactly what we started with</p>
+
+<h4 id="step-2-find-the-first-thing-that-looks-like-an-id-and-mark-it">Step 2: Find the first thing that looks like an ID and mark it</h4>
+
+<p>I primarily work in Ruby and Perl, which means the dramatic abuse of regular expressions is just part of my daily life.</p>
+
+<p>Line 5 is our first use of a regexp in the filter chain via <a href="http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.PatternReplaceFilterFactory">PatternReplaceFilterFactory</a>.</p>
+
+<p>The idea is to:</p>
+
+<ol>
+<li>Find something that looks like a match</li>
+<li>If found, get rid of everything else, and throw a &lsquo;***&rsquo; onto the beginning so later on I can tell if I matched or not.</li>
+</ol>
+
+<p>The second step is a little&hellip;odd&hellip;but necessary because I need a way to know if I found a candidate ID or not. If I did, well, there will be three asterisks on the front of the string from here on out. If not, there won&rsquo;t.</p>
+
+<p>This is a little confusing as these things go, so I&rsquo;ll break it down.</p>
+
+<p>Line 6: the match:</p>
+
+<ul>
+<li>Skip any amount of stuff we don&rsquo;t care about (.*?)</li>
+<li>Match a number (\p{N}) (that&rsquo;s unicode regexp syntax, if you haven&rsquo;t seen it)</li>
+<li>Match a string of at least 6 numbers and dashes</li>
+<li>Close with an optional X or x [Xx]?</li>
+<li>&hellip;and any trailing bits until the end of the string.</li>
+</ul>
+
+<p>So&hellip;<em>[number][six numbers/dashes][optional X]</em></p>
+
+<p>At minimum, that&rsquo;s seven digits/dashes.</p>
+
+<p>Line 7: replacement</p>
+
+<ul>
+<li>Replace the whole string (note how I anchored the match with ^ and $?) with whatever was matched inside the parentheses (represented here by $1) after prepending a set of three asterisks &lsquo;***&rsquo;</li>
+</ul>
+
+<p><strong>What we have now</strong>: If we found a candidate ID, we have that string prepended by &lsquo;***&lsquo;. Otherwise, we have exactly what we started with.</p>
+
+<h4 id="step-3-if-we-didn-t-find-a-match-throw-it-all-away">Step 3: If we didn&rsquo;t find a match, throw it all away</h4>
+
+<p>Line 9 shows an attempt to match on any string that start with an asterisk (which we&rsquo;re pretty sure we won&rsquo;t see because that&rsquo;s illegal lucene wildcard syntax). If we have a string that doesn&rsquo;t start with an asterisk, then throw the whole damn thing away because we don&rsquo;t have a candidate ID anyway.</p>
+
+<p>[There&rsquo;s a strong argument to be made that using an asterisk as the tagging character is a bad choice. Anyone have suggestions?]</p>
+
+<p><strong>What we have now</strong>: Either a candidate ID string preceded by &lsquo;***&rsquo; or the empty string.</p>
+
+<h4 id="step-4-ditch-the-used-to-mark-a-candidate-id">Step 4: Ditch the &lsquo;***&rsquo; used to mark a candidate ID</h4>
+
+<p>Lines 10-11</p>
+
+<p>Find the &lsquo;***&rsquo; and throw it away.</p>
+
+<p><strong>What we have now</strong>: The raw candidate ID string or the empty string.</p>
+
+<h4 id="step-5-lowercase-it">Step 5: Lowercase it</h4>
+
+<p>Line 12.</p>
+
+<p>By &lsquo;it&rsquo; I mean &ldquo;any X that might be trailing the ID&rdquo;; we should have thrown everything else away by now. (Note: could have done this with a PattenReplace as well, obviously; not sure why&rsquo;d I&rsquo;d choose one over the other).</p>
+
+<p><strong>What we have now</strong>: The raw candidate ID string with its optional trailing &lsquo;X&rsquo; lowercased, or the empty string</p>
+
+<h4 id="step-6-get-rid-of-everything-that-s-not-a-number-or-an-x">Step 6: Get rid of everything that&rsquo;s not a number or an &lsquo;x&rsquo;</h4>
+
+<p>Lines 13-15</p>
+
+<p>Ditch any dashes that are remaining. I&rsquo;m doing it like this instead of just ditching the dashes because I&rsquo;ll likely modify this at some point to allow, e.g., periods between numbers, or maybe spaces. This is safer.</p>
+
+<p>Note the extra parameter (replace=&ldquo;all&rdquo;), indicating that I want to replace all occurrences. This hasn&rsquo;t been an issue until now because I&rsquo;ve been careful to match the entire string by anchoring the pattern at the beginning (&lsquo;^&rsquo;) and end (&lsquo;$&rsquo;).</p>
+
+<p><strong>What we have now</strong>: A string of numbers possibly followed by an &lsquo;x&rsquo;, or the empty string.</p>
+
+<h4 id="step-7-make-sure-what-we-have-is-a-reasonable-length">Step 7: Make sure what we have is a reasonable length</h4>
+
+<p>Line 16</p>
+
+<p>Now that we&rsquo;ve gotten rid of the dashes, we need to make sure we have enough digits left to make a valid identifier.</p>
+
+<p>If we didn&rsquo;t match originally, it quickly got reduced to the empty string, and that will disappear here due to having length 0.</p>
+
+<p>It&rsquo;s also possible that our initial match was, say, &lsquo;1&mdash;-3&mdash;&ndash;6&mdash;7&rsquo;, which will at this point have been reduced to just &lsquo;1367&rsquo; &ndash; too short for our taste.</p>
+
+<p>In this version, I allow strings of any length between 7 (old OCLC number) and 14 (barcode).</p>
+
+<p><strong>What we have now</strong>: A string consisting purely of 7-14 characters, the last of which may be an &lsquo;x&rsquo;, or nothing at all (e.g., nothing will get indexed).</p>
+
+<h4 id="step-8-remove-leading-0s">Step 8: Remove leading 0s</h4>
+
+<p>My ILS (Aleph) loves to zero-pad all its local identifiers. I&rsquo;d rather get rid of them.</p>
+
+<p><strong>What we have now</strong>: What we had before, but with no leading zeros</p>
+
+<h3 id="let-s-try-it">Let&rsquo;s try it!</h3>
+
+<p>If you&rsquo;re following along at home, get the latest version of the schema and try it!</p>
+
+<pre><code class="language-bash">
+  cd solr_stupid_tricks
+  git pull origin master
+  java -jar start.jar
+
+</code></pre>
+
+<p>&hellip;and then:</p>
+
+<ul>
+<li>Go to the analysis page at <a href="http://localhost:8983/solr/admin/analysis.jsp?highlight=on">http://localhost:8983/solr/admin/analysis.jsp?highlight=on</a></li>
+<li>Set the first line of the form to use Field: <strong>type</strong> and input <em>numericID</em></li>
+<li>Check the &ldquo;verbose output&rdquo; checkbox under <em>Field value: index</em></li>
+<li>Put in a test value and see what the analyzer gives you!</li>
+</ul>
+
+<p>For those of you <em>not</em> following along at home, here are the examples from waaaaaay at the top of this post:</p>
+
+<ul>
+<li>1234-5678 =&gt; 12345678</li>
+<li>123-4567-890 =&gt; 1234567890</li>
+<li>12-34-567-X =&gt; 1234567x</li>
+<li>0012-0045 =&gt; 120045</li>
+<li>ISBN13: 1234567890123 =&gt; 1234567890123</li>
+<li>ISSN: 1234567X (1998-99) =&gt; 1234567x</li>
+<li>ISSN (1998-99): 1234567X =&gt; <strong>199899</strong></li>
+<li>1234567890 (hdk. 22 pgs) =&gt; 1234567890</li>
+<li>9 =&gt; [nothing]</li>
+<li>Behind the 3rd floor desk =&gt; [nothing]</li>
+<li>Henry VIII =&gt; [nothing]</li>
+</ul>
+
+<p>So&hellip;not too bad. We did miss one, mistaking a year range for a numeric ID, but if your data are that bad, there&rsquo;s only so much we can do.</p>
+
+<h3 id="conclusions">Conclusions</h3>
+
+<p>Obviously, this is the tip of the iceberg with this sort of thing. And it can still be confused.</p>
+
+<p>But it <em>does</em> follow our goal of having the exact same behavior on index and query, moving the logic to solr, and being pretty flexible.</p>
+
+<p>Perfect? No. Useful? Yes.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

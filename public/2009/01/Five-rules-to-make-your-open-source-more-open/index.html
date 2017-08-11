@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Five rules to make your open source more open">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Five rules to make your open source more open</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2009-01-25 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2009/01/five-rules-to-make-your-open-source-more-open/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Five rules to make your open source more open
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<p>[I&rsquo;ve noticed that a sure way to get people to look at stuff (as measured by, say, <a href="http://digg.com/">digg</a>) is to include a number. So I did. Five. ]</p>
+
+<p>Over at <a href="http://bibwild.wordpress.com/">Bibliographic Wilderness</a>, Jonathan Rothkind has a great followup to an ongoing discussion on the Blacklight list called <em><a href="http://bibwild.wordpress.com/2009/01/06/how-to-build-shared-open-source/">How to build shared open source</a></em> in which he tackles some of the differences between open-sourcing your code (a legal and distribution issue) and actually making it so someone else can usefully contribute to your code.</p>
+
+<p>The project I&rsquo;m spending most of my time on right now, <a href="http://vufind.org/">VUFind</a>, is a great piece of functional code but, in many ways, a nightmare in terms of trying to contribute code and abstract out local functionality. This isn&rsquo;t meant as a slam on the main contributor(s) to VUFind &ndash; Andrew, especially, seems to be an almost frighteningly-productive coder &ndash; but my experiences trying to customize the code to our local situation has given me a lot of time to think about how I <em>wish</em> things had been architected.</p>
+
+<p>So, here I give some general rules and some specifics as to What I Wish I Had To Work With.
+<h3>1. Abstraction</h3>
+<strong>General rule:</strong> Abstract things out as much as makes sense</p>
+
+<p><strong>Specific rule:</strong> Abstract <em>the living crap</em> out of your authentication scheme.</p>
+
+<p>Look, pretty much everyone with anything worth protecting already has an auth/authZ infrastructure in place. Sometimes an extensive, perhaps multi-institutional infrastructure. One that isn&rsquo;t going to be bypassed without, say, getting fired.</p>
+
+<p>So if you&rsquo;re going to require people to log in, make sure you make that process as abstract as you possibly can, both in algorithm and in code. Have a singleton class that&rsquo;s easily subclassed to represent your user, and call it exclusively. Make sure that your URIs are easily separated into those that require auth and those that don&rsquo;t, for simple use of mod_rewrite or whatnot to redirect to authentication. Make sure it&rsquo;s easy to hook into (or work around) AJAX links that might require authentication that has expired.</p>
+
+<p>And for the love of god, don&rsquo;t stuff username/password information into a cookie if you&rsquo;re doing web work. Use a session and session key. Any auth scheme that <em>I</em> can spoof is no auth scheme at all, because I&rsquo;m an idiot and not even trying hard.
+<h3>2. Configuration files</h3>
+<strong>General rule:</strong> use config files for anything local</p>
+
+<p><strong>Specific rule:</strong> Use a configuration file format that can represent complex data</p>
+
+<p>That&rsquo;s right, I&rsquo;m looking at you, <em>.ini</em> and <em>.properties</em> files.</p>
+
+<p>Use something like YAML, or XML, or even straight programming-language code (i.e., a file with a PHP hash or a perl hashref or whatnot) that can actually represent, in a logical way, the complexities of the stuff you need to configure. And then, again, have a singleton class that will read that data and expose it in a useful and safe way.</p>
+
+<p>And include a semantics checker if you can manage to write one.  It&rsquo;ll save everyone a load of trouble.</p>
+
+<p><em>Huge bonus points</em> if your configuration singleton class can read from multiple files, overriding previous (default) definitions with subsequent (local) ones.
+<h3>3. Hide subapplications</h3>
+<strong>General rule:</strong> Don&rsquo;t force your user to intimately understand every piece of every library/application you include</p>
+
+<p><strong>Specific rule:</strong> Generate configuration information for sublibraries/applications</p>
+
+<p>This might be a little specific to the project I&rsquo;m working on now, which uses <a href="http://lucene.apache.org/solr/">Solr</a> as a backend, but I think it applies more generally.</p>
+
+<p><em>If</em> you&rsquo;re using a non-brain-dead configuration file format, and <em>if</em> you can assume reasonable defaults, <em>then</em> generate configuration files for your user. A low-level extreme of this is the traditional unix <em>autoconf</em>, which essentially allows you to install software without knowing a damn thing about your own system. Which is useful to those of us that don&rsquo;t.</p>
+
+<p>In VUFind, there are three files &ndash; a .properties file that specifies how to map MARC data into  field names,  Solr&rsquo;s <em>schema.xml</em> that describes the structure and behavior of those same fields, and an XSLT stylesheet that pretties the data as it comes out of Solr to make it easier to work with. As you might expect, the overlap in data is about 80% across the three of them, and it would be a bazillion times easier to have a single file that generated all three.</p>
+
+<p>OK. Maybe not a <em>ba</em>zillion, because if it was that easy, I&rsquo;d have taken a couple hours to write the code to do it already. Let&rsquo;s say just a <em>zillion</em> times easier.</p>
+
+<p>The caveat to this is that you need to either make sure your config file specification is complete enough to encompass everything all the other files might need to know (bad), or that the other config files can import subsections that override your defaults (good).
+<h3>4.Testing</h3>
+<strong>General rule:</strong> practice test-first (TDD or BDD) development</p>
+
+<p><strong>Specific rule:</strong> write your code in such a way that it&rsquo;s testable</p>
+
+<p>Look, we all know we should spend the first three weeks writing eight thousand tests to describe every corner of the code. And we all have bosses that will ask, every morning about 10:30am, &ldquo;So, what do you have that you can show me?&rdquo;</p>
+
+<p>Not everyone is going to be able to write tests first. That&rsquo;s not right, it&rsquo;s not smart, but it&rsquo;s the way the world works. But at least <em>put in the hooks</em> so someone else can come along and write tests.</p>
+
+<p>Writing tests is one of the easiest ways that a newbie can come along to a project and instantly contribute in a meaningful way. But if you&rsquo;re constantly calling global variables, depending on live database connections and not providing a way to mock them up, or throwing fatal errors if every subsystem isn&rsquo;t present no matter the context, then it&rsquo;s going to be hard to write tests.  So hard, in fact, that not only will you not do it, but neither will anyone else.
+<h3>5. Error handling</h3>
+<strong>General rule:</strong> provide a sane, hierarchical set of error classes and hooks to catch them as necessary</p>
+
+<p><strong>Specific rule:</strong> THROW SOME GODDAMN ERRORS!!!!</p>
+
+<p>Don&rsquo;t be an idiot. Things will fail. In the absense of Design by Contract or somesuch, errors will happen. Throw them. Catch them. But at least throw them, instead of letting your code die six hundred lines later with a &ldquo;Cannot cast null value to string&rdquo; when you finally get around to trying to print something out.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

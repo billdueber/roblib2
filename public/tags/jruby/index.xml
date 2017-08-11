@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jruby on Robot Librarian</title>
+    <link>http://robotlibrarian.billdueber.com/tags/jruby/</link>
+    <description>Recent content in Jruby on Robot Librarian</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Jul 2011 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://robotlibrarian.billdueber.com/tags/jruby/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Even better, even simpler multithreading with JRuby</title>
+      <link>http://robotlibrarian.billdueber.com/2011/07/even-better-even-simpler-multithreading-with-jruby/</link>
+      <pubDate>Fri, 01 Jul 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/07/even-better-even-simpler-multithreading-with-jruby/</guid>
+      <description>[Yes, another post about ruby code; I&amp;rsquo;ll get back to library stuff soon.]
+Quite a while ago, I released a little gem called threach (for &amp;ldquo;threaded #each&amp;rdquo;). It allows you to easily process a block with multiple threads.
+# Process a CSV file with three threads FIle.open(&#39;data.csv&#39;).threach(3, :each_line) {|line| send_to_db(line)}  Nice, right?
+The problem is that I could never figure out a way to deal with a break or an Exception raised inside the block.</description>
+    </item>
+    
+    <item>
+      <title>Using SQLite3 from JRuby without ActiveRecord</title>
+      <link>http://robotlibrarian.billdueber.com/2011/05/using-sqlite3-from-jruby-without-activerecord-2/</link>
+      <pubDate>Thu, 26 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/05/using-sqlite3-from-jruby-without-activerecord-2/</guid>
+      <description>I spent way too long asking my friend, The Internet, how to get a normal DBI connection to SQLIte3 using JRuby. Apparently, everyone except me is using ActiveRecord and/or Rails and doesn&amp;rsquo;t want to just connect to the database.
+But I do. Here&amp;rsquo;s how.
+First, get the gems:
+gem install dbi gem install dbd-jdbc gem install jdbc-sqlite3  Then you&amp;rsquo;re ready to load it up into DBI.
+require &#39;rubygems&#39; # if you&#39;re using 1.</description>
+    </item>
+    
+  </channel>
+</rss>

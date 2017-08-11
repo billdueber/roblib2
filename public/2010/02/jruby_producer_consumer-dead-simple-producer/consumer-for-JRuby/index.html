@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="jruby_producer_consumer dead-simple producer/consumer for JRuby">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | jruby_producer_consumer dead-simple producer/consumer for JRuby</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2010-02-05 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2010/02/jruby_producer_consumer-dead-simple-producer/consumer-for-JRuby/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.19" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+		
+		
+		<div id="social" class="text-center">
+			
+				
+			
+			
+			
+			
+				
+						
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>jruby_producer_consumer dead-simple producer/consumer for JRuby
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<p>Yea! My first gem ever released!</p>
+
+<p style="color: red">[YUCK! It was a disaster in a few ways! Don't look at this! It's hideous! There's a new <a href="http://rdoc.info/projects/billdueber/jruby_producer_consumer">jruby_producer_consumer</a> gem on gemcutter that is slightly different from this in that it works. Ignore the stuff below.]</p>
+
+<p>[In working on a threaded JRuby-based MARC-to-Solr project, I realized that my threading stuff was&hellip;ugly. And
+I didn&rsquo;t really understand it. So I dug in today and wrote this.]</p>
+
+<p>I&rsquo;ve just pushed to <a href="http://gemcutter.org/">Gemcutter</a> my first gem &ndash; a <a href="http://jruby.org/">JRuby</a>-only
+producer/consumer class that works with anything that provides <em>#each</em> called <a href="http://gemcutter.org/gems/jruby_producer_consumer">jruby_producer_consumer</a>.</p>
+
+<p>It&rsquo;s JRuby-only because it uses (a) A blocking queue implemenation that&rsquo;s native Java, and (b) threading, which isn&rsquo;t
+a huge win under regular Ruby.</p>
+
+<p>There&rsquo;s no testing there because I&rsquo;m not sure how to test threaded stuff :-(</p>
+
+<p>It is, I hope, easy to use:</p>
+
+<pre><code class="language-ruby">
+   require 'rubygems'
+   require 'jruby_producer_consumer'
+
+   # Create a ProducerConsumer. Arguments are anything that implements #each
+   # and the size for the underlying queue. For the former, I'll just use a Range object.
+
+   eachable = 1..10
+   queuesize = 3
+
+   pc = ProducerConsumer.new(eachable, queuesize)
+
+   # Just a method to show what happens
+   def sample (consumerid, x)
+     puts &quot;Consumer #{consumerid}: consuming #{x}&quot;
+     sleep 1 # otherwise this'll finsish before I can create multiple consumers
+   end
+
+   # Create three consumers. You can pass any number of args to
+   # #consumer, and must pass a block whose arguments are the
+   # object returned by eachable#each and those args back.
+
+   ['A', 'B', 'C'].each do |consumerid|
+     pc.consumer(consumerid) do |x, consumerid|
+       sample(consumerid, x)
+     end
+   end
+
+   # OUTPUT
+   # Consumer A: consuming 1
+   # Consumer B: consuming 2
+   # Consumer C: consuming 3
+   # Consumer A: consuming 4
+   # Consumer B: consuming 5
+   # Consumer C: consuming 6
+   # Consumer B: consuming 7
+   # Consumer A: consuming 8
+   # Consumer C: consuming 9
+   # Consumer B: consuming 10
+
+
+</code></pre>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

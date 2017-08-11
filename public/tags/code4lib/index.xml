@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Code4lib on Robot Librarian</title>
+    <link>http://robotlibrarian.billdueber.com/tags/code4lib/</link>
+    <description>Recent content in Code4lib on Robot Librarian</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Jul 2008 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://robotlibrarian.billdueber.com/tags/code4lib/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Planet Code4Lib in a snapshot</title>
+      <link>http://robotlibrarian.billdueber.com/2008/07/planet-code4lib-in-a-snapshot/</link>
+      <pubDate>Mon, 07 Jul 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/07/planet-code4lib-in-a-snapshot/</guid>
+      <description>Inspired by the Inquiring Librarian, I just used Wordle to create a &amp;ldquo;tagcloud&amp;rdquo; of the current [Planet Code4Lib]() feed.
+What kills me is the tiny little &amp;ldquo;Library&amp;rdquo; in the lower left-hand corner.</description>
+    </item>
+    
+    <item>
+      <title>Psst. We&#39;re not printing cards anymore</title>
+      <link>http://robotlibrarian.billdueber.com/2008/05/psst-were-not-printing-cards-anymore/</link>
+      <pubDate>Mon, 12 May 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/05/psst-were-not-printing-cards-anymore/</guid>
+      <description>[From a series I&amp;rsquo;m calling, &amp;ldquo;Things About The Library I Think Are Stoooopid&amp;rdquo;, part one of about a zillion.]
+I&amp;rsquo;m going to wallow in a little bit of hyperbole here, but only a little.
+The problem Suppose, just for a moment, that you&amp;rsquo;re a computer programmer working anytime in the last twenty years, and someone wants you to set up a data structure to deal with a timeless issue &amp;ndash; how to keep track of who&amp;rsquo;s on which committees in a library.</description>
+    </item>
+    
+  </channel>
+</rss>

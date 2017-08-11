@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="OCLC still not (NO! They are!) normalizing their LCCNs">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | OCLC still not (NO! They are!) normalizing their LCCNs</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2010-02-18 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2010/02/OCLC-still-not-NO-They-are-normalizing-their-LCCNs/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.19" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+		
+		
+		<div id="social" class="text-center">
+			
+				
+			
+			
+			
+			
+				
+						
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>OCLC still not (NO! They are!) normalizing their LCCNs
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<blockquote>NOTE 2: It turns out that I did find a minor bug in the system, but that in general LCCN normalization is working correctly. I just happened to hit a weirdness with a bad LCCN and a little bug in the parser on their end. Which is getting fixed. So...good news all around, and huge kudos to
+Xiaoming Liu for his quick response!
+</blockquote>
+
+<blockquote>**NOTE** It strikes me that I haven't seen a case where bad data results from sending a valid LCCN. The only verified problem is one of false negatives. Send a valid lccn, you'll get back either good data or nothing (and the "nothing" might be in error). So, still a big problem, but not as THESKYISFALLING as I imply below.</blockquote>
+
+<hr />
+
+<p>A <a href="http://bibwild.wordpress.com/2009/03/11/normalize-your-lccns/">long time ago</a>, Jonathan Rochkind noted that the OCLC doesn&rsquo;t correctly <a href="http://www.loc.gov/marc/lccn-namespace.html">normalize their LCCNs</a>.</p>
+
+<p>Well, it&rsquo;s not fixed.</p>
+
+<p>I could really, <em>really</em> use the xlccn service right about now &ndash; a great web service they provide that, much like xisbn and xissn and the other xXXXX (heh!) services, purports to allow you to put in an lccn and get data back on the item you&rsquo;re interested in.</p>
+
+<p>Except they &ldquo;normalize&rdquo; their LCCNs in a way that is not only incorrect, but causes namespace collisions. As near as I can tell, they throw out any leading non-digits and only keep up to the next non-digit.</p>
+
+<p><em>The xLCCN service will silently provide no data or <strong>incorrect data</strong> for many LCCN requests!</em></p>
+
+<p>An example:</p>
+
+<ul>
+<li>(F) Full LCCN is &ldquo;sn 83011407&rdquo;</li>
+<li>(D) First set of digits is &ldquo;83011407&rdquo;. This is what I think the OCLC is indexing.</li>
+<li>(N) Correct normalization is &ldquo;sn83011407&rdquo;</li>
+</ul>
+
+<p>The problem, of course, is that (D) &ldquo;83011407&rdquo; <em>is itself a valid LCCN</em>.</p>
+
+<ul>
+<li>(F) is associated with OCLC# 47212967</li>
+<li>(D) is associated with OCLC# 12505148. That&rsquo;s <em>not the same record</em>.</li>
+</ul>
+
+<p>So, how do the OCLC services respond?</p>
+
+<ul>
+<li>(F) Worldcat search finds correct (probably just doing a string match); xid finds nothing</li>
+<li>(D) Worldcat finds both correct and incorrect records. The xLCCN service finds <em>only</em> the incorrect record, OCLC# 12505148.</li>
+<li>(N) Neither worldcat nor xid finds anything for the correctly normalized version.</li>
+</ul>
+
+<p>So, what am I supposed to do? Only use the service on LCCNs where the original
+and normalized versions are the same and include only digits? Frustrating.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

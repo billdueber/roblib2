@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Robot Librarian</title>
+    <link>http://robotlibrarian.billdueber.com/post/</link>
+    <description>Recent content in Posts on Robot Librarian</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Feb 2015 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://robotlibrarian.billdueber.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reintroducing Traject: Traject 2.0</title>
+      <link>http://robotlibrarian.billdueber.com/2015/02/reintroducing-traject-traject-2.0/</link>
+      <pubDate>Thu, 19 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2015/02/reintroducing-traject-traject-2.0/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>How good/bad is MARC data? The case of place-of-publication</title>
+      <link>http://robotlibrarian.billdueber.com/2014/11/how-good/bad-is-marc-data-the-case-of-place-of-publication/</link>
+      <pubDate>Mon, 10 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2014/11/how-good/bad-is-marc-data-the-case-of-place-of-publication/</guid>
+      <description>I complain a lot about the MARC format, the way people put data in MARC records, the actual data themselves I find in MARC records, the inexplicably complex syntax for identifiers and, ironically, attempts to replace MARC with something else.
+One nice little beacon of hope was when I found that only roughly 0.26% of the ISBNs in the UMich catalog have invalid checksums. That&amp;rsquo;s not bad at all, and it&amp;rsquo;s worth digging into other things about which I might be likely to complain before I make a fool of myself.</description>
+    </item>
+    
+    <item>
+      <title>Ruby MARC serialization/deserialization revisited</title>
+      <link>http://robotlibrarian.billdueber.com/2014/10/ruby-marc-serialization/deserialization-revisited/</link>
+      <pubDate>Thu, 09 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2014/10/ruby-marc-serialization/deserialization-revisited/</guid>
+      <description>A few years ago, I benchmarked various methods of serializing/deserialzing MARC data using the ruby-marc gem. Given that I&amp;rsquo;m planning on starting fresh with my catalog setup, I thought I&amp;rsquo;d take a moment to revisit them.
+The biggest changes since that time have been (a) the continued speed improvements in JRuby, (b) the introduction of the Oj json parser for MRI ruby, and &amp;copy; wider availability of msgpack code in the wild.</description>
+    </item>
+    
+    <item>
+      <title>&#34;Schemaless&#34; solr with dynamicField and copyField</title>
+      <link>http://robotlibrarian.billdueber.com/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/</link>
+      <pubDate>Mon, 06 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/</guid>
+      <description>[Holy Kamoly, it&amp;rsquo;s been a long time since I blogged!]
+Recent versions of solr have the option to run in what they call &amp;ldquo;schemaless mode&amp;rdquo;, wherein fields that aren&amp;rsquo;t recognized are actually added, automatically, to the schema as real named fields.
+I find this intruguing, but it&amp;rsquo;s not what I&amp;rsquo;m after right now.
+The problem I&amp;rsquo;m in the first stages of addressing is that my schema.xml is huge mess &amp;ndash; very little consistency, no naming conventions dictating what&amp;rsquo;s stored/indexed, etc.</description>
+    </item>
+    
+    <item>
+      <title>Help me test yet another LC Callnumber parser</title>
+      <link>http://robotlibrarian.billdueber.com/2014/01/yet-another-lc-callnumber-parser.html/</link>
+      <pubDate>Thu, 30 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2014/01/yet-another-lc-callnumber-parser.html/</guid>
+      <description>Those who have followed this blog and my code for a while know that I have a long, slightly sad, and borderline abusive relationship with Library of Congress call numbers.
+They&amp;rsquo;re a freakin&amp;rsquo; nightmare. They just are.
+But, based on the premise that Sisyphus was a quitter, I took another stab at it, this time writing a real (PEG-) parser instead of trying to futz with extended regular expressions.
+The results, so far, aren&amp;rsquo;t too bad.</description>
+    </item>
+    
+    <item>
+      <title>New blog front- and back-end</title>
+      <link>http://robotlibrarian.billdueber.com/2013/12/new-blog-front-and-back-end.html/</link>
+      <pubDate>Tue, 17 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2013/12/new-blog-front-and-back-end.html/</guid>
+      <description>A while back, Dreamhost had some problems and my blog and assorted other websites I help keep track of went down.
+For more than two weeks.
+Now, I understand that crap happens. And I understand that sometimes lots of things happen at once. But fundamentally, their infrastructure is such that they could lose everything on a machine and be unable to get it back for more than two weeks. I&amp;rsquo;m not a mathematician, but that&amp;rsquo;s not &amp;ldquo;five-nine&amp;rdquo; service.</description>
+    </item>
+    
+    <item>
+      <title>Announcing &#34;traject&#34; indexing software</title>
+      <link>http://robotlibrarian.billdueber.com/2013/10/announcing-traject-indexing-software/</link>
+      <pubDate>Mon, 14 Oct 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2013/10/announcing-traject-indexing-software/</guid>
+      <description>[Over the next few days I&amp;rsquo;ll be writing a series of posts that highlight a new indexing solution by Jonathan Rochkind and myself called traject that we&amp;rsquo;re using to index MARC data into Solr. This is the introduction.]
+Wow. Six months since I posted here. What have I been doing?
+Well, mostly parenting, but in the last few weeks I was lucky enough to get on board with a project started by Jonathan Rochkind for a new JRuby-based tool optimized for indexing MARC data into solr.</description>
+    </item>
+    
+    <item>
+      <title>Come work at the University of Michigan</title>
+      <link>http://robotlibrarian.billdueber.com/2013/04/come-work-at-the-university-of-michigan/</link>
+      <pubDate>Thu, 18 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2013/04/come-work-at-the-university-of-michigan/</guid>
+      <description>The Library has three UX positions available right now &amp;ndash; interface designer, interface developer, and a web content strategist.
+Come join me at what is easily the best place I&amp;rsquo;ve ever worked! Full details are over at Suz&amp;rsquo;s blog.</description>
+    </item>
+    
+    <item>
+      <title>Please: don&#39;t return your books</title>
+      <link>http://robotlibrarian.billdueber.com/2013/02/please-dont-return-your-books/</link>
+      <pubDate>Tue, 12 Feb 2013 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2013/02/please-dont-return-your-books/</guid>
+      <description>So, I&amp;rsquo;m at code4lib 2013 right now, where side conversations and informal exchanges tend to be the most interesting part.
+Last night I had an conversation with the inimitable Michael B. Klein, and after complaining about faculty members that keep books out for decades at a time, we ended up asking a simple question:
+ How much more shelving would we need if everyone returned their books?
+ Assuming we could get them all checked in and such, well, where would we put them?</description>
+    </item>
+    
+    <item>
+      <title>Boosting on Exactish (anchored) phrase matching in Solr: (SST #4)</title>
+      <link>http://robotlibrarian.billdueber.com/2012/03/boosting-on-exactish-anchored-phrase-matching-in-solr-sst-4/</link>
+      <pubDate>Mon, 19 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2012/03/boosting-on-exactish-anchored-phrase-matching-in-solr-sst-4/</guid>
+      <description>Check out introduction to the Stupid Solr Tricks series if you&amp;rsquo;re just joining us.]
+ Exact matching in Solr is easy. Use the default string type: all it does is, essentially, exact phrase matching. string is a great type for faceted values, where the only way we expect to search the index is via text pulled from the index itself. Query the index to get a value: use that value to re-query the index.</description>
+    </item>
+    
+    <item>
+      <title>Requiring/Preferring searches that don&#39;t span multiple values (SST #3)</title>
+      <link>http://robotlibrarian.billdueber.com/2012/03/requiringpreferring-searches-that-dont-span-multiple-values-sst-3/</link>
+      <pubDate>Fri, 09 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2012/03/requiringpreferring-searches-that-dont-span-multiple-values-sst-3/</guid>
+      <description>Check out introduction to the Stupid Solr Tricks series if you&amp;rsquo;re just joining us.]
+ Solr and multiValued fields Here&amp;rsquo;s another thing you need to understand about Solr: it doesn&amp;rsquo;t really have fields that can take multiple values.
+&amp;ldquo;But Bill,&amp;rdquo; you&amp;rsquo;re saying, &amp;ldquo;sure it does. I mean, hell, it even has a &amp;lsquo;multiValued&amp;rsquo; parameter.&amp;rdquo;
+First off: watch your language.
+Second off: are you sure?
+Let&amp;rsquo;s do a quick test.</description>
+    </item>
+    
+    <item>
+      <title>Using localparams in Solr (or, how to boost records that contain all terms) (SST #2)</title>
+      <link>http://robotlibrarian.billdueber.com/2012/03/using-localparams-in-solr-sst-2/</link>
+      <pubDate>Tue, 06 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2012/03/using-localparams-in-solr-sst-2/</guid>
+      <description>[Note: this isn&amp;rsquo;t so much a Stupid Solr Trick as a Thing You Should Probably Know; consider it required reading for the next SST. If you&amp;rsquo;re just joining us, check out the introduction to the Stupid Solr Tricks series]
+What the heck is a localparams query? A garden-variety Solr query URL looks something like this:
+ http://localhost:8983/solr/select? defType=dismax &amp;amp;amp;qf=name^2 place^1 &amp;amp;amp;q=Dueber ~~~~ Which is fine, as far as it goes.</description>
+    </item>
+    
+    <item>
+      <title>Solr Field Type for numeric(ish) IDs (SST #1)</title>
+      <link>http://robotlibrarian.billdueber.com/2012/03/solr-field-type-for-numericish-ids/</link>
+      <pubDate>Thu, 01 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2012/03/solr-field-type-for-numericish-ids/</guid>
+      <description>[For the introduction to this series, take a quick gander at the introduction]
+Like everyone else in the library world, I&amp;rsquo;ve got a bunch of well-defined, well-controlled standard identifiers I need to keep track of and allow searching on.
+You know, well-vetted stuff like this:
+ 1234-5678 123-4567-890 12-34-567-X 0012-0045 ISBN13: 1234567890123 ISSN: 1234567X (1998-99) ISSN (1998-99): 1234567X 1234567890 (hdk. 22 pgs) 9 Behind the 3rd floor desk Henry VIII  [Note: some of these may be a titch exaggerated]</description>
+    </item>
+    
+    <item>
+      <title>Stupid Solr tricks: Introduction (SST #0)</title>
+      <link>http://robotlibrarian.billdueber.com/2012/02/stupid-solr-tricks-introduction/</link>
+      <pubDate>Wed, 29 Feb 2012 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2012/02/stupid-solr-tricks-introduction/</guid>
+      <description>Completed parts of the series:
+ A Solr Field Type for numeric(ish) IDs Using localparams in Solr (or, how to boost records that contain all terms) Requiring/Preferring searches that don&amp;rsquo;t span multiple values Boosting on Exactish (anchored) phrase matching  Those of you who read this blog regularly (Hi Mom!) know that while we do a lot of stuff at the University of Michigan Library, our bread-and-butter these days are projects that center around Solr.</description>
+    </item>
+    
+    <item>
+      <title>Another short personal note</title>
+      <link>http://robotlibrarian.billdueber.com/2012/02/another-short-personal-note/</link>
+      <pubDate>Mon, 27 Feb 2012 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2012/02/another-short-personal-note/</guid>
+      <description>The baby spent all last week in the hospital. Nothing life-threatening (so long as he was in the hospital and could get O2 when needed); it was just annoying.
+So&amp;hellip;.here&amp;rsquo;s to a week-long hospital stay being able to be merely &amp;ldquo;annoying&amp;rdquo;. A tip of the hat to steady employment, generous sick/vacation policies, flexible co-workers, excellent insurance, and having a world-class hospital in town. This could have been a much, much worse week than it was.</description>
+    </item>
+    
+    <item>
+      <title>Solr and boolean operators</title>
+      <link>http://robotlibrarian.billdueber.com/2011/12/solr-and-boolean-operators/</link>
+      <pubDate>Thu, 01 Dec 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/12/solr-and-boolean-operators/</guid>
+      <description>[Summary: ALWAYS ALWAYS ALWAYS USE PARENTHESES TO GROUP BOOLEANS IN SOLR!!!]
+What does Solr do, given the following query?
+ a OR b AND c ~~~~ I&#39;ll give you three guesses, but you&#39;ll get the first two wrong and won&#39;t have any idea how to generate a third, so don&#39;t spend too much time on it. ### Boolean algebra and operator precedence Anyone who&#39;s had even a passing introduction to boolean alegebra knows that it specifies a strict order to how the operators are bound: NOT before AND before OR.</description>
+    </item>
+    
+    <item>
+      <title>A short personal note</title>
+      <link>http://robotlibrarian.billdueber.com/2011/10/a-short-personal-note/</link>
+      <pubDate>Tue, 11 Oct 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/10/a-short-personal-note/</guid>
+      <description>We had another baby. :-)
+
+Shai Brown Dueber was born last Monday, the 3rd, at a very moderate 7lbs 7.2oz (his brothers were 9lbs and 9.5lbs). Mother, baby, and older brothers are all doing well. Father is freakin&amp;rsquo; tired.
+
+&amp;nbsp;
+&amp;nbsp;</description>
+    </item>
+    
+    <item>
+      <title>Even better, even simpler multithreading with JRuby</title>
+      <link>http://robotlibrarian.billdueber.com/2011/07/even-better-even-simpler-multithreading-with-jruby/</link>
+      <pubDate>Fri, 01 Jul 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/07/even-better-even-simpler-multithreading-with-jruby/</guid>
+      <description>[Yes, another post about ruby code; I&amp;rsquo;ll get back to library stuff soon.]
+Quite a while ago, I released a little gem called threach (for &amp;ldquo;threaded #each&amp;rdquo;). It allows you to easily process a block with multiple threads.
+# Process a CSV file with three threads FIle.open(&#39;data.csv&#39;).threach(3, :each_line) {|line| send_to_db(line)}  Nice, right?
+The problem is that I could never figure out a way to deal with a break or an Exception raised inside the block.</description>
+    </item>
+    
+    <item>
+      <title>Using SQLite3 from JRuby without ActiveRecord</title>
+      <link>http://robotlibrarian.billdueber.com/2011/05/using-sqlite3-from-jruby-without-activerecord-2/</link>
+      <pubDate>Thu, 26 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/05/using-sqlite3-from-jruby-without-activerecord-2/</guid>
+      <description>I spent way too long asking my friend, The Internet, how to get a normal DBI connection to SQLIte3 using JRuby. Apparently, everyone except me is using ActiveRecord and/or Rails and doesn&amp;rsquo;t want to just connect to the database.
+But I do. Here&amp;rsquo;s how.
+First, get the gems:
+gem install dbi gem install dbd-jdbc gem install jdbc-sqlite3  Then you&amp;rsquo;re ready to load it up into DBI.
+require &#39;rubygems&#39; # if you&#39;re using 1.</description>
+    </item>
+    
+    <item>
+      <title>How good is our relevancy ranking?</title>
+      <link>http://robotlibrarian.billdueber.com/2011/05/how-good-is-our-relevancy-ranking/</link>
+      <pubDate>Wed, 25 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/05/how-good-is-our-relevancy-ranking/</guid>
+      <description>For those of us that spend our days trying to tweak Mirlyn to make it better, one of the most important &amp;ndash; and, in many ways, most opaque &amp;ndash; questions is, &amp;ldquo;How good is our relevancy ranking?&amp;rdquo;
+Research from the UMich Library&amp;rsquo;s Usability Group (pdf; 600k) points to the importance of relevancy ranking for both known-item searches and discovery, but mapping search terms to the &amp;ldquo;best&amp;rdquo; results involves crawling deep inside the searcher&amp;rsquo;s head to know what she&amp;rsquo;s looking for.</description>
+    </item>
+    
+    <item>
+      <title>Ruby gem library_stdnums goes to version 1.0</title>
+      <link>http://robotlibrarian.billdueber.com/2011/05/ruby-gem-library_stdnums-goes-to-version-1-0/</link>
+      <pubDate>Fri, 06 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/05/ruby-gem-library_stdnums-goes-to-version-1-0/</guid>
+      <description>I just released another (this time pretty good) version of my gem for normalizing/validating library standard numbers, library_stdnums (github source / docs).
+The short version of the functions available:
+ ISBN: get checkdigit, validate, convert isbn10 to/from isbn13, normalize (to 13-digit) ISSN: get checkdigit, validate, normalize LCCN: validate, normalize  Validation of LCCNs doesn&amp;rsquo;t involve a checkdigit; I basically just normalize whatever is sent in and then see if the result is syntactically valid.</description>
+    </item>
+    
+    <item>
+      <title>A short ruby diversion: cost of flow control under Ruby</title>
+      <link>http://robotlibrarian.billdueber.com/2011/05/a-short-ruby-diversion-cost-of-flow-control-under-ruby/</link>
+      <pubDate>Tue, 03 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/05/a-short-ruby-diversion-cost-of-flow-control-under-ruby/</guid>
+      <description>A couple days ago I decided to finally get back to working on threach to try to deal with problems it had &amp;ndash; essentially, it didn&amp;rsquo;t deal well with non-local exits due to calls to break or even something simple like a NoMethodError.
+[BTW, I think I managed it. As near as I can tell, threach version 0.4 won&amp;rsquo;t deadlock anymore]
+Along the way, while trying to figure out how threads affect the behavior of different non-local exits, I noticed that in some cases there was still work being done by one or more threads long after there was an exception raised.</description>
+    </item>
+    
+    <item>
+      <title>ISBN parenthetical notes: Bad MARC data #1</title>
+      <link>http://robotlibrarian.billdueber.com/2011/04/isbn-parenthetical-notes-bad-marc-data-1/</link>
+      <pubDate>Tue, 12 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/04/isbn-parenthetical-notes-bad-marc-data-1/</guid>
+      <description>Yesterday, I gave a brief overview of why free text is hard to deal with.
+Today, I&amp;rsquo;m turning my attention to a concrete example that drives me absolutely batshit crazy: taking a perfectly good unique-id field (in this case, the ISBN in the 020) and appending stuff onto the end of it.
+The point is not to mock anything. Mocking will, however, be included for free.
+What&amp;rsquo;s supposed to be in the 020?</description>
+    </item>
+    
+    <item>
+      <title>Why programmers hate free text in MARC records</title>
+      <link>http://robotlibrarian.billdueber.com/2011/04/why-programmers-hate-free-text-in-marc-records/</link>
+      <pubDate>Mon, 11 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/04/why-programmers-hate-free-text-in-marc-records/</guid>
+      <description>One of the frustrating things about dealing with MARC (nee AACR2) data is how much nonsense is stored in free text when a unique identifier in a well-defined place would have done a much better job.
+A lot of people seem to not understand why.
+This post, then, is for all the catalogers out there who constantly answer my questions with, &amp;ldquo;Well, it depends&amp;rdquo; and don&amp;rsquo;t understand why that&amp;rsquo;s a problem.</description>
+    </item>
+    
+    <item>
+      <title>Corrected Code4Lib slides are up</title>
+      <link>http://robotlibrarian.billdueber.com/2011/02/corrected-code4lib-slides-are-up/</link>
+      <pubDate>Tue, 15 Feb 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/02/corrected-code4lib-slides-are-up/</guid>
+      <description>&amp;hellip;at the same URL.
+I was, to put it mildly, incredibly excited about code4lib this year because, for once, I thought I had something to say. And I did have something to say. And I said it. But it was wrong.
+I presented a bunch of statistics drawn from nearly a year of Mirlyn logs. The most outlandish of my assertions, and the one that eventually turned out to be the most incorrect, was that some 45% of all our user sessions consist of only one action: a search.</description>
+    </item>
+    
+    <item>
+      <title>[RETRACTED] Code4Lib 2011 Lightning Talk Slides</title>
+      <link>http://robotlibrarian.billdueber.com/2011/02/code4lib-2011-lightning-talk-slides/</link>
+      <pubDate>Wed, 09 Feb 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/02/code4lib-2011-lightning-talk-slides/</guid>
+      <description>DANGER!
+I was trying to re-verify my numbers and found a glaring and hugely important mistake. I&amp;rsquo;ll make a new post with the details, but basically I was counting about 180k sessions (out of only 735k) that I should have been ignoring. Please ignore my basic stats until further notice.
+See thenew numbers and corrected slides for more accurate data. I did a little Lightning Talk at Code4Lib 2011 and cleaned up (and heavily annotated) my slides for anyone interested in them.</description>
+    </item>
+    
+    <item>
+      <title>Four things I hate about Ruby</title>
+      <link>http://robotlibrarian.billdueber.com/2011/01/four-things-i-hate-about-ruby/</link>
+      <pubDate>Thu, 13 Jan 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/01/four-things-i-hate-about-ruby/</guid>
+      <description>Don&amp;rsquo;t get me wrong. I use ruby as my default language when possible. I love JRuby in a way that&amp;rsquo;s illegal in most states.
+But there are&amp;hellip;issues. There are with any language and the associated environment. These are the ones that bug the crap out of me.
+ Ruby is slow. Let&amp;rsquo;s get this one out of the way right away. Ruby (at least the MRI 1.8.x implementation) is, for many things, slow.</description>
+    </item>
+    
+    <item>
+      <title>Does anyone use those prev/next/back-to-search links?</title>
+      <link>http://robotlibrarian.billdueber.com/2010/11/does-anyone-use-those-prevnextback-to-search-links/</link>
+      <pubDate>Wed, 03 Nov 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/11/does-anyone-use-those-prevnextback-to-search-links/</guid>
+      <description>There&amp;rsquo;s a common problem among developers of websites that paginate, including OPACs: how do you provide a single item view that can have links that go back to the search (or to the prev/next item) without making your URLs look ugly?
+The fundamental problem is that as soon as your user opens up a couple searches in separate tabs, your session data can&amp;rsquo;t keep track of which search she wants to &amp;ldquo;go back to&amp;rdquo; unless you put some random crap in the URL, which none of us want to do.</description>
+    </item>
+    
+    <item>
+      <title>Size/speed of various MARC serializations using ruby-marc</title>
+      <link>http://robotlibrarian.billdueber.com/2010/09/sizespeed-of-various-marc-serializations-using-ruby-marc/</link>
+      <pubDate>Wed, 29 Sep 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/09/sizespeed-of-various-marc-serializations-using-ruby-marc/</guid>
+      <description>Ross Singer recently updated ruby-marc to include a #to_hash method that creates a data structure that is (a) round-trippable without any data loss, and (b) amenable to serializing to JSON. He&amp;rsquo;s calling it marc-in-json (even though the serialization is up to the programmer, it&amp;rsquo;s expected most of us will use JSON), and I think it&amp;rsquo;s the way to go in terms of JSON-able MARC data.
+I wanted to take a quick look at the space/speed tradeoffs of using various means to serialize MARC records in the marc-in-json format compared to using binary MARC-21.</description>
+    </item>
+    
+    <item>
+      <title>VuFind Midwest gathering</title>
+      <link>http://robotlibrarian.billdueber.com/2010/09/vufind-midwest-gathering/</link>
+      <pubDate>Thu, 16 Sep 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/09/vufind-midwest-gathering/</guid>
+      <description>A couple weeks ago, representatives from UMich (that&amp;rsquo;d be me), Purdue, Notre Dame, UChicago, and our hosts at Western Michigan got together in lovely Kalamazoo to talk about our VuFind implementations.
+Eric Lease Morgan already wrote up his notes about the meeting, and I encourage you to go there for more info, but I&amp;rsquo;ll add my two cents here.
+So, in light of that meeting, here&amp;rsquo;s what I&amp;rsquo;m thinking about VuFind of late:</description>
+    </item>
+    
+    <item>
+      <title>Simple Ruby gem for dealing with ISBN/ISSN/LCCN</title>
+      <link>http://robotlibrarian.billdueber.com/2010/09/simple-ruby-gem-for-dealing-with-isbnissnlccn/</link>
+      <pubDate>Mon, 13 Sep 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/09/simple-ruby-gem-for-dealing-with-isbnissnlccn/</guid>
+      <description>I needed some code to deal with ISBN10-&amp;gt;ISBN13 conversion, so I put in a few other functions and wrapped it all up in a gem called library_stdnums.
+It&amp;rsquo;s only 100 lines of code or so and some specs, but I put it out there in case others want to use it or add to it. Pull requests at the github repo are welcome.
+Functionality is all as module functions, as follows:</description>
+    </item>
+    
+    <item>
+      <title>Solr: Forcing items with all query terms to the top of a Solr search</title>
+      <link>http://robotlibrarian.billdueber.com/2010/08/solr-forcing-items-with-all-query-terms-to-the-top-of-a-solr-search/</link>
+      <pubDate>Wed, 18 Aug 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/08/solr-forcing-items-with-all-query-terms-to-the-top-of-a-solr-search/</guid>
+      <description>[Note: I&amp;rsquo;ve since made a better explanation of, and solution for, this problem.]
+Here at UMich, we&amp;rsquo;re apparently in the minority in that we have Mirlyn, our catalog discovery interface (a very hacked version of VuFind), set up to find records that match only a subset of the query terms.
+Put more succinctly: everyone else seem to join all terms with &amp;lsquo;AND&amp;rsquo;, whereas we do a DisMax variant on &amp;lsquo;OR&amp;rsquo;.</description>
+    </item>
+    
+    <item>
+      <title>Why RDA is doomed to failure</title>
+      <link>http://robotlibrarian.billdueber.com/2010/04/why-rda-is-doomed-to-failure/</link>
+      <pubDate>Fri, 23 Apr 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/04/why-rda-is-doomed-to-failure/</guid>
+      <description>[Note: edited for clarity thanks to rsinger&amp;rsquo;s comment, below]
+Doomed, I say! DOOOOOOOOOOMMMMMMMED!
+My reasoning is simple: RDA will fail because it&amp;rsquo;s not &amp;ldquo;better enough.&amp;rdquo;
+Now, those of you who know me might be saying to yourselves, &amp;ldquo;Waitjustaminute. Bill doesn&amp;rsquo;t know anything at all about cataloging, or semantic representations, or the relative merits of various encapsulations of bibliographic metadata. I mean, sure, he knows a lot about&amp;hellip;err&amp;hellip;.hmmm&amp;hellip;well, in any case, he&amp;rsquo;s definitely talking out of his ass on this one.</description>
+    </item>
+    
+    <item>
+      <title>Data structures and Serializations</title>
+      <link>http://robotlibrarian.billdueber.com/2010/04/data-structures-and-serializations/</link>
+      <pubDate>Tue, 20 Apr 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/04/data-structures-and-serializations/</guid>
+      <description>Jonathan Rochkind, in response to a long (and, IMHO, mostly ridiculous) thread on NGC4Lib, has been exploring the boundaries between a data model and its expression/serialization ( see here, here, and here ) and I thought I&amp;rsquo;d jump in.
+What this post is not There&amp;rsquo;s a lot to be said about a good domain model for bibliographic data. I&amp;rsquo;m so not the guy to say it. I know there are arguments for and against various aspects of the AACR2 and RDA and FRBR, and I&amp;rsquo;m unable to go into them.</description>
+    </item>
+    
+    <item>
+      <title>Stupid catalog tricks: Subject Headings and the Long Tail</title>
+      <link>http://robotlibrarian.billdueber.com/2010/04/stupid-catalog-tricks-subject-headings-and-the-long-tail/</link>
+      <pubDate>Tue, 13 Apr 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/04/stupid-catalog-tricks-subject-headings-and-the-long-tail/</guid>
+      <description>Library of Congress Subject Headings (LCSH) in particular.
+I&amp;rsquo;ve always been down on LCSH because I don&amp;rsquo;t understand them. They kinda look like a hierarchy, but they&amp;rsquo;re not really. Things get modifiers. Geography is inline and &amp;hellip;weird.
+And, of course, in our faceting catalog when you click on a linked LCSH to do an automatic search, you often get nothing but the record you started from. Which is super-annoying.</description>
+    </item>
+    
+    <item>
+      <title>Why bother with threading in jruby? Because it&#39;s easy.</title>
+      <link>http://robotlibrarian.billdueber.com/2010/03/why-bother-with-threading-in-jruby-because-its-easy/</link>
+      <pubDate>Fri, 12 Mar 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/03/why-bother-with-threading-in-jruby-because-its-easy/</guid>
+      <description>[Edit 2011-July-1: I&amp;rsquo;ve written a jruby_specific threach that takes advantage of better underlying java libraries called jruby_threach that is a much better option if you&amp;rsquo;re running jruby]
+Lately on the #code4lib IRC channel, several of us have been knocking around different versions (in several programming languages) of programs to read in a ginormous file and do some processing on each line. I noted some speedups related to multi-threading, and someone (maybe rsinger?</description>
+    </item>
+    
+    <item>
+      <title>Pushing MARC to Solr; processing times and threading and such</title>
+      <link>http://robotlibrarian.billdueber.com/2010/03/pushing-marc-to-solr-processing-times-and-threading-and-such/</link>
+      <pubDate>Thu, 04 Mar 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/03/pushing-marc-to-solr-processing-times-and-threading-and-such/</guid>
+      <description>[This is in response to a thread on the blacklight mailing list about getting MARC data into Solr.]
+What&amp;rsquo;s the question? The question came up, &amp;ldquo;How much time do we spend processing the MARC vs trying to push it into Solr?&amp;rdquo;. Bob Haschart found that even with a pretty damn complicated processing stage, pushing the data to solr was still, at best, taking at least as long as the processing stage.</description>
+    </item>
+    
+    <item>
+      <title>ruby-marc with pluggable readers</title>
+      <link>http://robotlibrarian.billdueber.com/2010/03/ruby-marc-with-pluggable-readers/</link>
+      <pubDate>Tue, 02 Mar 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/03/ruby-marc-with-pluggable-readers/</guid>
+      <description>I&amp;rsquo;ve been messing with easier ways of adding parsers to ruby-marc&amp;rsquo;s MARC::Reader object. The idea is that you can do this:
+require &#39;marc&#39; require &#39;my_marc_stuff&#39; mbreader = MARC::Reader.new(&#39;test.mrc&#39;) # =&amp;gt; Stock marc binary reader mbreader = MARC::Reader.new(&#39;test.mrc&#39; :readertype=&amp;gt;:marcstrict) # =&amp;gt; ditto MARC::Reader.register_parser(My::MARC::Parser, :marcstrict) mbreader = MARC::Reader.new(&#39;test.mrc&#39;) # =&amp;gt; Uses My::MARC::Parser now xmlreader = MARC::Reader.new(&#39;test.xml&#39;, :readertype=&amp;gt;:marcxml) # ...and maybe further on down the road asreader = MARC::Reader.new(&#39;test.seq&#39;, :readertype=&amp;gt;:alephsequential) mjreader = MARC::Reader.new(&#39;test.json&#39;, :readertype=&amp;gt;:marchashjson)  A parser need only implement #each and a module-level method #decode_from_string.</description>
+    </item>
+    
+    <item>
+      <title>New interest in MARC-HASH / JSON</title>
+      <link>http://robotlibrarian.billdueber.com/2010/02/new-interest-in-marc-hash-json/</link>
+      <pubDate>Fri, 26 Feb 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/02/new-interest-in-marc-hash-json/</guid>
+      <description>EDIT: This is historical &amp;ndash; the recommended serialization for marc in json is now Ross Singer&amp;rsquo;s marc-in-json. The marc-in-json serialization has implementations in the core marc libraries for Ruby and PHP, and add-ons for Perl and Java. C&amp;rsquo;mon, Python people! For reasons I&amp;rsquo;m still not entirely clear on (I wasn&amp;rsquo;t there), the Code4Lib 2010 conference this week inspired renewed interest in a JSON-based format for MARC data.
+When I initially looked at MARC-HASH almost a year ago, I was mostly looking for something that wasn&amp;rsquo;t such a pain in the butt to work with, something that would marshall into multiple formats easily and would simply and easily round-trip.</description>
+    </item>
+    
+    <item>
+      <title>OCLC still not (NO! They are!) normalizing their LCCNs</title>
+      <link>http://robotlibrarian.billdueber.com/2010/02/oclc-still-not-normalizing-their-lccns/</link>
+      <pubDate>Thu, 18 Feb 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/02/oclc-still-not-normalizing-their-lccns/</guid>
+      <description>NOTE 2: It turns out that I did find a minor bug in the system, but that in general LCCN normalization is working correctly. I just happened to hit a weirdness with a bad LCCN and a little bug in the parser on their end. Which is getting fixed. So...good news all around, and huge kudos to Xiaoming Liu for his quick response!  **NOTE** It strikes me that I haven&#39;t seen a case where bad data results from sending a valid LCCN.</description>
+    </item>
+    
+    <item>
+      <title>Indexing data into Solr via JRuby (with threads!)</title>
+      <link>http://robotlibrarian.billdueber.com/2010/02/indexing-data-into-solr-via-jruby-with-threads/</link>
+      <pubDate>Tue, 16 Feb 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/02/indexing-data-into-solr-via-jruby-with-threads/</guid>
+      <description>[Note: in this post I&amp;rsquo;m just going to focus on the &amp;ldquo;get stuff into Solr&amp;rdquo; part. My normal focus &amp;ndash; MARC data &amp;ndash; will make an appearance in the next post when I talk about using this in addition to / instead of solrmarc.]
+Working with Solr I love me the Solr. I love everything about it except that the best way to interact with it is via Java. I don&amp;rsquo;t so much love me the java.</description>
+    </item>
+    
+    <item>
+      <title>jruby_producer_consumer dead-simple producer/consumer for JRuby</title>
+      <link>http://robotlibrarian.billdueber.com/2010/02/jruby_producer_consumer-dead-simple-producerconsumer-for-jruby/</link>
+      <pubDate>Fri, 05 Feb 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/02/jruby_producer_consumer-dead-simple-producerconsumer-for-jruby/</guid>
+      <description>Yea! My first gem ever released!
+[YUCK! It was a disaster in a few ways! Don&#39;t look at this! It&#39;s hideous! There&#39;s a new jruby_producer_consumer gem on gemcutter that is slightly different from this in that it works. Ignore the stuff below.]
+[In working on a threaded JRuby-based MARC-to-Solr project, I realized that my threading stuff was&amp;hellip;ugly. And I didn&amp;rsquo;t really understand it. So I dug in today and wrote this.</description>
+    </item>
+    
+    <item>
+      <title>Still another look at MARC parsing in ruby and jruby</title>
+      <link>http://robotlibrarian.billdueber.com/2010/01/still-another-look-at-marc-parsing-in-ruby-and-jruby/</link>
+      <pubDate>Fri, 29 Jan 2010 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2010/01/still-another-look-at-marc-parsing-in-ruby-and-jruby/</guid>
+      <description>I&amp;rsquo;ve been looking at making a jruby-based solr indexer for MARC documents, and started off wanting to make sure I could determine if anything I did would be faster than our existing (solrmarc-based) setup.
+ Assertion: The upper bound on how fast I can process records and send them to Solr can be approximated by looking at how fast I can parse (and do nothing else to) marc records from a file.</description>
+    </item>
+    
+    <item>
+      <title>Beta version of the HathiTrust Volumes API available</title>
+      <link>http://robotlibrarian.billdueber.com/2009/12/beta-version-of-the-hathitrust-volumes-api-available/</link>
+      <pubDate>Tue, 15 Dec 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/12/beta-version-of-the-hathitrust-volumes-api-available/</guid>
+      <description>MAJOR CHANGE So, initially, this post listed that the way to separate multiple simultaneous requests was with a nice, URL-like slash (/) character.
+Then, I remembered that LCCNs can have embedded slashes, e.g., 65063380//r85.
+So, we&amp;rsquo;re back to using pipe (|) characters to separate multiple calls &amp;ndash; the examples below have been updated to reflect this.
+Introduction I&amp;rsquo;ve put up a beta version of the HathiTrust Volumes API previously discussed on this blog and via email.</description>
+    </item>
+    
+    <item>
+      <title>Running Blacklight under JRuby</title>
+      <link>http://robotlibrarian.billdueber.com/2009/11/running-blacklight-under-jruby/</link>
+      <pubDate>Wed, 18 Nov 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/11/running-blacklight-under-jruby/</guid>
+      <description>I decided to see if I could get Blacklight working under JRuby, starting with running the test suite and working my way up from there.
+There was much pain. Much, much pain. Exacerbated by my almost complete lack of knowledge about what I was doing.
+This is the procedure I eventually arrived at &amp;ndash; if there are places where I made trouble for myself, please let me know!
+[And does anyone know how to get jruby&amp;rsquo;s nokogiri to link to a different libxml and stop with the crappy libxml2-version error message every time I run it under OSX?</description>
+    </item>
+    
+    <item>
+      <title>Setting up your OPAC for Zotero support using unAPI</title>
+      <link>http://robotlibrarian.billdueber.com/2009/11/setting-up-your-opac-for-zotero-support-using-unapi/</link>
+      <pubDate>Fri, 06 Nov 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/11/setting-up-your-opac-for-zotero-support-using-unapi/</guid>
+      <description>unAPI is a very simple protocol to let a machine know what other formats a document is available in. Zotero is a bibliographic management tool (like Endnote or Refworks) that operates as a Firefox plugin. And it speaks unAPI.
+Let&amp;rsquo;s get them to play nice with each other!
+How&amp;rsquo;s it all work?  Zotero looks for a well-constructed &amp;lt;link&amp;gt; tag in the head of the page It checks the document on the other side of that link to see what formats are offered, and picks one to use.</description>
+    </item>
+    
+    <item>
+      <title>Thinking through a simple API for HathiTrust item metadata</title>
+      <link>http://robotlibrarian.billdueber.com/2009/11/thinking-through-a-simple-api-for-hathitrust-item-metadata/</link>
+      <pubDate>Tue, 03 Nov 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/11/thinking-through-a-simple-api-for-hathitrust-item-metadata/</guid>
+      <description>EDITS:
+ Added &amp;ldquo;recordURL&amp;rdquo; per Tod&amp;rsquo;s request Made a record&amp;rsquo;s title field an array and call it titles, to allow for vernacular entries Changed item&amp;rsquo;s ingest to lastUpdate to accurately note what the actual date reflects. This gets updated every time either the item or the record to which it&amp;rsquo;s attached gets changed. Fixed a couple typos, including one where I substituted an ampersand for a pipe in the multi-get example (thanks again, Tod).</description>
+    </item>
+    
+    <item>
+      <title>Adding LibXML and Java STAX support to ruby-marc with pluggable XML parsers</title>
+      <link>http://robotlibrarian.billdueber.com/2009/10/adding-libxml-and-java-stax-support-to-ruby-marc-with-pluggable-xml-parsers-2/</link>
+      <pubDate>Wed, 07 Oct 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/10/adding-libxml-and-java-stax-support-to-ruby-marc-with-pluggable-xml-parsers-2/</guid>
+      <description>JRuby is my ruby platform of choice, mostly because I think its deployment options in my work environment are simpler (perhaps technically and certainly politically), but also because I have high, high hopes to use lots of super-optimized native java libraries. The CPAN is what keeps me tethered to Perl, and whether or not you like Java-the-language, boy, are there a lot of high-quality libraries out there.
+Since I&amp;rsquo;ve been messing around with MARC-XML parsing of late, and since Ross Singer added pluggable xml-parser awesomeness to the ruby-marc project, I thought I&amp;rsquo;d see what I could do with native Java methods when parsing MARC-XML.</description>
+    </item>
+    
+    <item>
+      <title>An exercise in Solr and DataImportHandler: HathiTrust data</title>
+      <link>http://robotlibrarian.billdueber.com/2009/09/an-exercise-in-solr-and-dataimporthandler-hathitrust-data/</link>
+      <pubDate>Mon, 28 Sep 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/09/an-exercise-in-solr-and-dataimporthandler-hathitrust-data/</guid>
+      <description>Many of the folks who read this blog (hi, both of you! Mom, say hello to Dad!) are aware, at least tangentially, of the HathiTrust. Currently hosted by us at the University of Michigan, the most public interface to its data is a VuFind installation you can access at catalog.hathitrust.org (or, for you smart-phone types, at m.catalog.hathitrust.org). Once you do a metadata search, you get links into the actual page images or a chance to search the fulltext of the selected item (depending on its copyright status).</description>
+    </item>
+    
+    <item>
+      <title>Dead-easy (but extreme) AJAX logging in our VuFind install</title>
+      <link>http://robotlibrarian.billdueber.com/2009/09/dead-easy-but-extreme-ajax-logging-in-our-vufind-install/</link>
+      <pubDate>Fri, 25 Sep 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/09/dead-easy-but-extreme-ajax-logging-in-our-vufind-install/</guid>
+      <description>One of the advantages of having complete control over the OPAC is that I change things pretty easily. The downside of that is that we need to know what to change.
+Many of you that work in libraries may have noticed that data are not necessarily the primary tool in decision-making. Or, say, even a part of the process. Or even thought about hard. Or even considered.
+For many decisions I see going on in the library world, the primary motivator is the anecdote.</description>
+    </item>
+    
+    <item>
+      <title>The sad truths about journal bundle prices</title>
+      <link>http://robotlibrarian.billdueber.com/2009/09/the-sad-truths-about-journal-bundle-prices/</link>
+      <pubDate>Wed, 23 Sep 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/09/the-sad-truths-about-journal-bundle-prices/</guid>
+      <description>[Notes taken during a talk today, Ted Bergstrom: &amp;ldquo;Some Economics of Saying Nix To Big Deals and the Terrible Fix&amp;rdquo;. My own thoughts are interspersed throughout; please don&amp;rsquo;t automatically ascribe everything to Dr. Bergstrom.
+Check out his stuff at Ted Bergstrom&amp;rsquo;s home page.]
+Journals are a weird market &amp;ndash; libraries buy as agents of professors, using someone else&amp;rsquo;s money, in deals of enormous complexity and uncertain value from companies that basically have a monopoly.</description>
+    </item>
+    
+    <item>
+      <title>More Ruby MARC Benchmarks: Adding in MARC-XML</title>
+      <link>http://robotlibrarian.billdueber.com/2009/09/more-marc-benchmars-adding-in-marc-xml/</link>
+      <pubDate>Fri, 18 Sep 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/09/more-marc-benchmars-adding-in-marc-xml/</guid>
+      <description>It turns out that UVA&amp;rsquo;s reluctance to use the raw MARC data on the search results screen is driven more by processing time than parsing time. Even if they were to start with a fully-parsed MARC object, they&amp;rsquo;re doing enough screwing around with that data that the bottleneck on their end appears to be all the regex and string processing, not the parsing. Their specs for what gets displayed are complex enough that they want to do the work up-front.</description>
+    </item>
+    
+    <item>
+      <title>Benchmarking MARC record parsing in Ruby</title>
+      <link>http://robotlibrarian.billdueber.com/2009/09/benchmarking-marc-record-parsing-in-ruby/</link>
+      <pubDate>Thu, 17 Sep 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/09/benchmarking-marc-record-parsing-in-ruby/</guid>
+      <description>[Note: since I started writing this, I found out Bess &amp;amp; Co. store MARC-XML. That makes a difference, since XML in Ruby can be really, really slow]
+[UPADTE It turns out they don&amp;rsquo;t use MARC-XML. They use MARC-Binary just like the rest of us. Oops. ]
+[UP-UPDATE Well, no, they do use MARC-XML. I&amp;rsquo;m not afraid to constantly change my story. This is why I&amp;rsquo;m the best investigative reporter in the business]</description>
+    </item>
+    
+    <item>
+      <title>Building a solr text filter for normalizing data</title>
+      <link>http://robotlibrarian.billdueber.com/2009/08/building-a-solr-text-filter-for-normalizing-data/</link>
+      <pubDate>Thu, 20 Aug 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/08/building-a-solr-text-filter-for-normalizing-data/</guid>
+      <description>[Kind of part of a continuing series on our VUFind implementation; more of a sidebar, really.]
+In my last post I made the case that you should put as much data normalization into Solr as possible. The built-in text filters will get you a long, long way, but sometimes you want to have specialized code, and then you need to build your own filter.
+Huge Disclaimer: I&amp;rsquo;m putting this up not because I&amp;rsquo;m the best person to do so, but because it doesn&amp;rsquo;t look as if anyone else has.</description>
+    </item>
+    
+    <item>
+      <title>Easy Solr types for library data</title>
+      <link>http://robotlibrarian.billdueber.com/2009/08/easy-solr-types-for-library-data/</link>
+      <pubDate>Wed, 19 Aug 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/08/easy-solr-types-for-library-data/</guid>
+      <description>[Yet another bit in a series about our Vufind installation]
+While I&amp;rsquo;m no longer shocked at the terrible state of our data every single day, I&amp;rsquo;m still shocked pretty often. We figured out pretty quickly that anything we could do to normalize data as it went into the Solr index (and, in fact, as queries were produced) would be a huge win.
+There&amp;rsquo;s a continuum of attitudes about how much &amp;ldquo;business logic&amp;rdquo; belongs in the database layer of any application.</description>
+    </item>
+    
+    <item>
+      <title>Going with and &#34;forking&#34; VUFind</title>
+      <link>http://robotlibrarian.billdueber.com/2009/08/going-with-and-forking-vufind/</link>
+      <pubDate>Wed, 19 Aug 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/08/going-with-and-forking-vufind/</guid>
+      <description>Note: This is the second in a series I&amp;rsquo;m doing about our VUFind installation, Mirlyn. Here I talk about how we got to where we are. Next I&amp;rsquo;ll start looking at specific technologies, how we solved various problems, and generally more nerd-centered stuff.
+When the University Library decided to go down the path of an open-source, solr-based OPAC, there were (and are, I guess) two big players: VUFind and Blacklight.</description>
+    </item>
+    
+    <item>
+      <title>Sending unicode email headers in PHP</title>
+      <link>http://robotlibrarian.billdueber.com/2009/08/sending-unicode-email-headers-in-php/</link>
+      <pubDate>Mon, 17 Aug 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/08/sending-unicode-email-headers-in-php/</guid>
+      <description>I&amp;rsquo;m probably the last guy on earth to know this, but I&amp;rsquo;m recording it here just in case. I&amp;rsquo;m sending record titles in the subject line of emails, and of course they may be unicode. The body takes care of itself, but you need to explicitly encode a header like &amp;ldquo;Subject.&amp;rdquo;
+$headers[&#39;To&#39;] = $to; $headers[&#39;From&#39;] = $from; $headers[&#39;Content-Type&#39;] = &amp;quot;text/plain; charset=utf-8&amp;quot;; $headers[&#39;Content-Transfer-Encoding&#39;] = &amp;quot;8bit&amp;quot;; $b64subject = &amp;quot;=?UTF-8?B?&amp;quot; . base64_encode($subject) . &amp;quot;?</description>
+    </item>
+    
+    <item>
+      <title>Rolling out UMich&#39;s &#34;VUFind&#34;: Introduction and New Features</title>
+      <link>http://robotlibrarian.billdueber.com/2009/08/rolling-out-umichs-vufind-introduction-and-new-features/</link>
+      <pubDate>Fri, 14 Aug 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/08/rolling-out-umichs-vufind-introduction-and-new-features/</guid>
+      <description>For the last few months, I&#39;ve been working on rolling out a ridiculous-modified version of Vufind, which we just launched as our primary OPAC, Mirlyn, with a slightly-different version powering catalog.hathitrust.org, a temporary metadata search on the HathiTrust data until the OCLC takes it over at some undetermined date.
+(Yeah, the HathiTrust site is a lot better looking.)
+[Our Aleph-based catalog lives on at mirlyn-classic) -- I&#39;ll be interested to see how the traffic on the two differs as time goes on.</description>
+    </item>
+    
+    <item>
+      <title>Sending MARC(ish) data to Refworks</title>
+      <link>http://robotlibrarian.billdueber.com/2009/05/sending-marcish-data-to-refworks/</link>
+      <pubDate>Mon, 11 May 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/05/sending-marcish-data-to-refworks/</guid>
+      <description>Refworks has some okish documentation about how to deal with its callback import procedure, but I thought I&amp;rsquo;d put down how I&amp;rsquo;m doing it for our vufind install (mirlyn2-beta.lib.umich.edu) in case other folks are interested.
+The basic procedure is:
+ Send your user to a specific refworks URL along with a callback URL that can enumerate the record(s) you want to import in a supported form Your user logs in (if need be) gets to her RefWorks page RefWorks calls up your system and requests the record(s) The import happens, and your user does whatever she want to do with them  Of course, there are lots of issues with doing this well (quick!</description>
+    </item>
+    
+    <item>
+      <title>MARC-HASH control field, now with less structure</title>
+      <link>http://robotlibrarian.billdueber.com/2009/04/marc-hash-control-field-now-with-less-structure/</link>
+      <pubDate>Wed, 15 Apr 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/04/marc-hash-control-field-now-with-less-structure/</guid>
+      <description>Why do I ever, ever think that MARC might not rely on order? I don&amp;rsquo;t know.
+In any case, control fields will now be just an array of duples:
+control: [ [&#39;001&#39;, &#39;value of the 001&#39;], [&#39;006&#39;, &#39;value of the 006&#39;] [&#39;006&#39;, &#39;another 006&#39;] }  </description>
+    </item>
+    
+    <item>
+      <title>MARC-HASH: The saga continues (now with even less structure)</title>
+      <link>http://robotlibrarian.billdueber.com/2009/04/marc-hash-the-saga-continues-now-with-even-less-structure/</link>
+      <pubDate>Wed, 15 Apr 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/04/marc-hash-the-saga-continues-now-with-even-less-structure/</guid>
+      <description>After a medium-sized discussion on #code4lib, we&amp;rsquo;ve collectively decided that&amp;hellip;well, ok, no one really cares all that much, but a few people weighed in.
+The new format is: A list of arrays. If it&amp;rsquo;s got two elements, it&amp;rsquo;s a control field; if it&amp;rsquo;s got four, it&amp;rsquo;s a data field.
+SO&amp;hellip;.it&amp;rsquo;s like this now.
+{ &amp;quot;type&amp;quot; : &amp;quot;marc-hash&amp;quot;, &amp;quot;version&amp;quot; : [1, 0], &amp;quot;leader&amp;quot; : &amp;quot;leader string&amp;quot; &amp;quot;fields&amp;quot; : [ [&amp;quot;001&amp;quot;, &amp;quot;001 value&amp;quot;] [&amp;quot;002&amp;quot;, &amp;quot;002 value&amp;quot;] [&amp;quot;010&amp;quot;, &amp;quot; &amp;quot;, &amp;quot; &amp;quot;, [ [&amp;quot;a&amp;quot;, &amp;quot;68009499&amp;quot;] ] ], [&amp;quot;035&amp;quot;, &amp;quot; &amp;quot;, &amp;quot; &amp;quot;, [ [&amp;quot;a&amp;quot;, &amp;quot;(RLIN)MIUG0000733-B&amp;quot;] ], ], [&amp;quot;035&amp;quot;, &amp;quot; &amp;quot;, &amp;quot; &amp;quot;, [ [&amp;quot;a&amp;quot;, &amp;quot;(CaOTULAS)159818014&amp;quot;] ], ], [&amp;quot;245&amp;quot;, &amp;quot;1&amp;quot;, &amp;quot;0&amp;quot;, [ [&amp;quot;a&amp;quot;, &amp;quot;Capitalism, primitive and modern;&amp;quot;], [&amp;quot;b&amp;quot;, &amp;quot;some aspects of Tolai economic growth&amp;quot; ], [&amp;quot;c&amp;quot;, &amp;quot;[by] T.</description>
+    </item>
+    
+    <item>
+      <title>MARC-Hash: a proposed format for JSON/YAML/Whatever-compatible MARC records </title>
+      <link>http://robotlibrarian.billdueber.com/2009/04/marc-hash-a-proposed-format-for-jsonyamlwhatever-compatible-marc-records/</link>
+      <pubDate>Mon, 13 Apr 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/04/marc-hash-a-proposed-format-for-jsonyamlwhatever-compatible-marc-records/</guid>
+      <description>In my first shot at MARC-in-JSON, which I appropriately (and prematurely) named MARC-JSON, I made a point of losing round-tripability (to and from MARC) in order to end up with a nice, easy-to-work-with data structure based mostly on hashes. &amp;ldquo;Who really cares what order the subfields come in?&amp;rdquo; I asked myself.
+Well, of course, it turns out some people do. Some even care about the order of the tags. &amp;ldquo;Only in the 500s&amp;hellip;usually&amp;rdquo; I was told today.</description>
+    </item>
+    
+    <item>
+      <title>A plea: use Solr to normalize your data</title>
+      <link>http://robotlibrarian.billdueber.com/2009/03/a-plea-use-solr-to-normalize-your-data/</link>
+      <pubDate>Mon, 30 Mar 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/03/a-plea-use-solr-to-normalize-your-data/</guid>
+      <description>[Only, of course, if you&amp;rsquo;re using Solr. Otherwise, that&amp;rsquo;d be dumb.]
+We&amp;rsquo;ve been working on Mirlyn2-Beta, our installation of VuFind for some time now (don&amp;rsquo;t let the fancy-pants name scare you off), and the further we get into it, the more obvious it is that I want to move as much data normalization into Solr itself as possible.
+Arguments about how much business logic to move into the database layer, in the form of foreign-key requirements, cascading inserts and deletes, stored procedures, etc.</description>
+    </item>
+    
+    <item>
+      <title>Enough with the freakin&#39; LC Call Number normalization!</title>
+      <link>http://robotlibrarian.billdueber.com/2009/03/enough-with-the-freakin-lc-call-number-normalization/</link>
+      <pubDate>Wed, 18 Mar 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/03/enough-with-the-freakin-lc-call-number-normalization/</guid>
+      <description>OK. I&amp;rsquo;m done with it, and this time I mean it.
+I&amp;rsquo;ve updated and improved the lc normalization code, documented the algorithm, and put it all into Google Code. In the next couple weeks, I&amp;rsquo;ll be turning it into a Solr text filter so we can do some decent sorting on call-number search results.</description>
+    </item>
+    
+    <item>
+      <title>Ask, and you shall receive, and it shall be AWESOME!</title>
+      <link>http://robotlibrarian.billdueber.com/2009/02/ask-and-you-shall-receive-and-it-shall-be-awesome/</link>
+      <pubDate>Thu, 12 Feb 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/02/ask-and-you-shall-receive-and-it-shall-be-awesome/</guid>
+      <description>The good folks at ticTocs heard the call for open data, and they responded&amp;hellip;exactly as I asked them to. Which makes me think I should have asked for a pony, too, but I&amp;rsquo;m still very, very happy!
+Anyone can now download a simple tab-delimited text file describing all the journal table of contents RSS files they&amp;rsquo;ve assembled, for use however anyone wants.
+The data include issns and eissns (where available), the title of the journal, and of course the URL of the RSS/Atom/Whatever feed.</description>
+    </item>
+    
+    <item>
+      <title>TicTocs: Give us a file! Pretty pretty pretty please!</title>
+      <link>http://robotlibrarian.billdueber.com/2009/02/tictocs-give-us-a-file-pretty-pretty-pretty-please/</link>
+      <pubDate>Mon, 02 Feb 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/02/tictocs-give-us-a-file-pretty-pretty-pretty-please/</guid>
+      <description>For those who haven&amp;rsquo;t heard, ticTOCs is a service that provides web-based access to a database of Journal RSS/Atom Table of Contents feeds. Awesome.
+In their blog at News from TicTocs, a post titled I want to be completely honest with you about ticTOCs notes that: As for the API - yes, we’ve been asked this several times, and the answer is that it is currently being written and should be available very soon.</description>
+    </item>
+    
+    <item>
+      <title>Five rules to make your open source more open</title>
+      <link>http://robotlibrarian.billdueber.com/2009/01/five-rules-to-make-your-open-source-more-open/</link>
+      <pubDate>Sun, 25 Jan 2009 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2009/01/five-rules-to-make-your-open-source-more-open/</guid>
+      <description>[I&amp;rsquo;ve noticed that a sure way to get people to look at stuff (as measured by, say, digg) is to include a number. So I did. Five. ]
+Over at Bibliographic Wilderness, Jonathan Rothkind has a great followup to an ongoing discussion on the Blacklight list called How to build shared open source in which he tackles some of the differences between open-sourcing your code (a legal and distribution issue) and actually making it so someone else can usefully contribute to your code.</description>
+    </item>
+    
+    <item>
+      <title>And then I finally shut the hell up</title>
+      <link>http://robotlibrarian.billdueber.com/2008/12/and-then-i-finally-shut-the-hell-up/</link>
+      <pubDate>Mon, 08 Dec 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/12/and-then-i-finally-shut-the-hell-up/</guid>
+      <description>I had a great &amp;mdash; great! I tell you &amp;ndash; 30 second conversation with Ken Varnum (of RSS4Lib fame) that went something like this (much paraphrasing, obviously):
+B: You&#39;re gonna have to fix that interface. The standard header won&#39;t work. K: Well, no, we&#39;re going leave it as it is. B: It&#39;s not gonna work. K: We&#39;ve decided to make it all consistent. B: OK, you can keep saying that, but I&#39;m really, really smart and I say users are going to be confused.</description>
+    </item>
+    
+    <item>
+      <title>Normalizing LoC Call Numbers for sorting</title>
+      <link>http://robotlibrarian.billdueber.com/2008/11/normalizing-loc-call-numbers-for-sorting/</link>
+      <pubDate>Thu, 13 Nov 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/11/normalizing-loc-call-numbers-for-sorting/</guid>
+      <description>Updated: I missed a &amp;lsquo;?&amp;rsquo; in the original code that pushed a single cutter into the second-cutter position. Fixed below.
+Crap. Update 2: Initial letters can be three characters long. Regexp and output changed.
+LoC Call numbers tend to be a mess, and I&amp;rsquo;ve been working this morning trying to normalize them for easy string comparison.
+The perl function below takes a call number (with some level of sloppiness) and returns a string suitable for comparisons with other strings returned by the function.</description>
+    </item>
+    
+    <item>
+      <title>How to rig an election</title>
+      <link>http://robotlibrarian.billdueber.com/2008/11/how-to-rig-an-election/</link>
+      <pubDate>Mon, 03 Nov 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/11/how-to-rig-an-election/</guid>
+      <description>No matter where I&amp;rsquo;ve gone today and for the past few days, I keep running into people (on both sides) who are sure that if Their Guy Doesn&amp;rsquo;t Win, it&amp;rsquo;s going to be because of dirty tactics.
+I&amp;rsquo;m not an expert in this stuff. Not by a long shot. But I thought it would be fun to work out, for my own benefit, types of election fraud and what to really worry about.</description>
+    </item>
+    
+    <item>
+      <title>Wanted: a better proxy server</title>
+      <link>http://robotlibrarian.billdueber.com/2008/10/wanted-a-better-proxy-server/</link>
+      <pubDate>Thu, 02 Oct 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/10/wanted-a-better-proxy-server/</guid>
+      <description>We in the library world have a problem. We spend a zillion-with-a-Z dollars subscribing to online databases, purchases which presume our ability to make sure only authorized people can look at them. The alternative is to be in breach of contract law, which I&amp;rsquo;ve been assured is something we&amp;rsquo;d like to avoid.
+The problem I see is this: The limitations of our proxy server software restrict how we can write contracts with our vendors.</description>
+    </item>
+    
+    <item>
+      <title>Planet Code4Lib in a snapshot</title>
+      <link>http://robotlibrarian.billdueber.com/2008/07/planet-code4lib-in-a-snapshot/</link>
+      <pubDate>Mon, 07 Jul 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/07/planet-code4lib-in-a-snapshot/</guid>
+      <description>Inspired by the Inquiring Librarian, I just used Wordle to create a &amp;ldquo;tagcloud&amp;rdquo; of the current [Planet Code4Lib]() feed.
+What kills me is the tiny little &amp;ldquo;Library&amp;rdquo; in the lower left-hand corner.</description>
+    </item>
+    
+    <item>
+      <title>Intuition-based librarianship?</title>
+      <link>http://robotlibrarian.billdueber.com/2008/07/intuition-based-librarianship/</link>
+      <pubDate>Wed, 02 Jul 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/07/intuition-based-librarianship/</guid>
+      <description>Not long after I started working in the library, I heard someone talking about &amp;ldquo;Evidence Based Librarianship.&amp;rdquo; Like the good little kind-of-a-librarian I&amp;rsquo;d become, I looked it up and found this article which states that:
+ EBL employs the best available evidence based upon library science research to arrive at sound decisions about solving practical problems in librarianship.
+ My immediate response was, of course, What the $#!&amp;amp;% is everyone else doing?</description>
+    </item>
+    
+    <item>
+      <title>Google Doctype -- open documentation, open code</title>
+      <link>http://robotlibrarian.billdueber.com/2008/05/google-doctype-open-documentation-open-code/</link>
+      <pubDate>Thu, 15 May 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/05/google-doctype-open-documentation-open-code/</guid>
+      <description>Because you can never have too many open encyclopedia-type-thingies, Google has launched Google Doctype, a &amp;ldquo;Google-sponsored open encyclopedia and reference library for developers of web applications. By web developers, for web developers.&amp;rdquo; It&amp;rsquo;s set up to use an open license (Creative Commons Attribution 3.0 Unported License) and, unlike other similar resources, is explicitly set up to include code for testing and browser-compatibility tables generated by running that code against different browsers.</description>
+    </item>
+    
+    <item>
+      <title>The friend of my enemy&#39;s friend&#39;s enemy&#39;s...err...</title>
+      <link>http://robotlibrarian.billdueber.com/2008/05/the-friend-of-my-enemys-friends-enemyserr/</link>
+      <pubDate>Thu, 15 May 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/05/the-friend-of-my-enemys-friends-enemyserr/</guid>
+      <description>Move over, Axis of Evil! Our 43rd president, George W. Bush (and you gotta know that his dad hangs on to that &amp;lsquo;H.&amp;rsquo; with two white-knuckled hands) is now in search of &amp;ldquo;the surest way to defeat the enemies of hatred.&amp;rdquo; Of course, we&amp;rsquo;re the best of friends with hatred here at Robot Librarian, so we should be safe.</description>
+    </item>
+    
+    <item>
+      <title>JSON, JSON everywhere</title>
+      <link>http://robotlibrarian.billdueber.com/2008/05/json-json-everywhere/</link>
+      <pubDate>Tue, 13 May 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/05/json-json-everywhere/</guid>
+      <description>Via Ajaxian, just saw an announcement for Persevere, a network-centric, JSON-based generic storage engine. It features:
+ A REST-based interface over regular old HTTP JSON as the native data going in and out, including circular references and such Search interface based around JSONPath RPC interface based on JSON-RPC Seemingly buzzword compliant across the board  I&amp;rsquo;ve been thinking about these sorts of servers a lot lately (couchdb and strokedb are two others) in the context of the &amp;ldquo;not-the-catalog&amp;rdquo; data we track here at the library.</description>
+    </item>
+    
+    <item>
+      <title>Psst. We&#39;re not printing cards anymore</title>
+      <link>http://robotlibrarian.billdueber.com/2008/05/psst-were-not-printing-cards-anymore/</link>
+      <pubDate>Mon, 12 May 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/05/psst-were-not-printing-cards-anymore/</guid>
+      <description>[From a series I&amp;rsquo;m calling, &amp;ldquo;Things About The Library I Think Are Stoooopid&amp;rdquo;, part one of about a zillion.]
+I&amp;rsquo;m going to wallow in a little bit of hyperbole here, but only a little.
+The problem Suppose, just for a moment, that you&amp;rsquo;re a computer programmer working anytime in the last twenty years, and someone wants you to set up a data structure to deal with a timeless issue &amp;ndash; how to keep track of who&amp;rsquo;s on which committees in a library.</description>
+    </item>
+    
+    <item>
+      <title>UPenn library has video &#34;commercials&#34;</title>
+      <link>http://robotlibrarian.billdueber.com/2008/05/upenn-library-has-video-commercials/</link>
+      <pubDate>Wed, 07 May 2008 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2008/05/upenn-library-has-video-commercials/</guid>
+      <description>The University of Pennsylvania Library has a set of video commercials touting their products &amp;ndash; some of which are musicals! Worth a look-see.</description>
+    </item>
+    
+  </channel>
+</rss>

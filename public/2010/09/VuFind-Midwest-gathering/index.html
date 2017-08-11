@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="VuFind Midwest gathering">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | VuFind Midwest gathering</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2010-09-16 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2010/09/vufind-midwest-gathering/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>VuFind Midwest gathering
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<p>A couple weeks ago, representatives from UMich (that&rsquo;d be me), Purdue, Notre Dame, UChicago, and our hosts at Western Michigan got together in lovely Kalamazoo to talk about our VuFind implementations.</p>
+
+<p>Eric Lease Morgan <a href="http://www.catholicresearch.net/blog/2010/09/vufind-midwest-users-group-meeting/">already wrote up his notes</a> about the meeting, and I encourage you to go there for more info, but I&rsquo;ll add my two cents here.</p>
+
+<p>So, in light of that meeting, here&rsquo;s what I&rsquo;m thinking about VuFind of late:</p>
+
+<ul>
+<li><p>None of us are running VuFuind 1.0 as released with full catalog data. Eric has a <a href="http://www.catholicresearch.net/">special purpose portal</a> running the current code over an aggregated special collection and hasn&rsquo;t done much to the underlying PHP. The rest of us were running heavily modified versions of RC1. An issue we had in common was that the changes from RC1 to RC2 to 1.0 release were so significant, including some complete architectual change (some based on the stuff I&rsquo;ve done with <a href="http://mirlyn.lib.umich.edu/">mirlyn</a>) that the effort required to get up with 1.0 would be no less significant than the effort to switch wholesale to something else (e.g., <a href="http://blacklightopac.org/">Blacklight</a>).</p></li>
+
+<li><p>A point that I made that was echoed by others is that we need to remember that these new discovery systems are all just thin wrappers over <a href="http://lucene.apache.org/solr/">Solr</a>. They basically have two jobs: to get a query and format it in a way that Solr can handle, and then to take the Solr results and display them. There&rsquo;s some sugar on top of that (exporting, tagging, etc) but that&rsquo;s really it. The heavy lifting is all done by your indexer (<a href="http://code.google.com/p/solrmarc/">Solrmarc</a> for most, although watch this space for my announcement of my JRuby-based stuff today) and Solr itself. <em>It&rsquo;s not a hard problem</em>, although it is occasionally a messy one.</p></li>
+
+<li><p>VuFind has, in my mind, fundamental architectural issues mostly based on the inability to easily separate local code from core code. A re-architecture to base everything on subclasses of the core code would help, but at some point you start to run up against fundamental limitations of PHP and Smarty to do things cleanly. Without the ability to update core code and know it won&rsquo;t affect your local code, there&rsquo;s no good way to keep on track with the trunk of the code and do upgrades; for the same reason, it&rsquo;s almost impossible to send changes back to trunk.</p></li>
+
+<li><p>Coupled tightly to the architectural issues is the lack of tests. The code is potentially very brittle; there&rsquo;s no good way to know if you&rsquo;re breaking anything until you notice it&rsquo;s broken. It&rsquo;s not at all clear how to write good tests for the code, because there&rsquo;s a lot of inter-dependencies.</p></li>
+
+<li><p>The second big problem is one of community; to wit, there isn&rsquo;t much of one. There are some active players, and there&rsquo;s what seems like a <a href="http://vufind.org/schedule.php">great conference</a> going on right now, so this may change.  But &ndash; especially because of the technical difficulties in contributing local changes back &ndash;VuFind could use a benevolent dictator, someone who has organizing and administrating VuFind <em>be a part of his/her job</em>. The last bit is important.</p></li>
+</ul>
+
+<p>All of these are surmountable issues. The reason they&rsquo;re at the top of my head, of course, is that the Blacklight community has, in many ways, already taken care of most of them.</p>
+
+<p>If I were starting from scratch tomorrow, we&rsquo;d already decided to do something locally, and I could convince my systems people to run a ruby implementation (I like JRuby myself), I&rsquo;d go with Blacklight. If we were already looking at something like Summon, I&rsquo;d take a hard, hard look at the build-vs-buy numbers. Summon and Primo both give you APIs to program an interface against, and boy, it might be worth the effort to do so and leave everything else alone.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ruby on Robot Librarian</title>
+    <link>http://robotlibrarian.billdueber.com/tags/ruby/</link>
+    <description>Recent content in Ruby on Robot Librarian</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Jul 2011 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://robotlibrarian.billdueber.com/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Even better, even simpler multithreading with JRuby</title>
+      <link>http://robotlibrarian.billdueber.com/2011/07/even-better-even-simpler-multithreading-with-jruby/</link>
+      <pubDate>Fri, 01 Jul 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/07/even-better-even-simpler-multithreading-with-jruby/</guid>
+      <description>[Yes, another post about ruby code; I&amp;rsquo;ll get back to library stuff soon.]
+Quite a while ago, I released a little gem called threach (for &amp;ldquo;threaded #each&amp;rdquo;). It allows you to easily process a block with multiple threads.
+# Process a CSV file with three threads FIle.open(&#39;data.csv&#39;).threach(3, :each_line) {|line| send_to_db(line)}  Nice, right?
+The problem is that I could never figure out a way to deal with a break or an Exception raised inside the block.</description>
+    </item>
+    
+    <item>
+      <title>Ruby gem library_stdnums goes to version 1.0</title>
+      <link>http://robotlibrarian.billdueber.com/2011/05/ruby-gem-library_stdnums-goes-to-version-1-0/</link>
+      <pubDate>Fri, 06 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/05/ruby-gem-library_stdnums-goes-to-version-1-0/</guid>
+      <description>I just released another (this time pretty good) version of my gem for normalizing/validating library standard numbers, library_stdnums (github source / docs).
+The short version of the functions available:
+ ISBN: get checkdigit, validate, convert isbn10 to/from isbn13, normalize (to 13-digit) ISSN: get checkdigit, validate, normalize LCCN: validate, normalize  Validation of LCCNs doesn&amp;rsquo;t involve a checkdigit; I basically just normalize whatever is sent in and then see if the result is syntactically valid.</description>
+    </item>
+    
+    <item>
+      <title>A short ruby diversion: cost of flow control under Ruby</title>
+      <link>http://robotlibrarian.billdueber.com/2011/05/a-short-ruby-diversion-cost-of-flow-control-under-ruby/</link>
+      <pubDate>Tue, 03 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/05/a-short-ruby-diversion-cost-of-flow-control-under-ruby/</guid>
+      <description>A couple days ago I decided to finally get back to working on threach to try to deal with problems it had &amp;ndash; essentially, it didn&amp;rsquo;t deal well with non-local exits due to calls to break or even something simple like a NoMethodError.
+[BTW, I think I managed it. As near as I can tell, threach version 0.4 won&amp;rsquo;t deadlock anymore]
+Along the way, while trying to figure out how threads affect the behavior of different non-local exits, I noticed that in some cases there was still work being done by one or more threads long after there was an exception raised.</description>
+    </item>
+    
+    <item>
+      <title>Four things I hate about Ruby</title>
+      <link>http://robotlibrarian.billdueber.com/2011/01/four-things-i-hate-about-ruby/</link>
+      <pubDate>Thu, 13 Jan 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/01/four-things-i-hate-about-ruby/</guid>
+      <description>Don&amp;rsquo;t get me wrong. I use ruby as my default language when possible. I love JRuby in a way that&amp;rsquo;s illegal in most states.
+But there are&amp;hellip;issues. There are with any language and the associated environment. These are the ones that bug the crap out of me.
+ Ruby is slow. Let&amp;rsquo;s get this one out of the way right away. Ruby (at least the MRI 1.8.x implementation) is, for many things, slow.</description>
+    </item>
+    
+  </channel>
+</rss>

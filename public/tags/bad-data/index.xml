@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bad Data on Robot Librarian</title>
+    <link>http://robotlibrarian.billdueber.com/tags/bad-data/</link>
+    <description>Recent content in Bad Data on Robot Librarian</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 12 Apr 2011 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://robotlibrarian.billdueber.com/tags/bad-data/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ISBN parenthetical notes: Bad MARC data #1</title>
+      <link>http://robotlibrarian.billdueber.com/2011/04/isbn-parenthetical-notes-bad-marc-data-1/</link>
+      <pubDate>Tue, 12 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/04/isbn-parenthetical-notes-bad-marc-data-1/</guid>
+      <description>Yesterday, I gave a brief overview of why free text is hard to deal with.
+Today, I&amp;rsquo;m turning my attention to a concrete example that drives me absolutely batshit crazy: taking a perfectly good unique-id field (in this case, the ISBN in the 020) and appending stuff onto the end of it.
+The point is not to mock anything. Mocking will, however, be included for free.
+What&amp;rsquo;s supposed to be in the 020?</description>
+    </item>
+    
+    <item>
+      <title>Why programmers hate free text in MARC records</title>
+      <link>http://robotlibrarian.billdueber.com/2011/04/why-programmers-hate-free-text-in-marc-records/</link>
+      <pubDate>Mon, 11 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2011/04/why-programmers-hate-free-text-in-marc-records/</guid>
+      <description>One of the frustrating things about dealing with MARC (nee AACR2) data is how much nonsense is stored in free text when a unique identifier in a well-defined place would have done a much better job.
+A lot of people seem to not understand why.
+This post, then, is for all the catalogers out there who constantly answer my questions with, &amp;ldquo;Well, it depends&amp;rdquo; and don&amp;rsquo;t understand why that&amp;rsquo;s a problem.</description>
+    </item>
+    
+  </channel>
+</rss>

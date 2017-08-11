@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Stupid catalog tricks: Subject Headings and the Long Tail">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Stupid catalog tricks: Subject Headings and the Long Tail</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2010-04-13 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2010/04/stupid-catalog-tricks-subject-headings-and-the-long-tail/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Stupid catalog tricks: Subject Headings and the Long Tail
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>Library of Congress Subject Headings (LCSH) in particular.</p>
+
+<p>I&rsquo;ve always been down on LCSH because I don&rsquo;t understand them. They kinda look like a hierarchy, but they&rsquo;re not really. Things get modifiers. Geography is inline and &hellip;weird.</p>
+
+<p>And, of course, in our faceting catalog when you click on a linked LCSH to do an automatic search, you often get nothing but the record you started from. Which is super-annoying.</p>
+
+<p>So, just for kicks, I ran some numbers.</p>
+
+<h3 id="the-process">The process</h3>
+
+<p>I extracted all the field 650, indicator2=&ldquo;0&rdquo; from our catalog, threw away the subfield 6&rsquo;s, and threw away any trailing punctuation in any of the subfields.  I called the concatenation of what was left a unique LCSH.</p>
+
+<p>Then I printed them out and put them all onto index cards, using tick-marks to indicate&hellip;</p>
+
+<p>No, of course not. I used <code>sort</code>, <code>uniq -c</code>, and <code>wc -l</code>. Here&rsquo;s what I found.</p>
+
+<h3 id="counts-of-lcsh">Counts of LCSH</h3>
+
+<p>&hellip;in round numbers.</p>
+
+<p>In our catalog, there are:</p>
+
+<ul>
+<li>8.50M subject headings (using the definition above)</li>
+<li>1.87M unique subject headings</li>
+<li>&hellip;66% of which (1.23M) appear exactly once</li>
+</ul>
+
+<p>We only have to go out to 30K subjects to account for half of all subject entries. The top 1000 most-used subjects account for 14.5% of all 8.5M subject entries.</p>
+
+<p>The top ten subjects by count are:</p>
+
+<ul>
+<li>6029 $$aSermons, American</li>
+<li>6131 $$aPhilosophy</li>
+<li>7224 $$aFeature films</li>
+<li>7591 $$aPiano music</li>
+<li>7968 $$aSocialism</li>
+<li>8796 $$aEconomics</li>
+<li>9185 $$aCommunism</li>
+<li>12440 $$aSermons, English$$y17th century</li>
+<li>13539 $$aBills, Private$$zUnited States</li>
+<li>58823 $$aEconomics$$xHistory$$vSources</li>
+</ul>
+
+<h3 id="from-a-record-s-point-of-view">From a record&rsquo;s point of view</h3>
+
+<p>Our catalog has:</p>
+
+<ul>
+<li>7M records</li>
+<li>4.4M records with at least one subject (as defined above)</li>
+<li>2.4M records with more than one subject</li>
+<li>2.0M records with exactly one subject</li>
+<li>2.6M records with zero subjects</li>
+</ul>
+
+<p>The records with the most subject headings tend to be collections of stuff (theses, photos, etc). Our local standout is the <a href="http://mirlyn.lib.umich.edu/Record/004078801">Dept. of Medicine and Surgery (University of Michigan) theses, 1851-1878</a> with 208 subject entries. 14 records have at least 30 subject entries.</p>
+
+<h3 id="what-it-means">What it means</h3>
+
+<p>Gee, lady, I don&rsquo;t know.</p>
+
+<p>One way to look at it: suppose you&rsquo;re considering defining subjects in this way, and making them &ldquo;hot&rdquo; in the catalog interface. For our data, <sup>2</sup>&frasl;<sub>3</sub> of records would have either no subjects or a subject that found only the record you&rsquo;re at. So&hellip;think again.</p>
+
+<p>In real life, we index lots of possible subject fields, and we additionally index the $$a as well as the whole string, so ours are a little bit more useful. A little.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | </title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2015-02-19 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2015/02/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.19" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+		
+		
+		<div id="social" class="text-center">
+			
+				
+			
+			
+			
+			
+				
+						
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Traject 2.0.0 released! Now runs under MRI/RBX!</p>
+</div>
+<div class="paragraph">
+<p><code>traject</code> is an ETL (extract/transform/load) system written in ruby with a special
+view towards extracting fields from MARC data and writing it out into Solr.  <a href="http://bibwild.wordpress.com">Jonathan Rochkind</a> and I wrote this primarily out of
+frustration using other tools in this space (e.g., <a href="https://code.google.com/p/solrmarc/">Solrmarc</a>, or my own precursor to <code>traject</code> , <a href="https://github.com/billdueber/marc2solr">marc2solr</a><sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>).</p>
+</div>
+<div class="paragraph">
+<p><code>traject</code> had its first release almost a year and a half ago (at least based on the date of my
+<a href="http://robotlibrarian.billdueber.com/2013/10/announcing-traject-indexing-software/">post introducting it</a>), and I&#8217;ve used it literally every day since then indexing data for the
+<a href="http://mirlyn.lib.umich.edu">Univeristy of Michigan</a> and <a href="http://catalog.hathitrust.org/">HathiTrust</a> library catalogs.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_does_it_work">How does it work?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>traject</code> is packaged as a gem, and ships with a command-line program (<code>traject</code>) that reads in configuration files or switches and the name of the file to operate on and transforms the incoming records as
+specified.</p>
+</div>
+<div class="paragraph">
+<p>The "configuration" is actually just ruby code, with some macros included to make it simple
+to do the common operations (e.g., get the ISBN) and possible to do &#8230;&#8203;well, anything you can
+do with ruby.</p>
+</div>
+<div class="listingblock">
+<div class="title">A partial sample traject configuration file</div>
+<div class="content">
+<pre class="highlight"><code class="language-ruby" data-lang="ruby">require 'traject/macros/marc21_semantics'
+extend  Traject::Macros::Marc21Semantics
+require 'library_stdnums' # just a regular ruby gem
+
+to_field "id", extract_marc("001", :first =&gt; true)
+to_field 'marcxml_record', serialized_marc(:format=&gt;:xml)
+to_field "allfields", extract_all_marc_values(:from=&gt;'100', :to=&gt;'999')
+
+to_field 'oclc', oclcnum('035a:035z')
+to_field 'isbn', extract_marc('020a') do |rec, acc|
+  acc.map!{|x| StdNum::ISBN.normalize(x)}
+end
+
+to_field 'title', extract_marc_filing_version('245abdefghknp', :include_original =&gt; true)
+to_field 'vtitle', extract_marc('245abdefghknp', :alternate_script=&gt;:only, :trim_punctuation =&gt; true, :first=&gt;true)
+to_field "publisher", extract_marc('260b:264|*1|:533c')
+to_field "edition", extract_marc('250a')</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_questions_about_code_traject_code">Questions about <code>traject</code></h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">How do I get started?</dt>
+<dd>
+<p>The best way is likely to look at the <a href="https://github.com/traject-project/traject_sample">heavily-documented sample project</a> we provide, followed by checking out the <code>traject</code> documentation. And, of course, just ask me for help.</p>
+</dd>
+<dt class="hdlist1">Do you need to use JRuby?</dt>
+<dd>
+<p>Not anymore. As of version 2.0.0, <code>traject</code> runs under MRI ("regular") ruby, although without
+all the speed-enhancing true threading that JRuby offers.</p>
+</dd>
+<dt class="hdlist1">How fast is it?</dt>
+<dd>
+<p>Apple-to-apples comparison is difficult. The <a href="https://github.com/projectblacklight/blacklight-marc">stock Blacklight indexing scheme</a> is reportedly about as fast as Solarmarc when just using single-threaded MRI (JRuby would presumably speed things up). I run a <a href="http://github.com/billdueber/ht_traject/">hideously complex</a> indexing scheme using JRuby and a few threads and can average over 900 records/second during a longish run (e.g., I can index all
+eleven-million bib records before lunch). For me, it&#8217;s fast enough.</p>
+</dd>
+<dt class="hdlist1">What kinds of data can I throw at it?</dt>
+<dd>
+<p>In theory, anything you want&#8201;&#8212;&#8201;it&#8217;s pretty easy to write a Traject reader. Out of the box or
+with existing gems, though, we support a few kinds of MARC:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>MARC (binary), via either <a href="http://github.com/ruby-marc/ruby-marc">ruby-marc</a> or <a href="https://github.com/traject-project/traject-marc4j_reader">marc4j</a> (the latter requiring JRuby)</p>
+</li>
+<li>
+<p>MARC-XML (again, via either ruby-marc or marc4j)</p>
+</li>
+<li>
+<p><a href="http://dilettantes.code4lib.org/blog/2010/09/a-proposal-to-serialize-marc-in-json/">marc-in-json</a> in the form of newline-delimited json (a text file with one MARC-in-JSON record per line)</p>
+</li>
+<li>
+<p><a href="https://github.com/traject-project/traject_alephsequential_reader">Alephsequential</a>, a human-readable serialization put out by the Aleph ILS from Ex Libris.</p>
+</li>
+<li>
+<p><a href="https://github.com/jrochkind/traject_horizon">Direct import from the Horizon ILS</a></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">How does it make it easier to deal with MARC?</dt>
+<dd>
+<p>MARC is the bread-and-butter of what <code>traject</code> is currently used for. <code>traject</code> ships with macros for reading through MARC records and  transforming the often-weird data within them. Some of these can:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>extract data from fields based on tag, indicators, and subfield values</p>
+</li>
+<li>
+<p>trim punctuation from extracted data</p>
+</li>
+<li>
+<p>translate MARC codes into human-readable languages, countries, etc.</p>
+</li>
+<li>
+<p>correctly deal with "filing characters" (e.g., leading articles like "a" or "the")</p>
+</li>
+<li>
+<p>find field data repeated in other languages ("vernacular" data, usually in 880 fields)</p>
+</li>
+<li>
+<p>find OCLC numbers, with their myriad of prefixes</p>
+</li>
+<li>
+<p>&#8230;&#8203;and many others. And, if you know a little ruby, it&#8217;s not hard to write your own.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">What are the records transformed into?</dt>
+<dd>
+<p>Given its history focused on indexing data into Solr, the basic result of a
+<code>traject</code> transformation of a record is a hash (map) of arrays (e.g., <code>key1&#8658;[val1, val2,&#8230;&#8203;]</code>&#8201;&#8212;&#8201;each key/fieldname is mapped to one or more values). This is easily transformed into
+something that you can send to Solr or write to a file. If you need to produce more complex hierarchical data, <code>traject</code> may not be the right tool for you.</p>
+</dd>
+<dt class="hdlist1">What kind of output can it produce?</dt>
+<dd>
+<p>Obviously, the resulting documents can be sent to Solr, via <code>Traject::SolrJsonWriter</code>. Additionally, we ship Traject
+with writers that produce other formats.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Traject::DebugWriter</code> produces a human-readable file with one field and its values per line.</p>
+</li>
+<li>
+<p><code>Traject::JsonWriter</code> produces newline-delimited JSON, one valid JSON record per line.</p>
+</li>
+<li>
+<p><code>Traject::YamlWriter</code> writes a yaml file that contains multiple documents, good for both further processing and human inspection.</p>
+</li>
+<li>
+<p><code>Traject::DelimitedWriter</code>, by default, writes a tab-delimited file suitable for further processing or import into Excel.</p>
+</li>
+<li>
+<p><code>Traject::CSVWriter</code> produces comma-separated value files, as you&#8217;d expect.</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_2_0_release">A 2.0 release?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So, what&#8217;s changed enough to warrant a 2.0 release?</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">No longer requires JRuby</dt>
+<dd>
+<p>The first release of <code>traject</code> only ran under JRuby, based on its need to use the
+<code>solrj</code> java library to efficiently indexing things into Solr. More modern
+versions of Solr (since version 3.2) allow indexing documents via HTTP with JSON;
+doing so not only works under any ruby implementation, but in my tests the JSON indexer goes about 20% faster than the old <code>solrj</code>-based indexer.</p>
+</dd>
+<dt class="hdlist1">(Tab-)Delimited and CSV Writers</dt>
+<dd>
+<p>How often are systems librarians asked to do things like "find all the records with publisher string XXX, and give me a list of them with the title, isbn, author, and date of publication"? For me, the answer is "often" and <code>traject</code> now makes it easy to output something that your user can inspect as text or import into Excel for further processing.</p>
+</dd>
+<dt class="hdlist1">Cross-platform threading</dt>
+<dd>
+<p>For most applications of <code>traject</code> to date, the bottleneck is the transformation process of turning a MARC record into a Solr document. Under JRuby, you can throw as many cores as you have available at that transformation to speed up the indexing process. Even under MRI, which can&#8217;t run multiple threads on ruby code at the same time, we can use a second thread to talk to Solr so indexing on the server doesn&#8217;t slow down processing of MARC records.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_so_give_it_a_whirl">So&#8230;&#8203;give it a whirl!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can find <code>traject</code> and its related gems <a href="https://github.com/traject-project">on Github</a>. Besides <code>traject</code> itself and the associated reader/writers, there&#8217;s a <a href="https://github.com/traject-project/traject_sample">heavily-documented sample project</a> to get you started.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;m heavily invested in <code>traject</code>, and am more than willing to assist folks as they start using it, so don&#8217;t be afraid to contact me (via email or <a href="https://twitter.com/billdueber">twitter</a>) if you want a little advice or a helping hand.</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. <a href="http://search.cpan.org/~nics/Catmandu-0.9210/bin/catmandu">Catmandu</a> is another, perl-based system I don&#8217;t have any direct experience with
+</div>
+</div>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

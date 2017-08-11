@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Still another look at MARC parsing in ruby and jruby">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Still another look at MARC parsing in ruby and jruby</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2010-01-29 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2010/01/still-another-look-at-marc-parsing-in-ruby-and-jruby/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Still another look at MARC parsing in ruby and jruby
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<p>I&rsquo;ve been looking at making a jruby-based solr indexer for MARC documents, and started off wanting to make sure I could determine if anything I did would be faster than our existing (solrmarc-based) setup.</p>
+
+<ul>
+<li><strong>Assertion</strong>: The upper bound on how fast I can process records and send them to Solr can be approximated by looking at how fast I can parse (and do nothing else to) marc records from a file.</li>
+<li><strong>Assertion</strong>: If I can&rsquo;t write a system that&rsquo;s faster than what we have now, it&rsquo;s probably not worth my time even though being able to fall back to ruby instead of java would be nice.</li>
+<li><strong>The Big Question</strong>: Is the MARC parsing process fast enough that it seems I might be able to write a system that runs faster than the solrmarc setup I have now?</li>
+<li><strong>The Answer (see below)</strong>: Yes, if I use marc4j.</li>
+</ul>
+
+<p>On our ridiculously-awesome hardware, right now we&rsquo;re doing about 300 records/second for short files and 250 records/second for a full (6.5 million record) index, giving us a 7-8 hour reindex.</p>
+
+<p>I&rsquo;ll just post the results without a lot of commentary. I warmed stuff up in all cases, and ran on my desktop (so I could compare to MRI ruby, which isn&rsquo;t installed on the server) and on the server where we usually run these things.</p>
+
+<ul>
+<li><em>The machines</em> are my desktop OSX machine and the beefy linux server where we usually do this stuff</li>
+<li><em>The platforms</em> are jruby 1.4 &ndash;server and MRI ruby 1.87</li>
+<li><em>The libraries</em> are marc4j and ruby-marc 0.3.3</li>
+
+<li><p><em>The parsers</em> are</p>
+
+<ul>
+<li>The standard binary parsers all around</li>
+<li>A home-grown AlephSequential format reader for the &lsquo;seq&rsquo; type. AlephSequential is a MARC representation that uses one line for each field. We use it because it doesn&rsquo;t have length limitations and, not surprisingly, Aleph can spit it out pretty quickly compared to MARC-XML.</li>
+<li>Whatever marc4j uses internally for MARC-XML</li>
+<li>ruby-marc&rsquo;s &lsquo;jstax&rsquo; xml parser under jruby (which I wrote and apparently needs some love, see below)</li>
+<li>ruby-marc&rsquo;s &lsquo;libxml&rsquo; xml parser under MRI ruby</li>
+</ul></li>
+
+<li><p><em>Seconds</em> is the average of two rounds, with measurements taken after a warmup run in each case.</p></li>
+</ul>
+
+<p>The test files were 18,881 records in marc-xml, marc-binary, and AlephSequential formats.</p>
+
+<p>~~~</p>
+
+<p>MACHINE  PLATFORM LIBRARY     PARSER    SECONDS    REC/SECOND
+desktop  jruby    marc4j      binary      4.06       4650
+desktop  jruby    marc4j      xml         5.55       3401
+desktop  jruby    ruby-marc   binary     17.35       1088
+desktop  jruby    ruby-marc   jstax      80.11        236</p>
+
+<p>desktop  ruby     ruby-marc   binary     33.54        562
+desktop  ruby     ruby-marc   libxml     46.87        402</p>
+
+<p>server   jruby    marc4j      binary      2.29       8245
+server   jruby    marc4j      xml         3.36       5619
+server   jruby    marc4j      AlephSeq    3.68       5130
+server   jruby    ruby-marc   binary      9.93       1901
+server   jruby    ruby-marc   jstax      44.56        424</p>
+
+<p>~~~~</p>
+
+<p>The quick takeaways, with all the obvious caveats:</p>
+
+<ul>
+<li>jruby with ruby-marc is twice as fast at binary and twice as slow at xml compared with MRI</li>
+<li>marc4j is four times as fast for binary and about an order of magnitutde faster for xml compared with ruby-marc.</li>
+<li>The server is fast.</li>
+</ul>
+
+<p>We know from previous experience that libxml is the fastest of the current MRI-based marc-xml readers and that jstax is the best of the current jruby-based marc-xml readers. And, finally, we know that many of us can&rsquo;t use marc-binary format because our records are too big.</p>
+
+<p>If I&rsquo;m gonna use jruby (which I think I am due to wanting to use the StreamingUpdateSolrServer) I&rsquo;m gonna need to use marc4j and just wrap it up in some nicer syntax.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

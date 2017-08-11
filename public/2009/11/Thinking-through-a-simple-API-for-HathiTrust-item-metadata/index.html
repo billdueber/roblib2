@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Thinking through a simple API for HathiTrust item metadata">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Thinking through a simple API for HathiTrust item metadata</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2009-11-03 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2009/11/thinking-through-a-simple-api-for-hathitrust-item-metadata/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Thinking through a simple API for HathiTrust item metadata
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p><strong>EDITS</strong>:</p>
+
+<ul>
+<li>Added &ldquo;recordURL&rdquo; per Tod&rsquo;s request</li>
+<li>Made a record&rsquo;s <em>title</em> field an array and call it <em>titles</em>, to allow for vernacular entries</li>
+<li>Changed item&rsquo;s <em>ingest</em> to <em>lastUpdate</em> to accurately note what the actual date reflects. This gets updated every time either the item or the record to which it&rsquo;s attached gets changed.</li>
+<li>Fixed a couple typos, including one where I substituted an ampersand for a pipe in the multi-get example (thanks again, Tod).</li>
+<li>Added a better explanation of option #4</li>
+</ul>
+
+<h3 id="introduction-and-history">Introduction and History</h3>
+
+<p>Ages ago, I wrote a simple(ish) little cgi program to get basic item-level data out of what is now <a href="http://mirlyn-classic.lib.umich.edu/">Mirlyn Classic</a>, our OPAC. Soon enough, I was asked to modify it so people could get <a href="http://catalog.hathitrust.org/">HathiTrust</a> data from the underlying Aleph system, check viewability of the associated items, etc.</p>
+
+<p>It works&hellip;kinda&hellip;but reflects what I now look back on as blissful ignorance. It doesn&rsquo;t deal at all with serials, and doesn&rsquo;t deal correctly with duplicated records or cases where multiple records have the same (supposedly-unique) identifiers,</p>
+
+<p>We need something better. And I&rsquo;m hoping comments on this post will result in something better.</p>
+
+<h3 id="scope">Scope</h3>
+
+<blockquote>
+<p>Given standard identifiers for a known item, return basic item-level metadata for volumes deposited in the HathiTrust.</p>
+</blockquote>
+
+<p>I want to keep this <em>simple</em>. There will likely be other APIs for other, more complex (or specialized) tasks, linked data for folks who dig that sort of thing, and so on. The goal here is to make something that&rsquo;s <em>fast</em> and can help people inline data about HT into their own OPAC or similar system.</p>
+
+<p>I&rsquo;d also like to get this thing in place, at least the basics, in the next two weeks. Anything longer is self-indulgent.</p>
+
+<h3 id="data-returned">Data returned</h3>
+
+<p>At the moment, I&rsquo;m only planning on offering JSON out, unless someone really, really needs something else. Speak up if you&rsquo;re an edge case.</p>
+
+<h4 id="proposed-basic-return-structure">Proposed basic return structure</h4>
+
+<p>&hellip;complete with JSON-illegal comments embedded</p>
+
+<pre><code class="language-javascript">
+  {
+    &quot;records&quot;:
+      {
+        &quot;003384758&quot;: // The HathiTrust record id of a matched record
+          {
+            &quot;recordURL&quot; : &quot;http://catalog.hathitrust.org/Record/003384758&quot;
+            &quot;titles&quot;:  [&quot;Full, space-joined 245s&quot;],
+            &quot;isbns&quot; : [&quot;123456789X&quot;], // any/all ISBNs on this record
+            &quot;issns&quot; : [], // any/all ISSNs on this record
+            &quot;oclcs&quot; : [], // any/all OCLC numbers
+            &quot;lccns&quot;  : [&quot;68001537&quot;], // any/all LCCNs
+          },
+          ... // any more records that were matched
+      },
+    'items' :
+      [
+        {
+          &quot;fromRecord&quot; : &quot;003384758&quot;,
+          &quot;htid&quot;: &quot;mdp.39015054407062&quot;,
+          &quot;itemURL&quot;: &quot;http://hdl.handle.net/2027/mdp.39015054407062&quot;,
+          &quot;rights&quot;: &quot;ic&quot;,
+          &quot;orig&quot;: &quot;University of Michigan&quot;, // supplying institution
+          &quot;lastUpdate&quot; : &quot;20090807&quot; // date of ingest into HathiTrust or last change
+          &quot;enumcron&quot; : &quot;An enumeration/chronology, if available&quot; // OPTIONAL
+        }
+      ]
+  }
+
+</code></pre>
+
+<h4 id="a-quick-walk-through-the-proposed-return-structure">A quick walk through the proposed return structure</h4>
+
+<p>Obviously, there are two sets of items: a list of records that matched the query, and a list representing the union of all items on those matched records.</p>
+
+<h5 id="records">records</h5>
+
+<p>For most purposes, people won&rsquo;t care so much about the record-level data unless you&rsquo;re trying to do your own error-checking (possible) or want to link to the catalog record-level page (more likely).</p>
+
+<p>[I&rsquo;m actually very open to just plain leaving it out.]</p>
+
+<p>The format is a hash keyed on the HathiTrust record ID, which can currently be turned into a URL such as <a href="http://catalog.hathitrust.org/Record/003384758">http://catalog.hathitrust.org/Record/003384758</a>. Elements are:</p>
+
+<ul>
+<li><em>recordURL</em>: The URL to the human-readable record view in the catalog</li>
+<li><em>titles</em>: an array of all the full 245, space-separated subfields. Always present, usually with one item, sometimes more than one (vernacular entries), almost never with zero.</li>
+<li><em>isbns</em>: An array of all the ISBNs associated with the record. Always present; an empty array if none.</li>
+<li><em>issns</em>, <em>oclcs</em>, <em>lccns</em>: Same as ISBNs, but for the appropriate data.</li>
+</ul>
+
+<p>Note that at this time, LCCNs are taken from the 010, so the LCCN array will either be empty or have one item. I left it as an array just for consistency.</p>
+
+<h5 id="items">items</h5>
+
+<p>This is an array of items, taken from <em>all</em> the matched records and ordered (as best I can) based on their enumcron. If no enumcron is present, order is undefined.</p>
+
+<ul>
+<li><em>fromRecord</em>: The HathiTrust record ID, as used as a key in the hash of records (explained above).</li>
+<li><em>htid</em>: The HathiTrust ID for the item.</li>
+<li><em>itemURL</em>: The URL to the page-turner (or search box, for search-only items) for this item. It&rsquo;s currently just appended to the prefix &ldquo;<a href="http://hdl.handle.net/2027/&quot;">http://hdl.handle.net/2027/&quot;</a>, but I thought I&rsquo;d include it in case the preferred URL algorithm changes at some point.</li>
+<li><em>rights</em>: The rights code for this item, as explained at <a href="http://www.hathitrust.org/hathifiles_metadata">http://www.hathitrust.org/hathifiles_metadata</a>.</li>
+<li><em>orig</em>: The institution that supplied the item for digitization.</li>
+<li><em>lastUpdate</em>: The date of the last time this item or its containing record was touched, either because of  ingest by the HathiTrust system or later editing, as YYYYMMDD. May be 00000000 if unknown.</li>
+<li><em>enumcron</em>: (OPTIONAL) The enumeration/cronology (e.g., &ldquo;v. 3 1997&rdquo; or somesuch). Again &ndash; optional. Leave out the key? Provide an empty string? Provide a <em>false</em>?</li>
+</ul>
+
+<h5 id="a-word-about-enumcron">A word about enumcron</h5>
+
+<p>The enumcron string is fickle, and very local. The algorithm I&rsquo;m using to sort them basically consists of taking all the numbers in the enumcron strings and zero-padding them to 8 digits, then sorting. It works pretty well, but isn&rsquo;t perfect. I&rsquo;m incredibly resistant to trying to do anything fancier, simply because I want it to be fast and because trying to deal with all possible enumcron formats is a sisyphean task.</p>
+
+<h4 id="an-actual-record">An actual record</h4>
+
+<p>Here&rsquo;s the simplest possible case: a single matched record with a single item</p>
+
+<pre><code class="language-javascript">
+  {
+    &quot;records&quot;:
+      {
+        &quot;000366004&quot;:
+          {
+            &quot;recordURL&quot; : &quot;http://catalog.hathitrust.org/Record/000366004&quot;,
+            &quot;titles&quot;: [&quot;The Sneetches, and other stories. Written and illustrated by Dr. Seuss.&quot;],
+            &quot;isbns&quot;: [],
+            &quot;issns&quot;: [],
+            &quot;oclcs&quot;: [&quot;00470409&quot;],
+            &quot;lccns&quot;: [&quot;68001537&quot;]
+          }
+      }
+    &quot;items&quot;: [
+      {
+        &quot;fromRecord&quot;: &quot;000366004&quot;,
+        &quot;htid&quot;: &quot;mdp.39015079651611&quot;,
+        &quot;itemURL&quot;: &quot;http://hdl.handle.net/2027/mdp.39015079651611&quot;,
+        &quot;rightscode&quot;: &quot;ic&quot;,
+        &quot;lastUpdate&quot;: &quot;20091004&quot;,
+        &quot;orig&quot;: &quot;University of Michigan&quot;,
+        &quot;enumcron&quot;: false
+      }
+    ],
+  }
+
+</code></pre>
+
+<p>We can see that (despite my expectation) we don&rsquo;t happen to have an ISBN for this item. The item originally came from Michigan, either ingested or last updated on October 10th, 2009. The HathiTrust catalog page for this item is <a href="http://catalog.hathitrust.org/Record/000366004">http://catalog.hathitrust.org/Record/000366004</a> (derived from the record ID) and it is In Copyright (ic), so the itemURL goes to a page that allows only search.</p>
+
+<h3 id="making-the-request">Making the request</h3>
+
+<p>I&rsquo;ll take care of normalizing data on the way in (mostly done by the Solr backend): strip leading zeros off the OCLC number, normalize the LCCN as per <a href="http://www.loc.gov/marc/lccn-namespace.html#syntax">this page at the Library of Congress</a>, strip anything funny-looking from the ISBN and ISSN, and (probably) convert all ISBNs into ISBN13s.</p>
+
+<p>I&rsquo;m anticipating three formats for a request (note: they don&rsquo;t work yet. There&rsquo;s no code):</p>
+
+<h4 id="single-identifier-option">Single-identifier option</h4>
+
+<pre><code>http://catalog.hathitrust.org/api/volumes/oclc/00470409.json
+http://catalog.hathitrust.org/api/volumes/lccn/68001537.json
+http://catalog.hathitrust.org/api/volumes/issn/1051290x.json
+http://catalog.hathitrust.org/api/volumes/isbn/0835221792.json  
+</code></pre>
+
+<p>Simple and unambiguous; returns the proposed return structure as described above (and presumable amended before actual implementation). Again, any normalization that needs to be done will be done on my end, so &ldquo;00470409&rdquo; and &ldquo;470409&rdquo; are considered the same OCLC number.</p>
+
+<h4 id="multiple-identifier-multi-request-option">Multiple-identifier, multi-request option</h4>
+
+<pre><code>http://catalog.hathitrust.org/api/volumes?yourID1=oclc:00470409|lccn:68001537&amp;amp;yourID2=oclc:67890987|isbn:987652348X
+</code></pre>
+
+<p>In this format, you can see that (a) you can provide multiple pieces of metadata for a record, separated by pipe characters (|),  and (b) you can provide metadata sets for multiple records at once, keyed on whatever arbitrary ID you want to use.</p>
+
+<p>The return format would look like this:</p>
+
+<pre><code class="language-javascript">
+  {
+    &quot;yourID1&quot; : &lt;proposed return structure&gt;,
+    &quot;yourID2&quot; : &lt;proposed return structure&gt;,
+      ...
+  }
+
+</code></pre>
+
+<h4 id="what-to-do-when-the-provided-metadata-don-t-agree">What to do when the provided metadata don&rsquo;t agree?</h4>
+
+<p>It&rsquo;s entirely possible to provide an OCLC number and an LCCN that, in fact, refer to two different records. It&rsquo;s also possible that we have two records in the system that should be merged, but haven&rsquo;t been.</p>
+
+<p>Some possible algorithms:</p>
+
+<ol>
+<li><em>Require that all sent numbers match</em>: If you send an OCLC, and ISBN, and an LCCN, any returned record must have all three, and all must match. That seems too strict.</li>
+<li><em>Return any records that match any sent numbers</em>: I could do a boolean-OR, so any record that matches any of the numbers you send gets returned. The risk of returning too much data seems too great.</li>
+<li><em>Return any records that don&rsquo;t mismatch any sent numbers</em>: The same as the first option, but null matches anything. So, <em>if</em> you sent an LCCN, and <em>if</em> the record has an LCCN, they must match. <em>If</em> you sent an OCLC number and <em>if</em> the record has an OCLC number, it, too, must match, etc.. Basically, every piece of metadata, if provided, must match.</li>
+<li><em>Order the number types and only match the best available</em>. We provide an ordered list of type: OCLC, LCCN, ISBN, and finally ISSN. If you provide an OCLC number and there is a record with that OCLC number, return it and ignore everything else. If you didn&rsquo;t provide an OCLC number (or if you did but we didn&rsquo;t get any matches), move on to the LCCN and try again, as shown below.</li>
+</ol>
+
+<p>~~~</p>
+
+<pre><code>// The algorithm for #4
+foreach type in (OCLC, LCCN, ISBN, ISSN) {
+  next unless (providedSearch[type]); ## move on unless a number was provided
+  records = recordsThatMatch(type, providedSearch[type]);
+  if records.size &gt; 0 { # If we found some, return
+    return records;
+  }
+  ## else, we move to the next type.
+}
+</code></pre>
+
+<p>~~~~</p>
+
+<p>So, for #4, if you provide an OCLC number and we find a match or matches, stop looking and return them. If we don&rsquo;t find an OCLC match but you also provided an LCCN, look for records that match the LCCN, and if found return <em>them</em>. Repeat with ISBN and ISSN.</p>
+
+<h4 id="understanding-3-vs-4">Understanding #3 vs. #4</h4>
+
+<p>Suppose the following are true:</p>
+
+<ul>
+<li>You provide an OCLC number <em>O</em> and an LCCN <em>L</em></li>
+<li>I have a record r1 with OCLC number <em>O</em> and no LCCN at all</li>
+<li>I have a record r2 with LCCN <em>L</em> and no OCLC number at all.</li>
+</ul>
+
+<p>Under option #3, both records would be returned. They both fulfill the criteria that they match all the supplied identifiers in all fields for which they have values. In other words, <em>r1</em> has a positive match on OCLC (<em>O</em> == <em>O</em>) and a null-matches-everything match on LCCN (<em>L</em> == no data).</p>
+
+<p>Under option #4, only <em>r1</em> is returned. We first look for all records that match on the OCLC number provided, find exactly one, and return it. We never even bother to look for records that match on LCCN only.</p>
+
+<h4 id="let-s-pick-one-and-see-how-it-works-in-the-real-world">Let&rsquo;s pick one and see how it works in the real world</h4>
+
+<p>I&rsquo;m leaning toward #4, but I&rsquo;m open to #3 as well, or any other variant that can be computed quickly and easily on this end. We&rsquo;re talking about some pretty weird edge cases when we start going down this road, and I don&rsquo;t want to sacrifice ease of use and ease of computation any more than we have to.</p>
+
+<h3 id="please-comment">Please comment!</h3>
+
+<p>You can comment here, or send email directly to me. I&rsquo;ll follow up this post periodically with more thoughts and synopses of what I&rsquo;ve heard.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

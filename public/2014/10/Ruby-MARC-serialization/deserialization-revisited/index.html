@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Ruby MARC serialization/deserialization revisited">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Ruby MARC serialization/deserialization revisited</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2014-10-09 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2014/10/ruby-marc-serialization/deserialization-revisited/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Ruby MARC serialization/deserialization revisited
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>A few years ago, I <a href="http://robotlibrarian.billdueber.com/2010/09/sizespeed-of-various-marc-serializations-using-ruby-marc/">benchmarked</a>
+various methods of serializing/deserialzing MARC data using the <a href="http://github.com/ruby-marc/ruby-marc/">ruby-marc</a>
+gem. Given that I&rsquo;m planning on starting fresh with my catalog setup, I thought I&rsquo;d take a moment
+to revisit them.</p>
+
+<p>The biggest changes since that time have been (a) the continued speed improvements in JRuby,
+(b) the introduction of the <a href="https://github.com/ohler55/oj">Oj</a> json parser for MRI ruby, and
+&copy; wider availability of msgpack code in the wild.</p>
+
+<p>I also wondered what would happen if I tried ruby&rsquo;s <code>Marshal</code> serialization; maybe it would be
+faster because I wouldn&rsquo;t have to &ldquo;manually&rdquo; create a <code>MARC::Record</code> object from a hash?</p>
+
+<h2 id="file-sizes">File sizes</h2>
+
+<p>File size isn&rsquo;t as important as it once was, but still matters to some of us working with
+ginormous amounts of data:</p>
+
+<p>This is the file size to hold the 18,881 records used for the benchmark.</p>
+
+<p>|-
+| Serialization | Size on disk (MB) |  Size vs. marc21 | Gzipped size on disk (MB) | Gzipped size vs marc21 |
+|:&mdash;&mdash;&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;:| &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-:|&ndash;:|&ndash;:|
+| marc21 | 31 |100% | 9.0 | 100%|
+| msgpack | 42 | 135% | 8.2 | 91% |
+| json (ndj) | 56 | 180% | 8.1 | 90% |
+| marshal | 69 | 223% | 9.4 | 104% |
+| marc-xml | 93 | 300% |  9.2 | 102% |</p>
+
+<p>It&rsquo;s interesting, if not super-useful, to note that the file sizes differ by a factor of three
+uncompressed, but hardly at all when compressed. I was surprised at how well the binary
+formats (msgpack, marshal, and marc21) compressed.</p>
+
+<h2 id="serialization-deserialization-time">Serialization / Deserialization time</h2>
+
+<p>I took a file of about 19k MARC records and tested the serialization/deserialization time, as follows:</p>
+
+<ul>
+<li><strong>marc21</strong> uses MARC::Reader and MARC::Writer from the ruby marc distribution</li>
+<li><strong>json</strong> Uses <code>MARC::Record#to_hash</code> to produce a marc-in-json hash, serializes with the stock JSON library, and
+the writes to a file with one record per line (sometimes known as <em>newline-delimited JSON, or NDJ</em>). Deserialization
+reverses the process</li>
+<li><strong>json (oj)</strong> is the same, except using the Oj json library under MRI.</li>
+<li><strong>msgpack</strong> uses the <a href="https://github.com/msgpack/msgpack-ruby">msgpack</a> or <a href="https://github.com/iconara/msgpack-jruby">msgpack-jruby</a> gems to
+serialize/deserialize msgpack objects to/from a file stream.</li>
+<li><strong>marshal</strong> uses the core ruby <a href="http://www.ruby-doc.org/core-2.1.3/Marshal.html">Marshal</a> class to serialize/deserialize to a file stream.</li>
+</ul>
+
+<p>In all cases, deserialization means to pull each record in turn from a file on disk and turn it into a <code>MARC::Record</code> object;
+serialization means to take a set of pre-created <code>MARC::Record</code> objects, serialize them, and push them into a file.</p>
+
+<p>All times are in &ldquo;real time&rdquo; seconds as reported by Benchmark, averaged across two runs on my desktop machine:</p>
+
+<ul>
+<li><strong>MRI</strong> ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0</li>
+<li><strong>JRuby</strong> jruby 1.7.15 (1.9.3p392) 2014-09-03 82b5cc3 on Java HotSpot&trade; 64-Bit Server VM 1.8.0-b132 +indy +jit [darwin-x86_64]</li>
+</ul>
+
+<p><a href="https://gist.github.com/billdueber/e375a35ebabd2de73616">The benchmark code</a> is up on a gist if you&rsquo;d like
+to look at or modify it.</p>
+
+<p>| MRI Ruby
+| Method | Deserialize (s)  | Serialize (s) | Total (s) | Total time vs. marc21 |
+|&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;:|&mdash;&mdash;&mdash;-:|&mdash;&mdash;-:|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;:|
+| marc21 | 11.5 | 6.7 | 18.2 | 100% |
+| json   | 9.5  | 5.9 | 15.4 | 85%
+| json (oj) | 6.4 | 3.5 | 9.9 | 54% |
+| msgpack | 5.8 | 3.4 | 9.2 | 51% |
+| marshal | 7.0 | 8.7 | 15.7| 86% |</p>
+
+<p>| JRuby
+| Method | Deserialize (s)  | Serialize (s) | Total (s) | Total time vs. marc21 |
+|&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;&mdash;:|&mdash;&mdash;&mdash;-:|&mdash;&mdash;-:|&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;:|
+| marc21 | 6.9 | 4.2 | 11.1 | 100% |
+| json   | 4.1  | 2.5 | 6.6 | 59% |
+| json (oj) | N/A | N/A | N/A | N/A |
+| msgpack | 4.0 | 3.9 | 7.9 | 71% |
+| marshal | 5.3| 8.1 | 13.4| 121% |</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<ul>
+<li>JRuby is faster than MRI on this these tasks, at least once it&rsquo;s warmed up.</li>
+<li>JSON, with a decent library, is either the fastest (JRuby) or really close (MRI)</li>
+<li>Marshal is slow and big.</li>
+</ul>
+
+<p>I come away with this thinking the same thing I did last time. I&rsquo;m going to use compressed ndj in files, and (possibly compressed) JSON
+over the wire. The speed is great, tool support is outstanding, and having something human-readable is a big bonus.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

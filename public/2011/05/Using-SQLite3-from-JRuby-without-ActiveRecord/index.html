@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Using SQLite3 from JRuby without ActiveRecord">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Using SQLite3 from JRuby without ActiveRecord</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2011-05-26 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2011/05/Using-SQLite3-from-JRuby-without-ActiveRecord/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+		<meta property="og:tags" content="jruby">
+	
+	<meta name="generator" content="Hugo 0.19" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+		
+		
+		<div id="social" class="text-center">
+			
+				
+			
+			
+			
+			
+				
+						
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Using SQLite3 from JRuby without ActiveRecord
+				
+			</h1>
+			<div class="panel-footer">
+				
+					<small class="text-muted">
+						
+						
+							<font size="4"><a href="http://robotlibrarian.billdueber.comtags/jruby"><span class="label label-success">jruby</span></a></font>
+						
+					</small>
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<p>I spent way too long asking my friend, The Internet, how to get a normal DBI connection to SQLIte3 using JRuby. Apparently, everyone except me is <a href="http://jruby-extras.rubyforge.org/activerecord-jdbc-adapter/">using ActiveRecord and/or Rails</a> and doesn&rsquo;t <em>want</em> to just connect to the database.</p>
+
+<p>But I do. Here&rsquo;s how.</p>
+
+<p>First, get the gems:</p>
+
+<pre><code class="language-bash">
+  gem install dbi
+  gem install dbd-jdbc
+  gem install jdbc-sqlite3
+
+</code></pre>
+
+<p>Then you&rsquo;re ready to load it up into DBI.</p>
+
+<pre><code class="language-ruby">
+require 'rubygems' # if you're using 1.8 still
+require 'java'
+require 'dbi'
+require 'dbd/jdbc'
+require 'jdbc/sqlite3'
+
+databasefile = 'test.db'
+dbh = DBI.connect(
+  &quot;DBI:jdbc:sqlite:#{databasefile}&quot;,  # connection string
+  '',                                 # no username for sqlite3
+  '',                                 # no password for sqlite3
+  'driver' =&gt; 'org.sqlite.JDBC')      # need to set the driver
+
+# That's it. Everything below here is stock DBI
+
+dbh.do &quot;create table squares (i integer, isquared integer)&quot;
+
+ins = dbh.prepare(&quot;insert into squares values (?, ?)&quot;)
+(1..20).each do |i|
+  ins.execute(i, i*i)
+end
+
+
+</code></pre>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

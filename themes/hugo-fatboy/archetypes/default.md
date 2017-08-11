@@ -1,10 +1,9 @@
 +++
-date = "2016-10-24"
-datefr = "24 Octobre 2016"
+title: "{{ replace .TranslationBaseName "-" " " | title }}"
+date: {{ .Date }}
 draft = true
-tags = ["blog"]
+tags = []
 description = ""
-title = "Page Title"
 highlight = true
 css = []
 scripts = []

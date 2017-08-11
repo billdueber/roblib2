@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Indexing data into Solr via JRuby (with threads!)">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Indexing data into Solr via JRuby (with threads!)</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2010-02-16 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2010/02/indexing-data-into-solr-via-jruby-with-threads/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Indexing data into Solr via JRuby (with threads!)
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>[Note: in this post I&rsquo;m just going to focus on the &ldquo;get stuff into Solr&rdquo; part. My normal focus &ndash; MARC data &ndash; will
+make an appearance in the next post when I talk about using this in addition to / instead of solrmarc.]</p>
+
+<h3 id="working-with-solr">Working with Solr</h3>
+
+<p>I love me the Solr. I love everything about it except that the best way to interact with it is via Java. I don&rsquo;t so much love me the java.</p>
+
+<p>So&hellip;taking Erik Hatcher&rsquo;s lead and advice, as I will do whenever he offers either, I wrote some code to work within JRuby to deal with Solr.</p>
+
+<h3 id="getting-the-code">Getting the code</h3>
+
+<p>I&rsquo;ve added the gems to gemcutter, if you want to play along at home:</p>
+
+<ul>
+<li><strong>jruby_producer_consumer</strong> (<a href="http://github.com/billdueber/jruby_producer_consumer">github</a>, <a href="http://rdoc.info/projects/billdueber/jruby_producer_consumer">rdoc.info</a>) Ruby syntax for threaded operations under jruby</li>
+<li><strong>jruby_streaming_update_solr_server</strong> (<a href="http://github.com/billdueber/jruby_streaming_update_solr_server">github</a>, <a href="http://rdoc.info/projects/billdueber/jruby_streaming_update_solr_server">rdoc.info</a>) Ruby syntax on top of the Java class of the same name</li>
+<li><strong>marc4j4r</strong> (<a href="http://github.com/billdueber/marc4j4r">github</a>, <a href="http://rdoc.info/projects/billdueber/marc4j4r">rdoc.info</a>) Ruby syntax on top of the marc4j java library.</li>
+</ul>
+
+<p><em>WARNING</em>: None of these gems have a 1.0 version tag on them, and that means that the API may change a titch in
+  the future. Also, the fact that they&rsquo;re released as gems means that it&rsquo;s easy to release gems, not that I&rsquo;m not
+  an idiot.</p>
+
+<h3 id="the-basics-using-solrinputdocument-and-streamingupdatesolrserver">The basics: Using SolrInputDocument and StreamingUpdateSolrServer</h3>
+
+<p>OK, with the disclaimer out of the way, let&rsquo;s look at some code.</p>
+
+<pre><code class="language-ruby">
+  require 'rubygems'
+  require 'jruby_streaming_update_solr_server'
+
+  solrurl = 'http://your.solr.server:port/solr'
+  sussqueuesize = 24 # how many items to buffer on their way to solr
+  sussthreads = 1   # how many threads to use to send stuff to solr
+
+  suss = StreamingUpdateSolrServer.new(solrurl,sussqueuesize,sussthreads)
+
+  # Let's add a simple document via a hash: A title, three authors, and a year
+
+  h = {
+    :title =&gt; &quot;Never been deader&quot;,
+    :author =&gt; ['Bill', 'Mike', 'Molly'],
+    :year =&gt; 2003
+  }
+  suss &lt;&lt; h
+  suss.commit
+
+  # YEA! You just added a document to solr and committed it.
+  # Have a cookie!
+
+  # We can also use a document object to do the same thing
+
+  doc = SolrInputDocument.new
+  # Add the title
+  doc &lt;&lt; ['title', 'Never been deader']
+
+  # Add the first author
+  doc &lt;&lt; [:author, 'Bill']
+
+  # Add more. Re-used keys mean you're adding additional values
+  # Note values can be scalars or arrays
+
+  doc &lt;&lt; [:author, ['Mike', 'Molly']]
+
+  # Add the wrong year using [] syntax
+  doc[:year] = 2001
+
+  # Oops! fix it. []= overwrites existing value(s)
+
+  doc[:year] = 2003
+
+  # Finally, we can merge a hash (or anything else that responds to
+  # 'each_pair' with key-value pairs) into an existing doc
+
+  doc.merge! {'author' =&gt; 'Ringo Starrre', 'publisher'=&gt;'Vainity Books'}
+
+  # Add it
+
+  suss &lt;&lt; doc
+
+  # Commit and optimize if you'd like
+
+  suss.commit
+  suss.optimize # if you want
+
+
+</code></pre>
+
+<p>Nothing really fancy in there &ndash; just a few things worth noting:</p>
+
+<ul>
+<li>An suss object will take a hash (again, anything that responds to <code>#each_pair</code>) or a SolrInputDoc</li>
+<li>You can use either strings or symbols to represent Solr field names</li>
+<li>Values can be either a single value, or an array of multiple values</li>
+</ul>
+
+<p>And there are three ways to get data into a doc:</p>
+
+<ul>
+<li>Via <code>&lt;&lt; [field, value(s)]</code> (additive)</li>
+<li>Via <code>doc.merge! hash</code> (additive)</li>
+<li>Via <code>doc[field] = value</code> (replaces)</li>
+</ul>
+
+<h3 id="adding-threads">Adding Threads</h3>
+
+<p>I also went down the garden path of threading things. There are an awful lot
+of operations that are not threadsafe (e.g., reading a line from a file) but
+once you&rsquo;ve got a bunch of records to worth with, turning them into Solr
+documents is usually thread-safe.</p>
+
+<p>My model is that there&rsquo;s a producer (usually the method <code>#each</code>) from an
+underlying data object. A thread takes whatever that method yields
+and sticks the values into a java
+BlockingQueue awaiting consumption. You then use <code>ProdcuerConsumer#threaded_each</code>
+(or <code>ProducerConsumer#threaded_each_with_index</code>) to pull items out of the queue and do something useful with them.</p>
+
+<p>I extracted stuff into a library (jruby_producer_consumer) for your viewing pleasure.</p>
+
+<p><strong>CONFUSION ALERT</strong>: It&rsquo;s perhaps unfortunate that the object you send to <code>ProducerConsumer.new(obj)</code> must implement <code>#each</code> and that the ProducerConsumer method <code>#threaded_each</code> calls that underlying <code>#each</code>&hellip;well
+there&rsquo;s a lot of <code>#each</code>&rsquo;s floating around. Keep them straight.</p>
+
+<p>So&hellip;let&rsquo;s look at some code to work with consumer threads.</p>
+
+<pre><code class="language-ruby">
+  # Start off the same as before
+  require 'rubygems'
+  require 'jruby_streaming_update_solr_server'
+  require 'jruby_producer_consumer'
+  require 'marc4j4r'
+
+  solrurl = 'http://your.solr.server:port/solr'
+  sussqueuesize = 24 # how many items to buffer on their way to solr
+  sussthreads = 2   # how many threads to use to send stuff to solr
+
+  suss = StreamingUpdateSolrServer.new(solrurl,sussqueuesize,sussthreads)
+
+  # I'll go ahead and use a MARC file as my example, but won't talk about the
+  # MARC parts of it. All you need to know is that the reader object
+  # implements #each
+
+  reader = MARC4J4R.reader('test.xml', :marcxml)
+
+  # Get a producer/consumer object with the reader at its base, using
+  # the default method #each to get stuff out of it, and with the assumption
+  # that we only need to keep the default 5 items in memory at a time to
+  # keep up with consumption
+
+  pc = ProducerConsumer.new(reader)
+
+  # Get three threads to actually consume the things, turn them into solr
+  # documents, and send them to solr (potentially out of order)
+
+  numconsumerthreads = 3
+  pc.threaded_each(numconsumerthreads).each do |r|
+    suss &lt;&lt; turn_marc_record_into_a_hash_or_solrdoc(r)
+  end
+  suss.commit
+
+
+</code></pre>
+
+<p>Again, not a lot happening here.</p>
+
+<ul>
+<li>The &ldquo;producer&rdquo; is always one thread, because so little is thread-safe at the &lsquo;each&rsquo; level. In this case, there&rsquo;s a single thread pulling data out of the file and turning it into MARC records, which are added to the internal BlockingQueue. I buffer 5 of these at a pop (the default) so the consumer threads don&rsquo;t starve. I presume that producing items is cheaper than consuming them, or else this library won&rsquo;t help you much.</li>
+<li><code>ProducerConsumer#threaded_each</code> calls the <code>#each</code> method of the underlying object. You can substitute anything that yields, though, as in this example where I call <code>#each_line</code> instead of the default <code>#each</code></li>
+</ul>
+
+<pre><code class="language-ruby">
+  queuesize = 5
+  pc = ProducerConsumer.new(File.new('myfile.txt'), queuesize, :each_line)
+
+</code></pre>
+
+<ul>
+<li>Keep track of your threads. In this last example, there is one thread getting MARC records and putting them into the PC buffer (no way to change that), three threads consuming those records and sticking them into the <code>suss</code> object, and another two pulling stuff <em>out</em> of the <code>suss</code> object and sending things to Sorl. And, of course, there&rsquo;s other stuff running on the computer, too. Experiment and figure out what works best for your hardware.</li>
+<li>See the docs for how to mess with what goes into a ProducerConsumer object. It&rsquo;s entirely possible to use, say, <code>#each_slice</code>. There&rsquo;s also a convenience method <code>#threaded_each_with_index</code>, but it does <em>not</em> call the underlying <code>#each_with_index</code>, it produces its own index as things are read.</li>
+</ul>
+
+<h3 id="feedback-not-only-welcome-but-necessary">Feedback not only welcome but necessary!</h3>
+
+<p>I&rsquo;ve done a lot of messing around with Ruby in the last 10 days or so, but I&rsquo;m still basically converting from Perl in my head. Any comments, bugs reports, or whatnot are definitely welcome!</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

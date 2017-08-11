@@ -11,6 +11,8 @@ frustration using other tools in this space (e.g., https://code.google.com/p/sol
 http://robotlibrarian.billdueber.com/2013/10/announcing-traject-indexing-software/[post introducting it]), and I've used it literally every day since then indexing data for the 
 http://mirlyn.lib.umich.edu[Univeristy of Michigan] and http://catalog.hathitrust.org/[HathiTrust] library catalogs. 
 
+<!--more-->
+
 == How does it work?
 
 `traject` is packaged as a gem, and ships with a command-line program (`traject`) that reads in configuration files or switches and the name of the file to operate on and transforms the incoming records as

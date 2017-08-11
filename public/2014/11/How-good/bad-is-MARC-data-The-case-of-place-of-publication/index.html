@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="How good/bad is MARC data? The case of place-of-publication">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | How good/bad is MARC data? The case of place-of-publication</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2014-11-10 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2014/11/how-good/bad-is-marc-data-the-case-of-place-of-publication/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>How good/bad is MARC data? The case of place-of-publication
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>I complain a lot about <a href="/2010/04/data-structures-and-serializations/">the MARC format</a>,
+<a href="/2011/04/why-programmers-hate-free-text-in-marc-records/">the way people put data in MARC records</a>,
+the <a href="/2011/04/isbn-parenthetical-notes-bad-marc-data-1/">actual data themselves I find in MARC records</a>,
+the <a href="/yet-another-lc-callnumber-parser/">inexplicably complex syntax for identifiers</a> and, ironically,
+<a href="/2010/04/why-rda-is-doomed-to-failure/">attempts to replace MARC with something else</a>.</p>
+
+<p>One nice little beacon of hope was when I found that only roughly 0.26% of the ISBNs in the UMich catalog
+have invalid checksums. That&rsquo;s not bad at all, and it&rsquo;s worth digging into other things about which
+I might be likely to complain before I make a fool of myself.</p>
+
+<p>[Note: there <em>will</em> be some complaining at the end. I promise.]</p>
+
+<p>One of my recent charges was to try to put in place a better place-of-publication filter in the catalog.
+<em>Place of Publication</em> is most formally dictated by the (poorly-named, since it includes states/provinces) <a href="http://www.oclc.org/bibformats/en/fixedfield/ctry.html">Country of Publication</a>
+code in the 008 fixed field. This one-, two- or three-letter code that is then translated into a place name
+via a <a href="http://www.loc.gov/standards/codelists/countries.xml">mapping provided by the LoC</a>. Like most important pieces of data,
+the place of publication can appear in a few different places in a valid MARC record &ndash; because the searching is half the fun! &ndash;
+but we decided to just stick with the
+008 for the catalog search.</p>
+
+<p>Of course, the name of a place of publication may have changed since the actual publication.
+Historically speaking, borders have been remakably consistent over the last half of a century
+or so, but there are still changes (fall of the Soviet Union), splits (the former Czechoslovakia)
+and merges (Germany).</p>
+
+<h2 id="focus-on-validity">Focus on validity</h2>
+
+<p>So, there are roughly a bazillion ways one could try to slice and dice the data to figure out what the most
+accurate textual representation of a place name should be for a given record. More cut-and-dry is a simple question:
+how many of the 008s have a valid (current or obsolete) place-of-publication code in them?</p>
+
+<p>I ran an analysis of all the 008s in all the records in the <a href="http://mirlyn.lib.umich.edu/">University of Michigan catalog</a>,
+which helpfully includes all the HathiTrust holdings as well, so we&rsquo;re getting a nice cross-section of institutional records.</p>
+
+<p>Here&rsquo;s what I found, in round numbers</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">Total</th>
+<th align="right">Pct. of Total</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">All records</td>
+<td align="right">12M</td>
+<td align="right">100%</td>
+</tr>
+
+<tr>
+<td align="left">Invalid 008</td>
+<td align="right">1900</td>
+<td align="right">0.15%</td>
+</tr>
+
+<tr>
+<td align="left">Valid code</td>
+<td align="right">11.6M</td>
+<td align="right">96.6%</td>
+</tr>
+
+<tr>
+<td align="left">Unknown place-of-pub</td>
+<td align="right">381k</td>
+<td align="right">3.1%</td>
+</tr>
+
+<tr>
+<td align="left">Invalid code</td>
+<td align="right">27k</td>
+<td align="right">0.2%</td>
+</tr>
+</tbody>
+</table>
+
+<p>[&ldquo;No place-of-pub&rdquo; includes both records with no data in the 008 and those with the code &lsquo;  x&rsquo; which explicitly indicates &ldquo;Unknown&rdquo;]</p>
+
+<h2 id="results-pretty-good">Results: pretty good!</h2>
+
+<p>Given much of the data I&rsquo;ve worked with over the years, this strikes me a stunningly good. Of course, in the case of a place as
+big as UMich, that means we&rsquo;ve still got about 408k items about which we have no good place-of-publication information, but
+as a percentage, it&rsquo;s small enough that I&rsquo;m happy to live with it.</p>
+
+<p>I was, admittedly, a little put out by the fact that we have records in which the 008 fixed field &ndash; which is pretty important, as these things go &ndash; was
+just plain invalid (including 176 just plain <em>missing</em>). You&rsquo;d think that the ILS software would reject things like that, but,
+as in almost all cases when you think the ILS should do something smart, you&rsquo;d be wrong.</p>
+
+<h2 id="and-now-the-complaints">And now, the complaints</h2>
+
+<p>Of course, all we know is that the codes are (or were) valid &ndash; not whether or not they&rsquo;re <em>accurate</em>.</p>
+
+<p>There are two obvious problems:</p>
+
+<ul>
+<li>Some rocket scientists at some point decided that the code &lsquo;ai&rsquo;, which had been used to represent Anguilla, should now be
+used to represent the Republic of Armenia. As if that weren&rsquo;t enough to make you slam your head into a brick wall,
+the change is based on the date of <em>cataloging</em>, not the date of publication, so there&rsquo;s no way for me to know which
+country is supposed to be indicated. It looks like this was to try to keep the first two letters of codes from the old Soviet Union
+the same one it fell apart, but c&rsquo;<em>mon</em>, people! (Note that Anguilla is now &lsquo;am&rsquo;, because of the &hellip;ummmm&hellip;.&ldquo;m&rdquo; in it&rsquo;s&hellip;er&hellip;nevermind.) We don&rsquo;t have
+many records with that code, but this is the sort of blatent disregard for simple data integrity that drives me <em>crazy</em>.</li>
+<li>A presumably different set of rocket scientists (once NASA downsized, those folks were <em>everywhere</em>) at various points in time and
+at various locations decided that the place of publication on a reproduction (say, a microfilm) should be the place the <em>reproduction</em>
+was created. So, a microfilm of <em>The New York Times</em> that happened to be created in Ann Arbor, MI is coded as &lsquo;miu&rsquo;, for Michigan.</li>
+</ul>
+
+<p>The latter, of course, is designed to serve those people studying where microfilms were created at the expense of people who
+want to, you know, find things actually published in a particular location. I&rsquo;m sure <em>all three</em> of the people in the country who want to know the
+former are forever grateful.</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

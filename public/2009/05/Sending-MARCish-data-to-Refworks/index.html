@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Sending MARC(ish) data to Refworks">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Sending MARC(ish) data to Refworks</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2009-05-11 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2009/05/sending-marcish-data-to-refworks/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Sending MARC(ish) data to Refworks
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		
+
+<p>Refworks has some <a href="http://www.refworks.com/DirectExport.htm">okish documentation</a> about how to deal with its callback import procedure, but I thought I&rsquo;d put down how I&rsquo;m doing it for our <a href="http://vufind.org/">vufind</a> install (<a href="http://mirlyn2-beta.lib.umich.edu/">mirlyn2-beta.lib.umich.edu</a>) in case other folks are interested.</p>
+
+<p>The basic procedure is:</p>
+
+<ul>
+    <li>Send your user to a specific refworks URL along with a callback URL that can enumerate the record(s) you want to import in a supported form</li>
+    <li>Your user logs in (if need be) gets to her RefWorks page</li>
+    <li>RefWorks calls up your system and requests the record(s)</li>
+    <li>The import happens, and your user does whatever she want to do with them</li>
+</ul>
+
+<p>Of course, there are lots of issues with doing this <em>well</em> (quick! Is this MARC record for a book? An edited book? Is it a journal, or a serial of some other sort? Who&rsquo;s the actual author/editor?), but doing it <em>at all</em> isn&rsquo;t so bad.</p>
+
+<h2 id="the-url-to-send-them-to">The URL to send them to</h2>
+
+<p>This is the &ldquo;Export this record&rdquo; URL on my system:</p>
+
+<pre><code>http://www.refworks.com.proxy.lib.umich.edu/express/expressimport.asp?
+vendor=[your system]&amp;
+filter=MARC+Format&amp;
+database=All+MARC+Formats&amp;
+encoding=65001
+&amp;url=[your callback URL]
+~~~~
+
+Note that the vendor variable should be a unique string (made up by your) for your &lt;em&gt;system&lt;/em&gt;, not a larger entity (like the whole library or the institution).
+
+The &quot;MARC Format&quot; filter we're using is &lt;em&gt;not&lt;/em&gt; a filter for real MARC. It's a MARC-like delimited format (see &lt;a target=&quot;marcish&quot; href=&quot;http://mirlyn2-beta.lib.umich.edu/Record/000152772/Export?style=REF&quot;&gt;an example from my catalog&lt;/a&gt;).
+
+Basically, you have three types of lines (but really, look at the example, 'cause it'll make everything a lot clearer):
+
+LEADER
+  : LEADER [one space] [leader text]
+
+Control Field
+  : [three-digit control tag] [four spaces] [data text]
+
+
+Data Field
+  : [three-digit data tag] [one space] [ind1] [ind2] [one space] [value of subfield a] [other subfield constructs]
+
+
+...where [other subfield constructs] look like
+
+</code></pre>
+
+<p>[pipe characeter][subfield code][subfield value]
+~~~~</p>
+
+<p>Notice that (a) there&rsquo;s no leading &lsquo;|a&rsquo; before the subfield a value, and (b) there are no spaces between the pipe, the subfield code, and the subfield value for the non-code-a subfields.</p>
+
+<p>Some easy PHP code to produce such a format is as follows. Note that I&rsquo;m sending it as text (because it&rsquo;s <em>not MARC</em>) and UTF-8. If you&rsquo;re got MARC-8, you&rsquo;ll have to convert it before sending.</p>
+
+<pre><code class="language-PHP">
+      $m = $this-&gt;marcRecord;
+      header('Content-type: text/plain; charset=UTF-8');
+
+      echo 'LEADER ', $m-&gt;getLeader(), &quot;\n&quot;;
+
+      foreach ($m-&gt;getFields() as $tag =&gt; $val) {
+        echo $tag;
+        if ($val instanceof File_MARC_Control_FIELD) {
+          echo '    ', $val-&gt;getData(), &quot;\n&quot;;
+        } else {
+          echo ' ', $val-&gt;getIndicator(1),  $val-&gt;getIndicator(2), ' ';
+          $subs = array();
+          foreach ($val-&gt;getSubFields() as $code=&gt;$subdata) {
+            $line = '';
+            if ($code != 'a') {
+              $line = '|' . $code;
+            }
+            $subs[] = $line . $subdata-&gt;getData();
+          }
+          echo implode(' ', $subs), &quot;\n&quot;;
+        }
+      }
+
+
+</code></pre>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

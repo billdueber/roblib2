@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="New interest in MARC-HASH / JSON">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | New interest in MARC-HASH / JSON</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2010-02-26 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2010/02/new-interest-in-marc-hash-json/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>New interest in MARC-HASH / JSON
+				
+			</h1>
+			<div class="panel-footer">
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<p><blockquote>EDIT: This is historical &ndash; the recommended serialization for marc in json is now Ross Singer&rsquo;s <a href="http://dilettantes.code4lib.org/blog/2010/09/a-proposal-to-serialize-marc-in-json/">marc-in-json</a>. The marc-in-json serialization has implementations in the core marc libraries for <a href="https://rubygems.org/gems/marc">Ruby</a> and <a href="http://pear.php.net/package/File_MARC/">PHP</a>, and add-ons for <a href="http://search.cpan.org/~bbaxter/MARC-Utils-MARC2MARC_in_JSON/">Perl</a> and <a href="https://github.com/billdueber/marc4j_extra_reader_writers">Java</a>. C&rsquo;mon, Python people!</blockquote>
+For reasons I&rsquo;m still not entirely clear on (I wasn&rsquo;t there), the Code4Lib 2010 conference this week inspired renewed interest in a JSON-based format for MARC data.</p>
+
+<p>When I initially looked at MARC-HASH <a href="http://robotlibrarian.billdueber.com/marc-hash-the-saga-continues-now-with-even-less-structure/">almost a year ago</a>, I was mostly looking for something that wasn&rsquo;t such a pain in the butt to work with, something that would marshall into multiple formats easily and would simply and easily round-trip.</p>
+
+<p>Now, though, a lot of us are looking for a MARC format that (a) doesn&rsquo;t suffer from the length limitations of binary MARC, but (b) is less painful (both in code and processing time) than MARC-XML, and it&rsquo;s worth re-visiting.</p>
+
+<p>For at least a few folks, un-marshaling time is a factor, since no matter what you&rsquo;re doing, processing XML is slower than most other options. Much of that expense is due to functionality and data-safety features that just aren&rsquo;t a big win with a brain-dead format like MARC, so it&rsquo;s worth looking at alternatives.
+<h2>What is MARC-HASH?</h2>
+At some point, we&rsquo;ll want a real spec, but right now it&rsquo;s just this:</p>
+
+<pre><code class="language-javascript">
+  // A record is a four-pair hash, as follows. UTF-8 is mandatory.
+  {
+    &quot;type&quot; : &quot;marc-hash&quot;
+    &quot;version&quot; : [1, 0]
+    &quot;leader&quot; : &quot;...leader string ... &quot;
+    &quot;fields&quot; : [array, of, fields]
+  }
+
+  // A field is an array of either 2 or 4 elements
+  [tag, value] // a control field
+  [tag, ind1, ind2, [array, of subfields]]
+
+  // A subfield is an array of two elements
+
+  [code, value]
+</code></pre>
+
+<p>So, a short example:</p>
+
+<pre><code class="language-json">  {
+    &quot;type&quot; : &quot;marc-hash&quot;,
+    &quot;version&quot; : [1, 0],
+
+    &quot;leader&quot; : &quot;leader string&quot;
+    &quot;fields&quot; : [
+       [&quot;001&quot;, &quot;001 value&quot;]
+       [&quot;002&quot;, &quot;002 value&quot;]
+       [&quot;010&quot;, &quot; &quot;, &quot; &quot;,
+        [
+          [&quot;a&quot;, &quot;68009499&quot;]
+        ]
+      ],
+      [&quot;035&quot;, &quot; &quot;, &quot; &quot;,
+        [
+          [&quot;a&quot;, &quot;(RLIN)MIUG0000733-B&quot;]
+        ],
+      ],
+      [&quot;035&quot;, &quot; &quot;, &quot; &quot;,
+        [
+          [&quot;a&quot;, &quot;(CaOTULAS)159818014&quot;]
+        ],
+      ],
+      [&quot;245&quot;, &quot;1&quot;, &quot;0&quot;,
+        [
+          [&quot;a&quot;, &quot;Capitalism, primitive and modern;&quot;],
+          [&quot;b&quot;, &quot;some aspects of Tolai economic growth&quot; ],
+          [&quot;c&quot;, &quot;[by] T. Scarlett Epstein.&quot;]
+        ]
+      ]
+    ]
+  }
+</code></pre>
+
+<h2>How's the speed?</h2>
+I think it's important to separate the format marc-hash from the eventual marshaling format -- partly because someone might actually want to use something other than JSON as a final format, but mostly because it forces implementations to separate hash-creation from json-creation and makes it easy to swap in different json libraries when a faster one comes along.
+
+Having said that, in real life people are mostly concerned about JSON. So,
+let's look at JSON performance.
+
+The MARC-Binary and MARC-XML files are normal files, as you'd expect. The JSON file is
+<a href="http://trephine.org/t/index.php?title=Newline_delimited_JSON">"Newline-Delimited JSON"</a> -- a single JSON record on each line.
+
+The benchmark code looks like this:
+
+~~~ruby
+  # Unmarshal
+  x.report("MARC Binary") do
+    reader = MARC::Reader.new('test.mrc')
+    reader.each do |r|
+      title = r['245']['a']
+    end
+  end
+
+  # Marshal
+  x.report("MARC Binary") do
+    reader = MARC::Reader.new('test.mrc')
+    writer = MARC::Writer.new('benchout.mrc')
+    reader.each do |r|
+      writer.write(r)
+    end
+    writer.close
+  end
+~~~~
+
+Under MRI, I used the nokogiri XML parser and the yajl JSON gem. Under JRUby, it was the jstax XML parser and the json-jruby JSON gem.
+
+The test file is a set of 18,831 records I've been using for all my benchmarking of late. It's nothing special; just a nice size.
+
+<h3>Marshalling Speed (read from binary marc, dump to given format)</h3>
+
+Times are in seconds on my Macbook laptop, using ruby-marc.
+
+<table class="grid">
+<tbody>
+<tr>
+<th>Format</th>
+<th>Ruby 1.87</th>
+<th>Ruby 1.9</th>
+<th>JRuby 1.4</th>
+<th>Jruby 1.4 --1.9</th>
+</tr>
+<tr>
+<td>XML</td>
+<td>393</td>
+<td>443</td>
+<td>188</td>
+<td>356</td>
+</tr>
+<tr>
+<td>MARC Binary</td>
+<td>36</td>
+<td>23</td>
+<td>23</td>
+<td>25</td>
+</tr>
+<tr>
+<td>JSON/ NDJ</td>
+<td>31</td>
+<td>19</td>
+<td>25</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Unmarshalling speed (from pre-created file)</h3>
+
+Again, times are in seconds
+
+<table class="grid">
+<tbody>
+<tr>
+<th>Format</th>
+<th>Ruby 1.87</th>
+<th>Ruby 1.9</th>
+<th>JRuby 1.4</th>
+<th>Jruby 1.4 --1.9</th>
+</tr>
+<tr>
+<td>XML</td>
+<td>113</td>
+<td>89</td>
+<td>75</td>
+<td>89</td>
+</tr>
+<tr>
+<td>MARC Binary</td>
+<td>29</td>
+<td>16</td>
+<td>16</td>
+<td>19</td>
+</tr>
+<tr>
+<td>JSON/ NDJ</td>
+<td>17</td>
+<td>9</td>
+<td>13</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+
+<h2>And so...</h2>
+
+<p>I&rsquo;m not sure what else to say. The format is totally brain-dead. It round-trips. It&rsquo;s fast enough. It has no length limitations. We define it to have to be UTF-8. The NDJ format is easy to understand and allows streaming of large document collections.</p>
+
+<p>If folks are interested in implementing this across other libraries, that&rsquo;d be great. Any thoughts?</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

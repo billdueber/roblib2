@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# website: http://ogp.me/ns/website#">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta property="og:title" content="Wanted: a better proxy server">
+	<link rel="icon" href="http://robotlibrarian.billdueber.com/" />
+	
+	
+		<title>Robot Librarian | Wanted: a better proxy server</title>
+		<meta property="og:type" content="article">
+		<meta property="article:published_time" content= 2008-10-02 >
+	
+	<meta property="og:description" content="">
+	<meta property="og:url" content="http://robotlibrarian.billdueber.com/2008/10/wanted-a-better-proxy-server/">
+	<meta property="og:site_name" content="Robot Librarian">
+	
+		<meta property="og:tags" content="TALITAS">
+	
+	<meta name="generator" content="Hugo 0.24.1" />
+   
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	
+	<link rel="stylesheet" href="http://robotlibrarian.billdueber.comcss/style.css">
+	<link href="" rel="alternate" type="application/rss+xml" title="Robot Librarian" />
+</head>
+<nav class="navbar navbar-default navbar-fixed-top visible-xs">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+				<a class="navbar-brand" href="http://robotlibrarian.billdueber.com">Robot Librarian</a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div id="menu" class="hidden-xs col-sm-4 col-md-3">
+	<div id="particles-js"></div>
+	<div id="menu-content" class="vertical-align">
+		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		
+			<h1 class="text-center"><a href="http://robotlibrarian.billdueber.com">Robot Librarian</a></h1>
+		
+		
+		
+			<small class="text-center center-block">Bill Dueber</small>
+		
+		
+		
+		<div id="social" class="text-center">
+			<a href="https://twitter.com/billdueber" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				
+			
+			
+			
+			<a href="https://github.com/https://github.com/billdueber" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>
+			
+				
+			<a href="mailto:bill@dueber.com" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
+		</div>
+		<div id="links" class="text-center">
+			
+			
+		</div>
+	</div>
+</div>
+
+
+		<div id="content" class="col-xs-12 col-sm-8 col-md-9">
+			<div class="row">
+				<div id="post" class="col-sm-offset-1 col-sm-10 col-md-10 col-lg-8">
+
+<main>
+	<header>
+		<div class="panel-header">
+			<h1>Wanted: a better proxy server
+				
+			</h1>
+			<div class="panel-footer">
+				
+					<small class="text-muted">
+						
+						
+							<font size="4"><a href="http://robotlibrarian.billdueber.comtags/talitas"><span class="label label-success">TALITAS</span></a></font>
+						
+					</small>
+				
+			</div>
+			
+		</div>
+	</header>
+	<br>
+	<HR align=center>
+	<article>
+		<p>We in the library world have a problem. We spend a zillion-with-a-Z dollars subscribing to online databases, purchases which presume our ability to make sure only authorized people can look at them. The alternative is to be in breach of contract law, which I&rsquo;ve been assured is something we&rsquo;d like to avoid.</p>
+
+<p>The problem I see is this: <em>The limitations of our proxy server software restrict how we can write contracts with our vendors</em>.</p>
+
+<p>The standard approach is to define two types of access:
+<ol>
+    <li>By IP address. The person is sitting in front of the right computer (or has hooked up to the right wireless network) and is assumed to be &ldquo;OK&rdquo; based on either the location of the computer (e.g., in the library building) or through the nature of the auth/authZ built into the computer&rsquo;s login procedure. We tell our vendors, &ldquo;Hey,&rdquo; (all vendor-library conversations start with &lsquo;Hey&rsquo;) &ldquo;here&rsquo;s a list of IP addresses that you should allow and associate with us.&rdquo;</li>
+    <li>By authenticating with a central mechanism and then sending everything through a rewriting proxy server, thus allowing us to tell the vendor, &ldquo;Hey. Anything coming through our proxy server is OK. Honest.&rdquo;</li>
+</ol>
+The venerable EZProxy (now owned by OCLC) has been the solution of choice for libraries for a long time. It does what it does very well.</p>
+
+<p>But I want more. Much more. More more more.</p>
+
+<p>The current model assumes there&rsquo;s exactly one question: <em>Is this person authorized as a UM-Ann Arbor user?</em></p>
+
+<p>But that&rsquo;s a pretty crude question. Suppose the Business or Law school wants to buy access to stuff for only their students (news flash: they already do)? Or we want to subscribe to a journal but, because it&rsquo;s so esoteric, restrict access to a couple departments to save money. Or recognize when an Ann Arbor faculty member is sitting at a public computer on a different campus but still allow her to get full rights as an Ann Arbor faculty member instead of appearing to be Joe-Random-Dearborn student, a group which has significantly less access to online journals.</p>
+
+<p>Why can&rsquo;t people with roles on multiple campuses get the best of all worlds, getting the least restrictive access possible to a given title  based on all their student/staff/faculty affiliations?</p>
+
+<p>Why can&rsquo;t we negotiate access to given titles (or even articles???) in lieu of course packets (or online reserves), restricting access to only those enrolled in the class?</p>
+
+<p>Here at UMich, we&rsquo;re just starting to get an Enterprise Directory online where we&rsquo;ll actually be able to ask some of these questions. But until we get a proxy server that&rsquo;s smart enough to do something with all the information, it&rsquo;ll just sit there and taunt me.</p>
+
+<p>This isn&rsquo;t an idle question. We already have databases that the Business School subscribes to alone that can only be accessed when you&rsquo;re physically in the B-School at one of the approved-IP-address computers. That&rsquo;s freakin&rsquo; ridiculous.</p>
+
+<p>Of course, this all presumes that all-or-nothing contracts aren&rsquo;t the best way to go, but shouldn&rsquo;t we at least have the option?</p>
+
+	</article>
+	<br>
+	
+</main>
+	
+
+
+						<br>
+						<section id="footer">
+							<div class="text-center center-block">
+								<ul class="copyright">
+									<li>&copy; 2017 <a target="_blank" href="http://robotlibrarian.billdueber.com"></a> | Powered by <a target="_blank" href="https://gohugo.io/">Gohugo</a> | Theme <a target="_blank" href="https://git.pofilo.fr/pofilo/hugo-fatboy">Fatboy</a></li>
+								</ul>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+	
+  
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	
+
+	
+
+	
+
+	
+
+	
+	</body>
+</html>
+
+
+
+
+

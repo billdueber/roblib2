@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Phrase Slop on Robot Librarian</title>
+    <link>http://robotlibrarian.billdueber.com/tags/phrase-slop/</link>
+    <description>Recent content in Phrase Slop on Robot Librarian</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Mar 2012 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://robotlibrarian.billdueber.com/tags/phrase-slop/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Requiring/Preferring searches that don&#39;t span multiple values (SST #3)</title>
+      <link>http://robotlibrarian.billdueber.com/2012/03/requiringpreferring-searches-that-dont-span-multiple-values-sst-3/</link>
+      <pubDate>Fri, 09 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>http://robotlibrarian.billdueber.com/2012/03/requiringpreferring-searches-that-dont-span-multiple-values-sst-3/</guid>
+      <description>Check out introduction to the Stupid Solr Tricks series if you&amp;rsquo;re just joining us.]
+ Solr and multiValued fields Here&amp;rsquo;s another thing you need to understand about Solr: it doesn&amp;rsquo;t really have fields that can take multiple values.
+&amp;ldquo;But Bill,&amp;rdquo; you&amp;rsquo;re saying, &amp;ldquo;sure it does. I mean, hell, it even has a &amp;lsquo;multiValued&amp;rsquo; parameter.&amp;rdquo;
+First off: watch your language.
+Second off: are you sure?
+Let&amp;rsquo;s do a quick test.</description>
+    </item>
+    
+  </channel>
+</rss>
