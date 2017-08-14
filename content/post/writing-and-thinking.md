@@ -18,7 +18,7 @@ What I haven’t done much of is write.
 
 I’m a firm believer that thinking without writing is just sloppy thinking. By that measure, I’ve been doing an enormous amount  of slopping thinking.
 
-Thinking in my head is an expansive process, and valuable for that. But writing forces _choices_. It forces _decisions_. I learned this the way most people do: by watching [Wonder Boys]([Wonder Boys (2000) - IMDb](http://www.imdb.com/title/tt0185014/)). But I also found it to be true for me.
+Thinking in my head is an expansive process, and valuable for that. But writing forces _choices_. It forces _decisions_. I learned this the way most people do: by watching [Wonder Boys](http://www.imdb.com/title/tt0185014/). But I also found it to be true for me.
 
 ## Future Bill
 When I write, I’m basically making a series of arguments. And I’m making them to my hypothetical reader and full-time nemesis, Future Bill. 
