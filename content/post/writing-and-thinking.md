@@ -7,6 +7,7 @@ title = "Thinking implies Writing"
 highlight = true
 css = []
 scripts = []
+markup = "mmark"
 +++
 
 It’s now been more than two and half years since I blogged anything. During that time I’ve switched jobs, taken on different responsibilities, watched my kids grow, and put on a few pounds. I also got new glasses, but nobody ever says anything when I get new glasses, or a new haircut, and geez, would it kill you to notice these things and tell me I look nice once in a while? 
