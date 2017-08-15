@@ -20,6 +20,8 @@ googleAnalytics: "UA-166456-3"
 metaDataFormat: yaml
 paginate: 10
 
+disqusShortname: "robotlibrarian"
+
 params:
   subtitle: Bill Dueber
   twitter: billdueber
