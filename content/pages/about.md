@@ -108,7 +108,7 @@ out of personal, hellacious experience.
 ### Solr stuff
 
 [Solr](http://lucene.apache.org/solr/) is a full-text search engine that backs a lot of 
-the projects I work on, My solr stuff tends to be what the most people find useful. 
+the projects I work on. My solr stuff tends to be what the most people find useful. 
 
 * I've got a few [blog posts](http://robotlibrarian.billdueber.com/tags/solr/index.html) on solr from the last few years. I've also done some
   code:
