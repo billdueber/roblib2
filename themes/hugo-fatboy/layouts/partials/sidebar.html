@@ -1,17 +1,15 @@
 <div id="menu" class="hidden-xs col-sm-4 col-md-3">
 	<div id="particles-js"></div>
 	<div id="menu-content" class="vertical-align">
-		<img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot">
+		<a href="/"><img src="/images/robot_alpha.png" class="center-block" alt="Cheesy picture of robot"></a>
 		{{ if isset .Site.Params "title" }}
 			<h1 class="text-center"><a href="{{ .Site.BaseURL }}">{{ .Site.Params.title }}</a></h1>
 		{{ else }}
 			<h1 class="text-center"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>
 		{{ end }}
-		
-		{{ if isset .Site.Params "subtitle" }}
-			<small class="text-center center-block">{{ .Site.Params.subtitle }}</small>
-		{{ end }}
-		
+
+		<small class="text-center center-block"><a href="/pages/about/">Bill Dueber</a></small>
+
 		{{ if isset .Site.Params "profilepic" }}
 			<img id="profile-pic" src="{{ .Site.BaseURL }}/{{ .Site.Params.profilepic }}" alt="My Picture" class="img-circle center-block">
 		{{ end }}

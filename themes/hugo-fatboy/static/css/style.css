@@ -5900,3 +5900,8 @@ ul.share li:hover .fa {
   color: inherit;
 }
 
+aside {
+  padding-left: 2em;
+  padding-right: 2.5em;
+  text-align: justify;
+}
