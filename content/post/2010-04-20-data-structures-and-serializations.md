@@ -2,6 +2,7 @@
 date: 2010-04-20T00:00:00Z
 slug: data-structures-and-serializations
 title: Data structures and Serializations
+tags: ["bad-data", "bad-formats"]
 ---
 
 Jonathan Rochkind, in response to a long (and, IMHO, mostly ridiculous) thread on NGC4Lib, has been exploring the boundaries between a data model and its expression/serialization (

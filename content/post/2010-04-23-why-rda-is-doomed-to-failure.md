@@ -2,6 +2,7 @@
 date: 2010-04-23T00:00:00Z
 slug: why-rda-is-doomed-to-failure
 title: Why RDA is doomed to failure
+tags: ["bad-formats"]
 ---
 
 [Note: edited for clarity thanks to rsinger's comment, below]

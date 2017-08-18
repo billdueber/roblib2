@@ -1,7 +1,7 @@
 ---
 date: 2008-05-12T00:00:00Z
 slug: psst-were-not-printing-cards-anymore
-tags: [code4lib, TALITAS]
+tags: [code4lib, TALITAS, bad-formats]
 title: Psst. We're not printing cards anymore
 ---
 

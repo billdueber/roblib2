@@ -1,6 +1,7 @@
 ---
 date: 2014-11-10T00:00:00Z
 title: How good/bad is MARC data? The case of place-of-publication
+tags: ["bad-data"]
 ---
 
 I complain a lot about [the MARC format](/2010/04/data-structures-and-serializations/),
