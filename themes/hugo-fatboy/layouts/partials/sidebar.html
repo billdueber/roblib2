@@ -10,6 +10,11 @@
 
 		<small class="text-center center-block"><a href="/pages/about/">Bill Dueber</a></small>
 
+		<div id="aggregates" class="text-center center-block">
+			<small><a href="/tags/">Tags</a></small> | <small><a href="/post/">All posts</a></small>
+		</div>
+
+
 		{{ if isset .Site.Params "profilepic" }}
 			<img id="profile-pic" src="{{ .Site.BaseURL }}/{{ .Site.Params.profilepic }}" alt="My Picture" class="img-circle center-block">
 		{{ end }}
